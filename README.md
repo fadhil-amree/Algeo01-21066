@@ -1,3 +1,5 @@
+<pre>
+
 Sistem persamaan linier (SPL) banyak ditemukan di dalam bidang sains dan rekayasa.
 Anda sudah mempelajari berbagai metode untuk menyelesaikan SPL, termasuk
 menghitung determinan matriks. Sembarang SPL dapat diselesaikan dengan beberapa
@@ -19,3 +21,4 @@ Beberapa tulisan cara membuat library di Java:
 2. https://developer.ibm.com/tutorials/j-javalibrary/
 3. https://stackoverflow.com/questions/3612567/how-to-create-my-own-java-libr
 aryapi
+
