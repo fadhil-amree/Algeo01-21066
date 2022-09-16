@@ -1,13 +1,15 @@
+## TUBES ALJABAR DAN GEOMETRI 1
+
 <pre>
 
 Sistem persamaan linier (SPL) banyak ditemukan di dalam bidang sains dan rekayasa.
 Anda sudah mempelajari berbagai metode untuk menyelesaikan SPL, termasuk
 menghitung determinan matriks. Sembarang SPL dapat diselesaikan dengan beberapa
 metode, yaitu metode eliminasi Gauss, metode eliminasi Gauss-Jordan, metode
-matriks balikan (x = A
--1b), dan kaidah Cramer (khusus untuk SPL dengan n peubah
+matriks balikan (x = A-1b), dan kaidah Cramer (khusus untuk SPL dengan n peubah
 dan n persamaan). Solusi sebuah SPL mungkin tidak ada, banyak (tidak berhingga),
 atau hanya satu (unik/tunggal).
+
 Di dalam Tugas Besar 1 ini, anda diminta membuat satu atau lebih library aljabar
 linier dalam Bahasa Java. Library tersebut berisi fungsi-fungsi seperti eliminasi
 Gauss, eliminasi Gauss-Jordan, menentukan balikan matriks, menghitung determinan,
@@ -22,3 +24,4 @@ Beberapa tulisan cara membuat library di Java:
 3. https://stackoverflow.com/questions/3612567/how-to-create-my-own-java-libr
 aryapi
 
+</pre>
