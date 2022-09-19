@@ -1,4 +1,4 @@
-## TUBES ALJABAR DAN GEOMETRI 1
+# TUBES ALJABAR DAN GEOMETRI 1
 
 <pre>
 
@@ -21,7 +21,6 @@ interpolasi dan regresi adalah seperti di bawah ini.
 Beberapa tulisan cara membuat library di Java:
 1. https://www.programcreek.com/2011/07/build-a-java-library-for-yourself/
 2. https://developer.ibm.com/tutorials/j-javalibrary/
-3. https://stackoverflow.com/questions/3612567/how-to-create-my-own-java-libr
-aryapi
+3. https://stackoverflow.com/questions/3612567/how-to-create-my-own-java-libraryapi
 
 </pre>
