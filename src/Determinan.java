@@ -1,8 +1,36 @@
-// package src; kenapa gabisa ya
+import java.util.*;
+package src;
+import src.Matrix;
+import Determinan.*;
 
 public class Determinan {
-    public void determinan(int[][] matriks) {
-        int det = matriks[0][0] * matriks[1][1] - matriks[0][1] * matriks[1][0];
-        System.out.println("Determinan matriks adalah " + det);
+
+    public static void main (int menu)
+    {
+        // KAMUS
+        int i, j, n;
+
+        // ALGORITMA
+
+        if (menu == 1)
+        {
+
+            // Baca Matrix
+            float[][] matrix;
+
+            // Output Matrix
+
+            // Output Determinan
+        } else // menu == 2
+        {
+            // Baca Matrix
+            float[][] matrix;
+
+            // Output Matrix
+
+            // Output Determinan
+            System.out.println();
+            System.out.println(detKofaktor(matrix));
+        }
     }
 }

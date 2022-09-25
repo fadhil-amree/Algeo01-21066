@@ -32,6 +32,8 @@ public class Matrix {
     Matrix(String file){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada file
+
+        
     } 
 
     //Konstruktor input berupa matriks
