@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Inverse {
     public static boolean isInvertible(Matrix matrix){
-        return (Determinan.determinan(matrix)!=0);
+        return (Determinan.determinan(matrix.content)!=0);
     }
 
     public static Matrix getIdentityMatrix(int order){
@@ -21,8 +21,23 @@ public class Inverse {
         return identityMatrix;
     }
 
+    public static Matrix getTransposeMatrix(Matrix matrix){
+        // Fungsi yang menerima sebuah matriks lalu mengembalikan Transpose dari matriks tersebut
+        // KAMUS LOKAL
+        float[][] tMatrix = new float[matrix.nRow][matrix.nCol];
+        int i,j;
+        //ALGORITMA   
+        for (i=0;i<=matrix.nRow-1;i++){
+            for(j=0;j<=matrix.nCol-1;j++){
+                tMatrix[i][j] = matrix.content[j][i];
+            }
+        }
+        Matrix transposeMatrix = new Matrix(tMatrix,matrix.nRow,matrix.nCol);
+        return transposeMatrix;
+    }
+
     public static Matrix getInversebyOBE (Matrix matrix){
-        // Fungsi yang menerima sebuah matriks lalu mengembalikan Inverse dari matriks tersebut
+        // Fungsi yang menerima sebuah matriks lalu mengembalikan Inverse dari matriks tersebut dengan metode Operasi Baris ELementer
 
         //KAMUS LOKAL
         Matrix tempMatrix = new Matrix(matrix);
@@ -112,6 +127,47 @@ public class Inverse {
     }
 
     public static Matrix getInversebyAdj(Matrix matrix){
-        return matrix;
+        // Fungsi yang menerima sebuah matriks lalu mengembalikan inverse dari matriks tersebut dengan metode Adjoin
+        // KAMUS LOKAL
+        float[][] minor; //matriks minor
+        float[][] cofactorMatrix = new float[matrix.nRow][matrix.nCol];
+        int i,j,k,l,bm,km; //indeks
+        float det, c;
+        // ALGORITMA
+        //i,k: indeks baris
+        //j,l: indeks kolom
+        //bm: indeks baris minor
+        //km: indeks kolom minor
+        for(i=0;i<=matrix.nRow-1;i++){
+            for(j=0;j<=matrix.nCol-1;j++){
+                minor = new float[matrix.nRow-1][matrix.nCol-1]; //Inisiasi matriks minor 
+                bm =0;
+                for(k=0;k<=matrix.nRow-1;k++){
+                    km = 0;
+                    for(l=0;l<=matrix.nCol-1;l++){
+                        if (k!=i && l!=j){ //Mengambil elemen yang termasuk minor i,j
+                            minor[bm][km] = matrix.content[i][j];
+                            km++; // kolom minor bergeser
+                        }
+                    }
+                    bm++;
+                }
+                det = Determinan.determinan(minor); // Menghitung determinan dari matriks minor
+                if ((i+j)%2==0){ //Menentukan tanda cofactor
+                    c = 1;
+                } else{
+                    c = -1;
+                }
+                c *= det; //Menghitung nilai cofactor
+                
+                // Menambahkan elemen matriks cofactor
+                cofactorMatrix[i][j] = c;
+            }
+        }
+        Matrix kofaktorMatrix = new Matrix(cofactorMatrix, matrix.nRow, matrix.nCol);
+        Matrix inverseMatrix = getTransposeMatrix(kofaktorMatrix);
+        det = Determinan.determinan(matrix.content); //menghitung determinan matriks
+        inverseMatrix.multiplybyConstant(det); // 1/det * adj(matriks)
+        return inverseMatrix;
     }
 }

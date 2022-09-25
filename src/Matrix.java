@@ -87,4 +87,19 @@ public class Matrix {
             }
         }
     }
+
+    void multiplybyConstant(float k){
+        // Prosedur untuk mengalikan matriks dengan suatu konstanta
+        // I.S matrix terdefinisi berisi nilai atau kosong
+        // F.S Setiap elemen pada matrix dikali dengan k
+        //KAMUS LOKAL
+        int i,j; //index
+        //ALGORITMA
+        for(i=0;i<this.nRow;i++){ 
+            for(j=0;j<this.nCol;j++){
+                this.content[i][j] *= k;
+            }
+        }
+
+    }
 }
