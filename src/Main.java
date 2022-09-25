@@ -1,3 +1,102 @@
+package src;
+import java.util.*;
+import src.Matrix;
 public class Main {
     
+    public static void  main (String[] args){
+        int nRow, nCol, menu; //deklarasi jumlah baris dan kolom pada matriks
+        Scanner input = new Scanner(System.in); //inisiasi variabel untuk melakukan input
+        boolean runProgram = true;
+
+        while (runProgram){
+            System.out.println("MENU");
+            System.out.println("1. Sistem Persamaan Linier");
+            System.out.println("2. Determinan");
+            System.out.println("3. Matriks Balikan");
+            System.out.println("4. Interpolasi Polinom");
+            System.out.println("5. Interpolasi Bicubic");
+            System.out.println("6. Regresi Linier Berganda");
+            System.out.println("7. Keluar");
+            System.out.println("");
+
+            System.out.print("Masukkan Pilihan Anda: ");
+            menu = input.nextInt();
+
+            //Template
+            switch (menu){
+                case 1:
+                        System.out.println("1. Metode Eliminasi Gauss");
+                        System.out.println("2. Metode Eliminasi Gauss-Jordan");
+                        System.out.println("3. Metode Matriks Balikan");
+                        System.out.println("4. Kaidah Cramer");
+                        System.out.println("");
+
+                        System.out.print("Masukkan Pilihan Anda: ");
+                        menu = input.nextInt();
+                        
+                        switch (menu){
+                            case 1: System.out.println("Menyelesaikan SPL dengan Metode Eliminasi Gauss");
+                                    break;
+                            case 2: System.out.println("Menyelesaikan SPL dengan Metode Eliminasi Gauss-Jordan");
+                                    break;
+                            case 3: System.out.println("Menyelesaikan SPL dengan Metode Matriks Balikan");
+                                    break;
+                            case 4: System.out.println("Menyelesaikan SPL dengan Kaidah Cramer");
+                                    break;
+                            default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
+                                    break;
+                        }
+                        break;
+                case 2:
+                        System.out.println("1. Metode Reduksi Baris");
+                        System.out.println("2. Metode Ekspansi Kofaktor"); 
+                        System.out.println("");
+
+                        System.out.print("Masukkan Pilihan Anda: ");
+                        menu = input.nextInt();     
+                        
+                        switch(menu){
+                            case 1: System.out.println("Mencari Determinan Matriks dengan Metode Reduksi Baris");
+                                    break;
+                            case 2: System.out.println("Mencari Determinan Matriks dengan Metode Ekspansi Kofaktor");
+                                    break;
+                            default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
+                                    break;
+                        }
+                        break;
+                case 3: 
+                        System.out.println("1. Metode Reduksi Baris");
+                        System.out.println("2. Metode Adjoin"); 
+                        System.out.println("");
+
+                        System.out.print("Masukkan Pilihan Anda: ");
+                        menu = input.nextInt();      
+                    
+                        switch(menu){
+                            case 1: System.out.println("Mencari Matriks Balikan dengan Metode Reduksi Baris");
+                                    break;
+                            case 2: System.out.println("Mencari Matriks Balikan dengan Metode Ekspansi Kofaktor");
+                                    break;
+                            default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
+                                    break;
+                        }
+                        break;     
+                case 4: 
+                        System.out.println("Melakukan Interpolasi Polinom");
+                        break;
+                case 5:
+                        System.out.println("Melakukan Interpolasi Bicubic");
+                        break;
+                case 6: 
+                        System.out.println("Melakukan Regresi Linier Berganda");
+                        break;
+                case 7:
+                        System.out.println("Keluar dari Program");
+                        runProgram = false;
+                        break;
+                default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
+                         break;
+            }
+        }
+    }
 }
