@@ -1,4 +1,4 @@
-package Determinan;
+package src.Determinant;
 import java.lang.Math;
 
 public class Kofaktor 
@@ -27,7 +27,7 @@ public class Kofaktor
         return result;
     }
 
-    public float[][] getMinor(float[][] matrix, int col)
+    public static float[][] getMinor(float[][] matrix, int col)
     {
         float[][] minor = new float[matrix[0].length-1][matrix[0].length-1];
         

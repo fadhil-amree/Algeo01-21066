@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Determinan {
 
+
     public static void main (int menu)
     {
         // KAMUS
@@ -30,7 +31,8 @@ public class Determinan {
 
             // Output Determinan
             System.out.println();
-            System.out.println(Kofaktor.detKofaktor(matrix));
+            System.out.println(detKofaktor(matrix));
         }
+
     }
 }
