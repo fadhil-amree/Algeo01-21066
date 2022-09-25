@@ -215,26 +215,5 @@ public class Inverse {
             return matrix;
         }
     }
-        public static void main (String[] args){
-        int nRow, nCol;
-        Scanner input = new Scanner(System.in);
-
-        do{ 
-            System.out.print("Masukkan Banyak Baris: ");
-            nRow =  input.nextInt();
-            System.out.println("");
-        } while (nRow<0);
-        do{ 
-            System.out.print("Masukkan Banyak Kolom: ");
-            nCol =  input.nextInt();
-            System.out.println("");
-        } while (nCol<0);
-        Matrix matrix = new Matrix(nRow, nCol); 
-        System.out.println("Matriks: ");
-        matrix.displayMatrix();
-        System.out.println("Inverse Matrix: ");
-
-        Matrix inverseMatrix = getInversebyAdj(matrix);
-        inverseMatrix.displayMatrix();
-    }
+    
 }

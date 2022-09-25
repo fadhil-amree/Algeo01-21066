@@ -1,4 +1,4 @@
-package Determinan;
+package src.Determinant;
 
 public class ReduksiBaris {
     public boolean IsSegitiga(float[][] matrix)
