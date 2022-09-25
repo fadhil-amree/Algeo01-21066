@@ -7,7 +7,7 @@ public class Matrix {
     private float[][] content;
 
     //Konstruktor input dari keyboard
-    Matrix(int nRow, int nCol){
+    public Matrix(int nRow, int nCol){
         // Konstruktor untuk menghasilkan matriks berukuran nRow x nCol
         // I.S matrix sembarang
         // F.S matrix terdefinisi dan berukuran nRow x nCol, bisa berisi atau kosong
@@ -29,7 +29,7 @@ public class Matrix {
     }
 
     //Konstruktor input dari file
-    Matrix(String file){
+    public Matrix(String file){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada file
 
@@ -37,7 +37,7 @@ public class Matrix {
     } 
 
     //Konstruktor input berupa matriks
-    Matrix(float[][] matrix, int nRow, int nCol){
+    public Matrix(float[][] matrix, int nRow, int nCol){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada input 
         // KAMUS LOKAL
@@ -53,7 +53,7 @@ public class Matrix {
         }
     }
     //Konstruktor input berupa objek matrix
-    Matrix(Matrix matrix){
+    public Matrix(Matrix matrix){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada input (copy) 
         // KAMUS LOKAL
