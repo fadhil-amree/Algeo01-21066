@@ -1,6 +1,6 @@
 package src;
 import src.Matrix;
-import Determinan.*;
+import src.Determinan.*;
 import java.util.*;
 
 public class Determinan {
@@ -31,7 +31,7 @@ public class Determinan {
 
             // Output Determinan
             System.out.println();
-            System.out.println(detKofaktor(matrix));
+            System.out.println(Kofaktor.detKofaktor(matrix));
         }
 
     }
