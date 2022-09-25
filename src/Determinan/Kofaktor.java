@@ -1,11 +1,15 @@
-package src.Determinan;
-
+package Determinan;
 import java.lang.Math;
-import java.util.*;
 
 public class Kofaktor 
 {
-    public float detKofaktor(float[][] matrix)
+    // Mencari Matrix dengan metode Ekspansi Kofaktor
+
+    //KAMUS
+
+    //ALGORITMA
+
+    public static float detKofaktor(float[][] matrix)
     {
         float result = 0;
         int i,j;
@@ -20,6 +24,7 @@ public class Kofaktor
         {
             result = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
         }
+        return result;
     }
 
     public float[][] getMinor(float[][] matrix, int col)
