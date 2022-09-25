@@ -72,6 +72,15 @@ public class Matrix {
         }
     }
 
+    //Template Wae
+    float determinantByReduction(){
+        return 0; 
+    }
+
+    float determinantByCofactor(){
+        return 0;
+    }
+
     void inverseMatrixOBE(){
 
     }
