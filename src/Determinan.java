@@ -15,7 +15,6 @@ public class Determinan {
 
         if (menu == 1)
         {
-
             // Baca Matrix
             float[][] matrix;
 
