@@ -3,8 +3,8 @@ package src;
 import java.util.*;
 
 public class Matrix {
-    int nRow,nCol;
-    float[][] content;
+    private int nRow,nCol;
+    private float[][] content;
 
     //Konstruktor input dari keyboard
     Matrix(int nRow, int nCol){
@@ -69,7 +69,31 @@ public class Matrix {
         }        
     }
 
-    void displayMatrix(){
+    //Getter
+    public int getNRow(){
+        return this.nRow;
+    }
+    public int getNCol(){
+        return this.nCol;
+    }
+    public float getElmtContent(int i, int j){
+        return this.content[i][j];
+    }
+    public float[][] getContent(){
+        return this.content;
+    }
+
+    //Setter
+
+    public void setElmtContent(int i, int j, float x){
+        this.content[i][j] = x;
+    }
+    public void setContent(float[][] newContent){
+        this.content = newContent;
+    }
+
+
+    public void displayMatrix(){
         // Prosedur untuk menampilkan matrix
         // I.S matrix terdefinisi berisi nilai atau kosong
         // F.S Menampilkan matriks ke terminal dengan format
@@ -90,7 +114,7 @@ public class Matrix {
         }
     }
 
-    void multiplybyConstant(float k){
+    public void multiplybyConstant(float k){
         // Prosedur untuk mengalikan matriks dengan suatu konstanta
         // I.S matrix terdefinisi berisi nilai atau kosong
         // F.S Setiap elemen pada matrix dikali dengan k

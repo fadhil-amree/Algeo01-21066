@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Inverse {
     public static boolean isInvertible(Matrix matrix){
-        return (Kofaktor.detKofaktor(matrix.content)!=0);
+        return (Kofaktor.detKofaktor(matrix.getContent())!=0);
     }
 
     public static Matrix getIdentityMatrix(int order){
@@ -39,15 +39,15 @@ public class Inverse {
     public static Matrix getTransposeMatrix(Matrix matrix){
         // Fungsi yang menerima sebuah matriks lalu mengembalikan Transpose dari matriks tersebut
         // KAMUS LOKAL
-        float[][] tMatrix = new float[matrix.nRow][matrix.nCol];
+        float[][] tMatrix = new float[matrix.getNRow()][matrix.getNCol()];
         int i,j;
         //ALGORITMA   
-        for (i=0;i<=matrix.nRow-1;i++){
-            for(j=0;j<=matrix.nCol-1;j++){
-                tMatrix[i][j] = matrix.content[j][i];
+        for (i=0;i<=matrix.getNRow()-1;i++){
+            for(j=0;j<=matrix.getNCol()-1;j++){
+                tMatrix[i][j] = matrix.getElmtContent(j,i);
             }
         }
-        Matrix transposeMatrix = new Matrix(tMatrix,matrix.nRow,matrix.nCol);
+        Matrix transposeMatrix = new Matrix(tMatrix,matrix.getNRow(),matrix.getNCol());
         return transposeMatrix;
     }
 
@@ -56,7 +56,7 @@ public class Inverse {
         // Prekondisi : matrix adalah matriks persegi
         //KAMUS LOKAL
         Matrix tempMatrix = new Matrix(matrix);
-        Matrix inverseMatrix = new Matrix(getIdentityMatrix(matrix.nRow)); //inisialisasi matriks identitas
+        Matrix inverseMatrix = new Matrix(getIdentityMatrix(matrix.getNRow())); //inisialisasi matriks identitas
         int i,j,k,l;
         float etemp,pengali,einverse; //variabel elemen dan faktor pengali
         boolean found;
@@ -64,22 +64,22 @@ public class Inverse {
         // Proses Mereduksi dua buah matrix tetapi seolah-seolah seperti augmented matrix
 
         //ALGORITMA
-        if (matrix.nRow>=2){
+        if (matrix.getNRow()>=2){
             //Pengecekan apakah matriks invertible atau tidak
             if (isInvertible(tempMatrix)){
 
-                for(i=0;i<=tempMatrix.nRow-1;i++)
+                for(i=0;i<=tempMatrix.getNRow()-1;i++)
                 {   // i : indeks baris patokan
                     // j : indeks baris selain baris i
                     // k : indeks kolom 
 
-                    if (tempMatrix.content[i][i]==0) //jika elemen diagonal utama 0
+                    if (tempMatrix.getElmtContent(i,i)==0) //jika elemen diagonal utama 0
                     {
                         found = false;
                         l=i+1;
-                        while(l<=tempMatrix.nRow-1 && !found) //cari elemen pada kolom tersebut di baris lain yang punya nilai !=0
+                        while(l<=tempMatrix.getNRow()-1 && !found) //cari elemen pada kolom tersebut di baris lain yang punya nilai !=0
                         {
-                            if(tempMatrix.content[l][i]!=0) //jika ketemu
+                            if(tempMatrix.getElmtContent(l,i)!=0) //jika ketemu
                             {
                                 found=true;
                             }
@@ -88,49 +88,49 @@ public class Inverse {
                                 l++;
                             }
                         }
-                        for(k=0;k<=tempMatrix.nCol-1;k++) //swap baris
+                        for(k=0;k<=tempMatrix.getNCol()-1;k++) //swap baris
                         {
-                            etemp = tempMatrix.content[i][k];
-                            einverse = inverseMatrix.content[i][k];
-                            tempMatrix.content[i][k] = tempMatrix.content[l][k];
-                            inverseMatrix.content[i][k] = inverseMatrix.content[l][k];
-                            tempMatrix.content[l][k] = etemp;
-                            inverseMatrix.content[l][k] = einverse;
+                            etemp = tempMatrix.getElmtContent(i,k);
+                            einverse = inverseMatrix.getElmtContent(i,k);
+                            tempMatrix.setElmtContent(i,k,tempMatrix.getElmtContent(l,k));
+                            inverseMatrix.setElmtContent(i,k,inverseMatrix.getElmtContent(l,k));
+                            tempMatrix.setElmtContent(l,k,etemp);
+                            inverseMatrix.setElmtContent(l,k,einverse);
                         }
                     }
 
                     //Forward Phase
-                    for (j=i+1;j<=tempMatrix.nRow-1;j++)
+                    for (j=i+1;j<=tempMatrix.getNRow()-1;j++)
                     {
-                        pengali = tempMatrix.content[j][i]/tempMatrix.content[i][i];
-                        for(k=0;k<=tempMatrix.nCol-1;k++)
+                        pengali = tempMatrix.getElmtContent(j,i)/tempMatrix.getElmtContent(i,i);
+                        for(k=0;k<=tempMatrix.getNCol()-1;k++)
                         {   //OBE tempMatrix
-                            tempMatrix.content[j][k] -= pengali*tempMatrix.content[i][k];
+                            tempMatrix.setElmtContent(j,k, tempMatrix.getElmtContent(j, k) - pengali*tempMatrix.getElmtContent(i,k));
                             //OBE inverseMatrix
-                            inverseMatrix.content[j][k] -= pengali*inverseMatrix.content[i][k];
+                            inverseMatrix.setElmtContent(j,k, inverseMatrix.getElmtContent(j,k) - pengali*inverseMatrix.getElmtContent(i,k));
                         }
                     }
 
                     //Backward Phase
                     for (j=0;j<=i-1;j++)
                     {
-                        pengali = tempMatrix.content[j][i]/tempMatrix.content[i][i];
-                        for(k=0;k<=tempMatrix.nCol-1;k++)
+                        pengali = tempMatrix.getElmtContent(j,i)/tempMatrix.getElmtContent(i,i);
+                        for(k=0;k<=tempMatrix.getNCol()-1;k++)
                         {   //OBE tempMatrix
-                            tempMatrix.content[j][k] -= pengali*tempMatrix.content[i][k];
+                            tempMatrix.setElmtContent(j,k, tempMatrix.getElmtContent(j, k) - pengali*tempMatrix.getElmtContent(i,k));
                             //OBE inverseMatrix
-                            inverseMatrix.content[j][k] -= pengali*inverseMatrix.content[i][k];
+                            inverseMatrix.setElmtContent(j,k, inverseMatrix.getElmtContent(j, k) - pengali*inverseMatrix.getElmtContent(i,k));
                         }
                     }
 
                     //bentuk leading 1
-                    if (tempMatrix.content[i][i] != 1)
+                    if (tempMatrix.getElmtContent(i,i) != 1)
                     {
-                        pengali = 1/tempMatrix.content[i][i];
-                        for(k=0; k<=tempMatrix.nCol-1; k++){
+                        pengali = 1/tempMatrix.getElmtContent(i,i);
+                        for(k=0; k<=tempMatrix.getNCol()-1; k++){
                             //Membentuk leading one
-                            tempMatrix.content[j][k] *= pengali;
-                            inverseMatrix.content[j][k] *= pengali;
+                            tempMatrix.setElmtContent(j,k, tempMatrix.getElmtContent(j, k) * pengali);
+                            inverseMatrix.setElmtContent(j,k, inverseMatrix.getElmtContent(j, k) * pengali);
                         }
                     }
 
@@ -138,7 +138,7 @@ public class Inverse {
                 return inverseMatrix;
             }
             else{ //not invertible
-                return getUndefMatrix(matrix.nRow); //Default saat matriks tidak invertible
+                return getUndefMatrix(matrix.getNRow()); //Default saat matriks tidak invertible
             }
         } else { // matrix.nRow < 2
             return matrix;
@@ -150,7 +150,7 @@ public class Inverse {
         // Prekondisi : matrix adalah matriks persegi
         // KAMUS LOKAL
         float[][] minor; //matriks minor
-        float[][] cofactorMatrix = new float[matrix.nRow][matrix.nCol];
+        float[][] cofactorMatrix = new float[matrix.getNRow()][matrix.getNCol()];
         int i,j,k,l,bm,km; //indeks
         float det, c;
         // ALGORITMA
@@ -159,20 +159,20 @@ public class Inverse {
         //bm: indeks baris minor
         //km: indeks kolom minor
 
-        if (matrix.nRow >= 2){
+        if (matrix.getNRow() >= 2){
 
             if (isInvertible(matrix)){
-                if (matrix.nRow>2){
-                    for(i=0;i<=matrix.nRow-1;i++){
-                        for(j=0;j<=matrix.nCol-1;j++){
-                            minor = new float[matrix.nRow-1][matrix.nCol-1]; //Inisiasi matriks minor 
+                if (matrix.getNRow()>2){
+                    for(i=0;i<=matrix.getNRow()-1;i++){
+                        for(j=0;j<=matrix.getNCol()-1;j++){
+                            minor = new float[matrix.getNRow()-1][matrix.getNCol()-1]; //Inisiasi matriks minor 
                             bm =0;
-                            for(k=0;k<=matrix.nRow-1;k++){
+                            for(k=0;k<=matrix.getNRow()-1;k++){
                                 km = 0;
                                 
-                                for(l=0;l<=matrix.nCol-1;l++){
+                                for(l=0;l<=matrix.getNCol()-1;l++){
                                     if (k!=i && l!=j){ //Mengambil elemen yang termasuk minor i,j
-                                        minor[bm][km] = matrix.content[k][l];
+                                        minor[bm][km] = matrix.getElmtContent(k,l);
                                         km++; // kolom minor bergeser
                                     }
                                 }
@@ -192,24 +192,24 @@ public class Inverse {
                             cofactorMatrix[i][j] = c;
                         }
                     }
-                    Matrix kofaktorMatrix = new Matrix(cofactorMatrix, matrix.nRow, matrix.nCol);
+                    Matrix kofaktorMatrix = new Matrix(cofactorMatrix, matrix.getNRow(), matrix.getNCol());
                     Matrix inverseMatrix = getTransposeMatrix(kofaktorMatrix);
-                    det = Kofaktor.detKofaktor(matrix.content); //menghitung determinan matriks
+                    det = Kofaktor.detKofaktor(matrix.getContent()); //menghitung determinan matriks
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;
                 } else { 
                     // matrix.nRow == 2
-                    cofactorMatrix[0][0] = matrix.content[1][1];
-                    cofactorMatrix[1][1] = matrix.content[0][0];
-                    cofactorMatrix[0][1] = (-1) * matrix.content[0][1];
-                    cofactorMatrix[1][0] = (-1) * matrix.content[1][0];
-                    det = Kofaktor.detKofaktor(matrix.content); //menghitung determinan matriks
-                    Matrix inverseMatrix = new Matrix(cofactorMatrix, matrix.nRow,matrix.nCol);
+                    cofactorMatrix[0][0] = matrix.getElmtContent(1,1);
+                    cofactorMatrix[1][1] = matrix.getElmtContent(0,0);
+                    cofactorMatrix[0][1] = (-1) * matrix.getElmtContent(0,1);
+                    cofactorMatrix[1][0] = (-1) * matrix.getElmtContent(1,0);
+                    det = Kofaktor.detKofaktor(matrix.getContent()); //menghitung determinan matriks
+                    Matrix inverseMatrix = new Matrix(cofactorMatrix, matrix.getNRow(),matrix.getNCol());
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;           
                 }
             } else{ // not invertible
-                return getUndefMatrix(matrix.nRow);
+                return getUndefMatrix(matrix.getNRow());
             }
         } else { //matrix.nRow < 2
             return matrix;

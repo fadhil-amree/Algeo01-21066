@@ -1,4 +1,4 @@
-package SPL;
+package src.SPL;
 
 public class Cramer {
     
