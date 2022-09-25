@@ -71,12 +71,4 @@ public class Matrix {
             }
         }
     }
-
-    void inverseMatrixOBE(){
-
-    }
-
-    void inverseMatrixAdj(){
-
-    }
 }
