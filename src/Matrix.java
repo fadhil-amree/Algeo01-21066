@@ -52,24 +52,7 @@ public class Matrix {
             }
         }
     }
-    //Konstruktor input beruba objek matrix
-    Matrix(Matrix matrix){
-        // I.S Matrix sembarang
-        // F.S matrix terdefinisi sesuai matrix yang ada pada input (copy) 
-        // KAMUS LOKAL
-        int i,j; //index
-        //ALGORITMA
-        this.nRow = matrix.nRow;
-        this.nCol = matrix.nCol;
-        this.content = new float[this.nRow][this.nCol];
-        for(i=0;i<this.nRow;i++){ 
-            for(j=0;j<this.nCol;j++){
-                this.content[i][j] = matrix.content[i][j];
-            }
-        }        
-    }
-
-    //Konstruktor input beruba objek matrix
+    //Konstruktor input berupa objek matrix
     Matrix(Matrix matrix){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada input (copy) 
