@@ -1,11 +1,12 @@
 package src;
 import src.Matrix;
-import src.Determinan;
+import Determinan.*;
 import java.util.*;
 
 public class Inverse {
     public static boolean isInvertible(Matrix matrix){
-        return (Determinan.determinan(matrix.content)!=0);
+        return (Kofaktor.detKofaktor(matrix.content)!=0);
+
     }
 
     public static Matrix getIdentityMatrix(int order){
@@ -118,6 +119,7 @@ public class Inverse {
                         inverseMatrix.content[j][k] *= pengali;
                     }
                 }
+
             }
             return inverseMatrix;
         }
