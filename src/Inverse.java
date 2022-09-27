@@ -4,59 +4,12 @@ import src.Determinant.*;
 import java.util.*;
 
 public class Inverse {
-    public static boolean isInvertible(Matrix matrix){
-        return (Kofaktor.detKofaktor(matrix.getContent())!=0);
-    }
-
-    public static Matrix getIdentityMatrix(int order){
-        // Fungsi mengembalikan Sebuah matriks identitas berorde order
-        // KAMUS LOKAL
-        float[][] idMatrix = new float[order][order];
-        int i;
-        //ALGORITMA
-        for(i=0;i<order;i++){
-            idMatrix[i][i] = 1;
-        }
-        Matrix identityMatrix = new Matrix(idMatrix,order,order);
-        return identityMatrix;
-    }
-
-    public static Matrix getUndefMatrix(int order){
-        // Fungsi mengembalikan Sebuah matriks undefine berorde order
-        // KAMUS LOKAL
-        float[][] undefMatrix = new float[order][order];
-        int i,j;
-        //ALGORITMA
-        for(i=0;i<order;i++){
-            for(j=0;j<order;j++){
-            undefMatrix[i][i] = -999;
-            }
-        }
-        Matrix undefinedMatrix = new Matrix(undefMatrix,order,order);
-        return undefinedMatrix;
-    }
-
-    public static Matrix getTransposeMatrix(Matrix matrix){
-        // Fungsi yang menerima sebuah matriks lalu mengembalikan Transpose dari matriks tersebut
-        // KAMUS LOKAL
-        float[][] tMatrix = new float[matrix.getNRow()][matrix.getNCol()];
-        int i,j;
-        //ALGORITMA   
-        for (i=0;i<=matrix.getNRow()-1;i++){
-            for(j=0;j<=matrix.getNCol()-1;j++){
-                tMatrix[i][j] = matrix.getElmtContent(j,i);
-            }
-        }
-        Matrix transposeMatrix = new Matrix(tMatrix,matrix.getNRow(),matrix.getNCol());
-        return transposeMatrix;
-    }
-
     public static Matrix getInversebyOBE (Matrix matrix){
         // Fungsi yang menerima sebuah matriks lalu mengembalikan Inverse dari matriks tersebut dengan metode Operasi Baris ELementer
         // Prekondisi : matrix adalah matriks persegi
         //KAMUS LOKAL
         Matrix tempMatrix = new Matrix(matrix);
-        Matrix inverseMatrix = new Matrix(getIdentityMatrix(matrix.getNRow())); //inisialisasi matriks identitas
+        Matrix inverseMatrix = new Matrix(Matrix.getIdentityMatrix(matrix.getNRow())); //inisialisasi matriks identitas
         int i,j,k,l;
         float etemp,pengali,einverse; //variabel elemen dan faktor pengali
         boolean found;
@@ -66,7 +19,7 @@ public class Inverse {
         //ALGORITMA
         if (matrix.getNRow()>=2){
             //Pengecekan apakah matriks invertible atau tidak
-            if (isInvertible(tempMatrix)){
+            if (Matrix.isInvertible(tempMatrix)){
 
                 for(i=0;i<=tempMatrix.getNRow()-1;i++)
                 {   // i : indeks baris patokan
@@ -138,7 +91,7 @@ public class Inverse {
                 return inverseMatrix;
             }
             else{ //not invertible
-                return getUndefMatrix(matrix.getNRow()); //Default saat matriks tidak invertible
+                return Matrix.getUndefMatrix(matrix.getNRow()); //Default saat matriks tidak invertible
             }
         } else { // matrix.nRow < 2
             return matrix;
@@ -161,7 +114,7 @@ public class Inverse {
 
         if (matrix.getNRow() >= 2){
 
-            if (isInvertible(matrix)){
+            if (Matrix.isInvertible(matrix)){
                 if (matrix.getNRow()>2){
                     for(i=0;i<=matrix.getNRow()-1;i++){
                         for(j=0;j<=matrix.getNCol()-1;j++){
@@ -193,7 +146,7 @@ public class Inverse {
                         }
                     }
                     Matrix kofaktorMatrix = new Matrix(cofactorMatrix, matrix.getNRow(), matrix.getNCol());
-                    Matrix inverseMatrix = getTransposeMatrix(kofaktorMatrix);
+                    Matrix inverseMatrix = Matrix.getTransposeMatrix(kofaktorMatrix);
                     det = Kofaktor.detKofaktor(matrix.getContent()); //menghitung determinan matriks
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;
@@ -209,7 +162,7 @@ public class Inverse {
                     return inverseMatrix;           
                 }
             } else{ // not invertible
-                return getUndefMatrix(matrix.getNRow());
+                return Matrix.getUndefMatrix(matrix.getNRow());
             }
         } else { //matrix.nRow < 2
             return matrix;

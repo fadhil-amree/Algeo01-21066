@@ -1,7 +1,7 @@
 package src;
 
 import java.util.*;
-
+import src.Determinant.*;
 public class Matrix {
     private int nRow,nCol;
     private float[][] content;
@@ -128,4 +128,78 @@ public class Matrix {
         }
 
     }
+
+    // Fungsi-funhgi statik yang berkenaan dengan Matrix
+    // keyword statik menunjukkan bahwa ia bisa diakses tanpa harus melalui objek
+    public static Matrix multiplyMatrix(Matrix m1, Matrix m2)
+    {
+        /* Prekondisi : Ukuran kolom  m1 = ukuran baris  m2 */
+        /* Mengirim hasil perkalian matriks: salinan m1 * m2 */
+        // KAMUS LOKAL
+        float [][] temp = new float[m1.getNRow()][m2.getNCol()];
+        int i,j,k;
+        float e;
+        // ALGORITMA
+        for(i=0;i<=m1.getNRow()-1;i++)
+        {
+            for(j=0;j<=m2.getNCol()-1;j++)
+            {
+                e = 0;
+                for (k=0;k<=m1.getNCol()-1;k++)
+                {
+                    e+= m1.getElmtContent(i,k)*m2.getElmtContent(k,j);
+                }
+                temp[i][j] = e;
+            }
+        }
+        Matrix m3 = new Matrix(temp,m1.getNRow(),m2.getNCol());
+        return m3;
+    }
+    public static boolean isInvertible(Matrix matrix){
+        return (Kofaktor.detKofaktor(matrix.getContent())!=0);
+    }
+
+    public static Matrix getIdentityMatrix(int order){
+        // Fungsi mengembalikan Sebuah matriks identitas berorde order
+        // KAMUS LOKAL
+        float[][] idMatrix = new float[order][order];
+        int i;
+        //ALGORITMA
+        for(i=0;i<order;i++){
+            idMatrix[i][i] = 1;
+        }
+        Matrix identityMatrix = new Matrix(idMatrix,order,order);
+        return identityMatrix;
+    }
+
+    public static Matrix getUndefMatrix(int order){
+        // Fungsi mengembalikan Sebuah matriks undefine berorde order
+        // KAMUS LOKAL
+        float[][] undefMatrix = new float[order][order];
+        int i,j;
+        //ALGORITMA
+        for(i=0;i<order;i++){
+            for(j=0;j<order;j++){
+            undefMatrix[i][i] = -999;
+            }
+        }
+        Matrix undefinedMatrix = new Matrix(undefMatrix,order,order);
+        return undefinedMatrix;
+    }
+
+    public static Matrix getTransposeMatrix(Matrix matrix){
+        // Fungsi yang menerima sebuah matriks lalu mengembalikan Transpose dari matriks tersebut
+        // KAMUS LOKAL
+        float[][] tMatrix = new float[matrix.getNRow()][matrix.getNCol()];
+        int i,j;
+        //ALGORITMA   
+        for (i=0;i<=matrix.getNRow()-1;i++){
+            for(j=0;j<=matrix.getNCol()-1;j++){
+                tMatrix[i][j] = matrix.getElmtContent(j,i);
+            }
+        }
+        Matrix transposeMatrix = new Matrix(tMatrix,matrix.getNRow(),matrix.getNCol());
+        return transposeMatrix;
+    }
+
 }
