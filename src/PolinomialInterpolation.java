@@ -2,14 +2,27 @@ package src;
 import src.Matrix;
 import src.SPL.*;
 import java.util.*;
+import java.lang.Math;
 
 public class PolinomialInterpolation {
-    public static Matrix setOfTitikToMatrix (float[][] setOfTitik){
+    public static Matrix setOfTitikToMatrix (float[][] setOfTitik,int nRow){
         // Fungsi untuk mengembalikan hasil SPL yang terbentuk dari kumpulan titik
         // KAMUS LOKAL
         Matrix augmented;
+        float[][] augMatrix = new float[nRow][nRow+1]; 
+        int i,j;
+        double e;
         // ALGORITMA
 
+        for (i=0;i<=nRow-1;i++){
+            for (j=0;j<=nRow-1;j++){
+                e = Math.pow(setOfTitik[i][0],j);
+                augMatrix[i][j] = (float)e; // Elemen matrixcoef
+            }
+            augMatrix[i][nRow] = setOfTitik[i][1]; // Elemen matrixres
+        }
+
+        augmented = new Matrix(augMatrix,nRow,nRow+1); // Membuat objek matrix
         return augmented;
     }
 
@@ -45,23 +58,44 @@ public class PolinomialInterpolation {
         return koefisien;
     }
 
-    public static float estimateY(float[] koefisien, float X){
+    public static float estimateY(float[] koefisien, int length, float X){
         // Fungsi mengembalikan taksiran suatu input x terhadap polinom interpolasi
         // KAMUS LOKAL
-        float Y;
+        double Y;
+        int i;
         // ALGORITMA
         Y=0;
-        return Y;
+        for (i=0;i<= length-1;i++){
+            Y += koefisien[i]*Math.pow(X,i);
+        }
+        return (float)Y;
     }
 
-    public static void displayPolinom(float[] koefisien){
+    public static void displayPolinom(float[] koefisien, int length){
         // Prosedur untuk menampilkan polinomial interpolasi
         // I.S Koefisien terdefinisi
         // F.S Menampilkan Polinom Interpolasi dengan format:
         //      a0 + a1x + a2x^2 + ... +anx^n 
+        // KAMUS LOKAL
+        String polinom;
+        int i;
+        // ALGORITMA
+        polinom = "P(x) = ";
+        for (i=0;i<=length-1;i++){
+            if (i == 0){
+                polinom += Double.toString((double)koefisien[i]);
+            } else if(i == 1){
+                polinom += (Double.toString((double)koefisien[i])+"x");
+            } else{
+                polinom += (Double.toString((double)koefisien[i])+"x"+"^"+ String.valueOf(i));
+            }
+            if (i!= length-1){
+                polinom += "+ ";
+            }
+        }
+
+        System.out.println(polinom);
     }
-
-
 
     public static void getPolinomialInterpolation(){
         // Prosedur untuk menjalankan menu Polinomial Interpolation
@@ -99,17 +133,19 @@ public class PolinomialInterpolation {
 
         // Membentuk Polinom Interpolasi
             // Membentuk Augmented Matrix
-        augmented = setOfTitikToMatrix(setOfTitik);
+        augmented = setOfTitikToMatrix(setOfTitik, n+1);
             // Mencari koefisien dari polinomial Interpolasi
         func = getPolinomialCoef(augmented);
 
         // Menampilkan Polinomial Interpolasi
-        displayPolinom(func);
+        System.out.println("Polinomial Interpolasi");
+        displayPolinom(func,n+1);
         
         // Menampilkan taksiran output dari x saat menjadi input polinomial interpolasi
             // Mencari nilai taksiran
-        Y = estimateY(func, X);
+        Y = estimateY(func, n+1 ,X);
             //Menampilkan
         System.out.printf("P(%.04f) = %.04f\n",X,Y);
     }
+
 }
