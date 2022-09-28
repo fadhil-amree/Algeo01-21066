@@ -1,6 +1,6 @@
 package src;
 import src.Matrix;
-import src.Determinan.*;
+import src.Determinant.*;
 import java.util.*;
 
 public class Determinan {
