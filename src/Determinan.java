@@ -6,7 +6,7 @@ import java.util.*;
 public class Determinan {
 
 
-    public static void main (int menu)
+    public static void main (Matrix matrix,int menu)
     {
         // KAMUS
         int i, j, n;
@@ -16,7 +16,6 @@ public class Determinan {
         if (menu == 1)
         {
             // Baca Matrix
-            float[][] matrix;
 
             // Output Matrix
 
@@ -24,7 +23,6 @@ public class Determinan {
         } else // menu == 2
         {
             // Baca Matrix
-            float[][] matrix;
 
             // Output Matrix
 

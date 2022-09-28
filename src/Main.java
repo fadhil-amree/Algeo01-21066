@@ -40,8 +40,11 @@ public class Main {
                             case 2: System.out.println("Menyelesaikan SPL dengan Metode Eliminasi Gauss-Jordan");
                             break;
                             case 3: System.out.println("Menyelesaikan SPL dengan Metode Matriks Balikan");
+                            // handle IsBalikan
                             break;
                             case 4: System.out.println("Menyelesaikan SPL dengan Kaidah Cramer");
+                            // handle IsSquare jika getNCol - 1 == getNRow
+                            // handle IsBalikan
                             break;
                             default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
                             break;

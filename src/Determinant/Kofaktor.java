@@ -1,5 +1,6 @@
 package src.Determinant;
 import java.lang.Math;
+import src.Matrix;
 
 public class Kofaktor 
 {
@@ -9,38 +10,38 @@ public class Kofaktor
 
     //ALGORITMA
 
-    public static float detKofaktor(float[][] matrix)
+    public static float detKofaktor(Matrix matrix)
     {
         float result = 0;
         int i,j;
-        if (matrix[0].length > 2)
+        if (matrix.getNCol() > 2)
         {
-            for (i=0;i<matrix[0].length;i++)
+            for (i=0;i<matrix.getNCol();i++)
             {
-                result += matrix[0][i] * (Math.pow(-1,i)) * detKofaktor(getMinor(matrix,i));
+                result += matrix.getElmtContent(0, i) * (Math.pow(-1,i)) * detKofaktor(getMinor(matrix,i));
             }
         }
         else
         {
-            result = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            result = matrix.getElmtContent(0, 0) * matrix.getElmtContent(1, 1) - matrix.getElmtContent(0, 1) * matrix.getElmtContent(1, 0);
         }
         return result;
     }
 
-    public static float[][] getMinor(float[][] matrix, int col)
+    public static Matrix getMinor(Matrix matrix, int col)
     {
-        float[][] minor = new float[matrix[0].length-1][matrix[0].length-1];
+        Matrix minor = new Matrix(matrix.getNRow()-1,matrix.getNCol()-1);
         
         int iMinor = 0, jMinor = 0;
         int i, j;
 
-        for (i = 1; i < matrix[0].length; i++)
+        for (i = 1; i < matrix.getNRow(); i++)
         {
-            for (j = 0; j < matrix[0].length; j++)
+            for (j = 0; j < matrix.getNCol(); j++)
             {
                 if (j != col)
                 {
-                    minor[iMinor][jMinor] = matrix[i][j];
+                    minor.setElmtContent(iMinor,jMinor,matrix.getElmtContent(i, j));
                     jMinor++;
                 }
             }

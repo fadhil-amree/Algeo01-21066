@@ -1,19 +1,22 @@
 package src.Determinant;
 
+import src.Matrix;
+
 public class ReduksiBaris {
-    public boolean IsSegitiga(float[][] matrix)
+    private float tukarBaris = 0,kaliDengan = 1, hasil = 1, temp;
+    public boolean IsSegitiga(Matrix matrix)
     {
         // KAMUS
         int i = 0, j;
         boolean found = true;
 
         // ALGORITMA
-        while (i < matrix[0].length && found)
+        while (i < matrix.getNCol() && found)
         {
             j = 0;
             while (j < i)
             {
-                if (matrix[i][j] != 0)
+                if (matrix.getElmtContent(i, j) != 0)
                 {
                     found = false;
                 }
@@ -23,24 +26,24 @@ public class ReduksiBaris {
         return found;
     }
 
-    public double detReduksi(float[][] matrix)
+    public Matrix MatReduksi(Matrix matrix)
     {
+        
         // KAMUS
-        float tukarBaris = 0,kaliDengan = 1, hasil = 1;
 
         // ALGORITMA
         while (!(IsSegitiga(matrix)))
         {
             // Tukar baris matrix yang elemen diagonalnya 0
             int i, j;
-            for (i = 0; i < matrix[0].length; i++)
+            for (i = 0; i < matrix.getNCol(); i++)
             {
-                if (matrix[i][i] == 0)
+                if (matrix.getElmtContent(i, i) == 0)
                 {
                     j = i + 1;
-                    while (j < matrix[0].length)
+                    while (j < matrix.getNCol())
                     {
-                        if (matrix[j][i] != 0)
+                        if (matrix.getElmtContent(j, i)!= 0)
                         {
                             tukarBaris(matrix, i, j);
                             tukarBaris++;
@@ -51,55 +54,63 @@ public class ReduksiBaris {
             }
 
             // tambah baris dengan baris lainnya
-            for (i = 0; i < matrix[0].length; i++)
+            for (i = 0; i < matrix.getNCol(); i++)
             {
                 for (j = 0; j < i; j++)
                 {
                     // Cek apakah elemen pada matrix bernilai 0
-                    if (matrix[i][j] != 0)
+                    if (matrix.getElmtContent(i, j) != 0)
                     {
 
                         // Cari KPK
-                        float KPK = matrix[i][j] * matrix[j][j];
-                        float kali = KPK / matrix[i][j];
+                        float KPK = matrix.getElmtContent(i, j) * matrix.getElmtContent(j, j);
+                        float kali = KPK / matrix.getElmtContent(i, j);
 
                         // kalikan baris i dengan konstanta kali
                         int col;
-                        for (col = 0; col < matrix[0].length; col++)
+                        for (col = 0; col < matrix.getNCol(); col++)
                         {
-                            matrix[i][col] *= kali;
+                            temp = matrix.getElmtContent(i, col) * kali;
+                            matrix.setElmtContent(i, col, temp);
                         }
 
-                        float kelipatan = KPK / matrix[j][j];
+                        float kelipatan = KPK / matrix.getElmtContent(j, j);
 
-                        for (col = 0; col < matrix[0].length; col++)
+                        for (col = 0; col < matrix.getNCol(); col++)
                         {
-                            matrix[i][col] -= (matrix[j][col] * kelipatan);
+                            temp = matrix.getElmtContent(i, col) - (matrix.getElmtContent(j, col) * kelipatan);
+                            matrix.setElmtContent(i, col, temp);
                         }
 
-                        kaliDengan *= matrix[j][j];
+                        kaliDengan *= matrix.getElmtContent(j, j);
                     }
                 }
             }
         }
-        for (int i = 0; i < matrix[0].length; i++)
-        {
-            hasil *= matrix[i][i];
-        }
-        return (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
+        return matrix;
     }
 
-    public void tukarBaris(float[][] matrix,int i,int j)
+    public float detReduksi(Matrix matrix)
+    {
+        matrix = MatReduksi(matrix);
+        for (int i = 0; i < matrix.getNCol(); i++)
+        {
+            hasil *= matrix.getElmtContent(i, i);
+        }
+        return (float) (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
+    }
+
+    public void tukarBaris(Matrix matrix,int i,int j)
     {
         // KAMUS
         float temp;
 
         // ALGORITMA
-        for (int k = 0; k < matrix[0].length; k++)
+        for (int k = 0; k < matrix.getNCol(); k++)
         {
-            temp = matrix[i][k];
-            matrix[i][k] = matrix[j][k];
-            matrix[j][k] = temp;
+            temp = matrix.getElmtContent(i, k);
+            matrix.setElmtContent(i, k, matrix.getElmtContent(j, k)) ;
+            matrix.setElmtContent(j, k, temp);
         }
     }
 }

@@ -156,7 +156,7 @@ public class Matrix {
         return m3;
     }
     public static boolean isInvertible(Matrix matrix){
-        return (Kofaktor.detKofaktor(matrix.getContent())!=0);
+        return (Kofaktor.detKofaktor(matrix)!=0);
     }
 
     public static Matrix getIdentityMatrix(int order){
