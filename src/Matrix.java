@@ -1,5 +1,6 @@
 package src;
 
+import java.io.File;
 import java.util.*;
 import src.Determinant.*;
 public class Matrix {
@@ -32,7 +33,8 @@ public class Matrix {
     public Matrix(String file){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada file
-
+        
+        File file = new File();
         
     } 
 
