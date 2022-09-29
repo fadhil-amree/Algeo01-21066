@@ -1,6 +1,7 @@
 package src;
 import java.util.*;
-import src.Matrix;
+import src.*;
+import src.SPL.GaussJordan;
 public class Main {
         
         public static void  main (String[] args){
@@ -36,13 +37,17 @@ public class Main {
                         
                     switch (menu){
                             case 1: System.out.println("Menyelesaikan SPL dengan Metode Eliminasi Gauss");
+                                    Spl.menuSPL(1);
                             break;
                             case 2: System.out.println("Menyelesaikan SPL dengan Metode Eliminasi Gauss-Jordan");
+                                    Spl.menuSPL(2);
                             break;
                             case 3: System.out.println("Menyelesaikan SPL dengan Metode Matriks Balikan");
+                                    Spl.menuSPL(3);
                             // handle IsBalikan
                             break;
                             case 4: System.out.println("Menyelesaikan SPL dengan Kaidah Cramer");
+                                    Spl.menuSPL(4);
                             // handle IsSquare jika getNCol - 1 == getNRow
                             // handle IsBalikan
                             break;
@@ -79,8 +84,10 @@ public class Main {
                         
                         switch(menu){
                                 case 1: System.out.println("Mencari Matriks Balikan dengan Metode Reduksi Baris");
+                                        Inverse.menuInverse(1);
                                 break;
                                 case 2: System.out.println("Mencari Matriks Balikan dengan Metode Ekspansi Kofaktor");
+                                        Inverse.menuInverse(2);
                                 break;
                                 default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
                                 break;
@@ -88,6 +95,7 @@ public class Main {
                         break;     
                         case 4: 
                         System.out.println("Melakukan Interpolasi Polinom");
+                        PolinomialInterpolation.menuPolinomialInterpolation();
                         break;
                         case 5:
                         System.out.println("Melakukan Interpolasi Bicubic");

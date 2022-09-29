@@ -3,6 +3,8 @@ import src.Matrix;
 import src.Determinant.*;
 import java.util.*;
 
+import org.w3c.dom.TypeInfo;
+
 public class Inverse {
     public static Matrix getInversebyOBE (Matrix matrix){
         // Fungsi yang menerima sebuah matriks lalu mengembalikan Inverse dari matriks tersebut dengan metode Operasi Baris ELementer
@@ -102,6 +104,7 @@ public class Inverse {
         // Fungsi yang menerima sebuah matriks lalu mengembalikan inverse dari matriks tersebut dengan metode Adjoin
         // Prekondisi : matrix adalah matriks persegi
         // KAMUS LOKAL
+        Matrix kofaktorMatrix, inverseMatrix, Mminor;
         float[][] minor; //matriks minor
         float[][] cofactorMatrix = new float[matrix.getNRow()][matrix.getNCol()];
         int i,j,k,l,bm,km; //indeks
@@ -133,7 +136,8 @@ public class Inverse {
                                     bm++;
                                 }
                             }
-                            det = Kofaktor.detKofaktor(minor); // Menghitung determinan dari matriks minor
+                            Mminor = new Matrix(minor,matrix.getNRow()-1,matrix.getNCol()-1);
+                            det = Kofaktor.detKofaktor(Mminor); // Menghitung determinan dari matriks minor
                             if ((i+j)%2==0){ //Menentukan tanda cofactor
                                 c = 1;
                             } else{
@@ -145,9 +149,9 @@ public class Inverse {
                             cofactorMatrix[i][j] = c;
                         }
                     }
-                    Matrix kofaktorMatrix = new Matrix(cofactorMatrix, matrix.getNRow(), matrix.getNCol());
-                    Matrix inverseMatrix = Matrix.getTransposeMatrix(kofaktorMatrix);
-                    det = Kofaktor.detKofaktor(matrix.getContent()); //menghitung determinan matriks
+                    kofaktorMatrix = new Matrix(cofactorMatrix, matrix.getNRow(), matrix.getNCol());
+                    inverseMatrix = Matrix.getTransposeMatrix(kofaktorMatrix);
+                    det = Kofaktor.detKofaktor(matrix); //menghitung determinan matriks
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;
                 } else { 
@@ -156,8 +160,8 @@ public class Inverse {
                     cofactorMatrix[1][1] = matrix.getElmtContent(0,0);
                     cofactorMatrix[0][1] = (-1) * matrix.getElmtContent(0,1);
                     cofactorMatrix[1][0] = (-1) * matrix.getElmtContent(1,0);
-                    det = Kofaktor.detKofaktor(matrix.getContent()); //menghitung determinan matriks
-                    Matrix inverseMatrix = new Matrix(cofactorMatrix, matrix.getNRow(),matrix.getNCol());
+                    det = Kofaktor.detKofaktor(matrix); //menghitung determinan matriks
+                    inverseMatrix = new Matrix(cofactorMatrix, matrix.getNRow(),matrix.getNCol());
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;           
                 }
@@ -169,4 +173,51 @@ public class Inverse {
         }
     }
     
+    public static void menuInverse(int menu){
+        // Prosedur untuk menjalankan menu Inverse
+        // I.S sembarang, menu == 1 atau menu == 2 
+        // F.S Menampilkan invers dari matriks yang diinputkan 
+        // KAMUS LOKAL
+        Scanner input = new Scanner(System.in);
+        Matrix inputMatrix, inverseMatrix;
+        int inputType, N;
+        String file;
+        // ALGORITMA
+        System.out.println("Tipe input");
+        System.out.println("1. Input Keyboard");
+        System.out.println("2. Input File");
+
+        System.out.print("Masukkan tipe input: ");
+        inputType = input.nextInt();
+        while (inputType!=1 && inputType!=2){
+            System.out.println("Tipe input yang anda pilih tidak tersedia!");
+            System.out.println("Tipe input");
+            System.out.println("1. Input Keyboard");
+            System.out.println("2. Input File");
+    
+            System.out.print("Masukkan tipe input: ");
+            inputType = input.nextInt();
+        }
+
+        // input Matrix
+        if (inputType==1){
+            System.out.println("Masukkan N: ");
+            N = input.nextInt(); // input dimensi
+            inputMatrix = new Matrix(N, N); // input matriks
+        } else{ // inputType == 2
+            System.out.println("Masukkan nama file: ");
+            file = input.next();      
+            inputMatrix = new Matrix(file);    
+        }
+
+        // Mencari inverse
+        if (menu == 1){
+            inverseMatrix = getInversebyOBE(inputMatrix);
+        } else { // menu == 2
+            inverseMatrix = getInversebyAdj(inputMatrix);
+        }
+
+        System.out.println("Matriks Invers: ");
+        inverseMatrix.displayMatrix();
+    }
 }

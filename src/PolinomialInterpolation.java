@@ -97,43 +97,71 @@ public class PolinomialInterpolation {
         System.out.println(polinom);
     }
 
-    public static void getPolinomialInterpolation(){
+    public static void menuPolinomialInterpolation(){
         // Prosedur untuk menjalankan menu Polinomial Interpolation
         // I.S Sembarang
         // F.S Menampilkan Polinom Interpolasi dan taksiran nilai fungsi pada x yang diberikan
     
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
-        int n,i,j;
+        int n,i,j, inputType;
         float xi,yi, X, Y;
         float[] func;
         float[][] setOfTitik;
+        Matrix MsetOfTitik;
         Matrix augmented;
+        String file;
 
         // ALGORITMA
-        System.out.print("Masukkan derajat Polinomial(n): ");
-        n = input.nextInt();
-        setOfTitik = new float [n+1][2]; //Alokasi memori
-        //Input
-        for (i=0;i<=n;i++){
-            // Input nilai xi,yi
-            System.out.printf("Masukkan x%d: ",i);
-            xi = input.nextFloat();
-            System.out.printf("Masukkan y%d: ",i);
-            yi = input.nextFloat();
 
-            // Menyimpan xi,yi ke dalam matriks titik
-            setOfTitik[i][0] = xi;
-            setOfTitik[i][1] = yi;
+        System.out.println("Tipe input");
+        System.out.println("1. Input Keyboard");
+        System.out.println("2. Input File");
+
+        System.out.print("Masukkan tipe input: ");
+        inputType = input.nextInt();
+        while (inputType!=1 && inputType!=2){
+            System.out.println("Tipe input yang anda pilih tidak tersedia!");
+            System.out.println("Tipe input");
+            System.out.println("1. Input Keyboard");
+            System.out.println("2. Input File");
+    
+            System.out.print("Masukkan tipe input: ");
+            inputType = input.nextInt();
         }
 
+        if (inputType == 1){
+            System.out.print("Masukkan derajat Polinomial(n): ");
+            n = input.nextInt();
+            setOfTitik = new float [n+1][2]; //Alokasi memori
+            //Input
+            for (i=0;i<=n;i++){
+                // Input nilai xi,yi
+                System.out.printf("Masukkan x%d: ",i);
+                xi = input.nextFloat();
+                System.out.printf("Masukkan y%d: ",i);
+                yi = input.nextFloat();
+
+                // Menyimpan xi,yi ke dalam matriks titik
+                setOfTitik[i][0] = xi;
+                setOfTitik[i][1] = yi;
+            }
+            MsetOfTitik = new Matrix(setOfTitik, n+1, 2);
+        } else{
+            // Input file
+            System.out.print("Masukkan nama file: ");
+            file = input.next();
+            MsetOfTitik = new Matrix(file);
+            n = MsetOfTitik.getNRow()-1; 
+        }
+        
         // input nilai yang akan ditaksir
         System.out.print("Masukkan X: ");
         X = input.nextFloat();
 
         // Membentuk Polinom Interpolasi
             // Membentuk Augmented Matrix
-        augmented = setOfTitikToMatrix(setOfTitik, n+1);
+        augmented = setOfTitikToMatrix(MsetOfTitik.getContent(), n+1);
             // Mencari koefisien dari polinomial Interpolasi
         func = getPolinomialCoef(augmented);
 
