@@ -3,8 +3,8 @@ package src.Determinant;
 import src.Matrix;
 
 public class ReduksiBaris {
-    private float tukarBaris = 0,kaliDengan = 1, hasil = 1, temp;
-    public boolean IsSegitiga(Matrix matrix)
+    private static float tukarBaris = 0,kaliDengan = 1, hasil = 1, temp;
+    public static boolean IsSegitiga(Matrix matrix)
     {
         // KAMUS
         int i = 0, j;
@@ -100,7 +100,7 @@ public class ReduksiBaris {
         return (float) (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
     }
 
-    public void tukarBaris(Matrix matrix,int i,int j)
+    public static void tukarBaris(Matrix matrix,int i,int j)
     {
         // KAMUS
         float temp;
