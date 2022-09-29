@@ -1,8 +1,9 @@
 package src;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import src.Determinant.*;
+
 public class Matrix {
     private int nRow,nCol;
     private float[][] content;
@@ -30,12 +31,18 @@ public class Matrix {
     }
 
     //Konstruktor input dari file
-    public Matrix(String file){
+    public Matrix(String namaFile) throws IOException{
+        // Untuk nerima matriks
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada file
-        
-        File file = new File();
-        
+        File file = new File(namaFile);
+        Scanner scan = new Scanner(file);
+
+        String fileContent = "";
+        while (scan.hasNextLine())
+        {
+            fileContent = fileContent.concat(scan.nextLine() + "\n");
+        }
     } 
 
     //Konstruktor input berupa matriks
@@ -203,5 +210,18 @@ public class Matrix {
         Matrix transposeMatrix = new Matrix(tMatrix,matrix.getNRow(),matrix.getNCol());
         return transposeMatrix;
     }
+
+    public static void saveHasil(boolean isMatrix){
+        // write
+        Scanner input = new Scanner(System.in);
+        System.out.println("Masukkan nama file yang diinginkan");
+        String temp = input.nextLine();
+        String path = "../test/" + temp + ".txt";
+        FileWriter writer = new FileWriter(path);
+        // write ke txt tersebut
+        writer.write();
+
+    }
+    
 
 }
