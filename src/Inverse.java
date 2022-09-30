@@ -2,6 +2,7 @@ package src;
 import src.Matrix;
 import src.Determinant.*;
 import java.util.*;
+import java.io.*;
 
 import org.w3c.dom.TypeInfo;
 
@@ -173,7 +174,7 @@ public class Inverse {
         }
     }
     
-    public static void menuInverse(int menu){
+    public static void menuInverse(int menu) throws IOException{ 
         // Prosedur untuk menjalankan menu Inverse
         // I.S sembarang, menu == 1 atau menu == 2 
         // F.S Menampilkan invers dari matriks yang diinputkan 

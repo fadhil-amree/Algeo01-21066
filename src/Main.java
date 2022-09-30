@@ -2,9 +2,11 @@ package src;
 import java.util.*;
 import src.*;
 import src.SPL.GaussJordan;
+import java.io.*;
+
 public class Main {
         
-        public static void  main (String[] args){
+        public static void  main (String[] args) throws IOException {
                 int nRow, nCol, menu; //deklarasi jumlah baris dan kolom pada matriks
                 Scanner input = new Scanner(System.in); //inisiasi variabel untuk melakukan input
                 boolean runProgram = true;
