@@ -4,11 +4,12 @@ import src.Matrix;
 import java.util.*;
 
 public class MatrixBalikan {
-    public static float[] splybyMatrixBalikan(Matrix matrixkoef, Matrix matrixres){
+    public static String[] splybyMatrixBalikan(Matrix matrixkoef, Matrix matrixres){
         // Fungsi mencari solusi SPL dengan metode MatrixBalikan
         // Prekondisi matrixkoef dan matrixres tak kosong
         // KAMUS LOKAL
         float[] solusi = new float[matrixkoef.getNCol()]; //
+        String[] solusi_string = new String[matrixkoef.getNCol()]; //
         int i; //indeks
         //ALGORITMA
         if (matrixkoef.getNCol()>=2){
@@ -33,6 +34,9 @@ public class MatrixBalikan {
             }
         }
 
-        return solusi;
+        for (i=0;i<matrixkoef.getNCol();i++){
+            solusi_string[i] = String.valueOf(solusi[i]);
+        } 
+        return solusi_string;
     }   
 }
