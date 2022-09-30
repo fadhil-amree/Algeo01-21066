@@ -36,6 +36,7 @@ public class PolinomialInterpolation {
         // KAMUS LOKAL
         Matrix matrixres, matrixkoef;
         float[] koefisien = new float[matrix.getNRow()];
+        String[] skoefisien = new String[matrix.getNRow()];
         float[][] coefMatrix = new float[matrix.getNRow()][matrix.getNCol()-1];
         float[][] resMatrix = new float[matrix.getNRow()][1];
         int i,j;
@@ -55,7 +56,11 @@ public class PolinomialInterpolation {
         matrixres = new Matrix(resMatrix,matrix.getNRow(),1);
 
         // Mencari nilai koefisien 
-        koefisien = GaussJordan.splbyGaussJordan(matrixkoef, matrixres);
+        skoefisien = GaussJordan.splbyGaussJordan(matrixkoef, matrixres);
+        // Konversi Solusi String ke Float
+        for (i=0;i<matrixkoef.getNCol();i++){
+            koefisien[i] = Float.valueOf(skoefisien[i]);
+        }
         return koefisien;
     }
 

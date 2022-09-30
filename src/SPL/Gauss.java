@@ -4,7 +4,7 @@ import src.Determinant.*;
 
 public class Gauss {
     float[] result;
-    public void splbyGauss(Matrix matrix)
+    public void splbyGauss(Matrix matrixkoef, Matrix matrixres)
     {
         // KAMUS
         /* Lakukan OBE */
