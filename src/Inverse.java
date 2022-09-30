@@ -5,7 +5,7 @@ import src.Determinant.*;
 import java.io.IOException;
 import java.util.*;
 
-import org.w3c.dom.TypeInfo;
+// import org.w3c.dom.TypeInfo;
 
 public class Inverse {
     public static Matrix getInversebyOBE (Matrix matrix){
