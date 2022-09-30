@@ -1,6 +1,6 @@
 package src;
 
-import src.Inverse;
+// import src.Inverse;
 import src.Matrix;
 
 import java.util.*;
@@ -17,11 +17,11 @@ public class BicubicInterpolation {
         
         tempfloatmat = new float[16][16];
         matx1 = new Matrix(tempfloatmat, 16, 16);
-        // matx1.displayMatrix();
+        matx1.displayMatrix();
         
         // sigma[j] sigma[i] aij xi, yj -
-        x = -2; y = -1;
-
+        // x = -2; y = -1;
+/* 
         for (j = 0; j < 16; j++) {
             
             if (x == 2) {
@@ -48,9 +48,16 @@ public class BicubicInterpolation {
         }
 
         System.out.print((float) ( Math.pow(0,0) * Math.pow(0, 0)));
+ */
+        matx1 = createModelBicubicMatrix(-1,-1);
+        matx1.displayMatrix();
 
-        // matx1.displayMatrix();
+    }
 
+
+    /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
+    public static void menuBicubicInterpolation(int menu) {
+        
     }
 
 
