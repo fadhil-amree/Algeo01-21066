@@ -112,10 +112,10 @@ public class Main {
                 }
         }
 }
-        public Matrix IsFile()
+        public void IsFile()
         {
                 int IsInput;
-                Matrix matrix = new Matrix(); 
+                // Matrix matrix = new Matrix(); 
                 Scanner input = new Scanner(System.in);
                 System.out.println("1. Input dari keyboard");
                 System.out.println("2. Input dari file");
@@ -124,13 +124,13 @@ public class Main {
                 System.out.print("Masukkan Pilihan Anda: ");
                 IsInput = input.nextInt();
 
-                if (IsInput == 1)
-                {
-                        return matrix ;
+                // if (IsInput == 1)
+                // {
+                   //     return matrix ;
                         // Input dari keyboard
-                } else // IsFile == 2
-                {
+                // } else // IsFile == 2
+                // {
                         // Input dari file
-                }
+                // }
         }
 }

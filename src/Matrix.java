@@ -35,13 +35,56 @@ public class Matrix {
         // Untuk nerima matriks
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada file
-        File file = new File(namaFile);
-        Scanner scan = new Scanner(file);
+        // KAMUS LOKAL
+        String[][] MatrixString; //matriks string berasal dari File
+        String data; //data yang dibaca dari file
+        String[] IsiData; //data yang sudah di split
+        int row, col, i, j; //index
+        
+        //ALGORITMA
+        /* Inisialisasi */
+        MatrixString = new String[9999][9999];
+        
+        /* Membaca file */
+        try {
+            File isiFile = new File(namaFile);
+            Scanner myReader = new Scanner(isiFile);
 
-        String fileContent = "";
-        while (scan.hasNextLine())
-        {
-            fileContent = fileContent.concat(scan.nextLine() + "\n");
+            row = 0; /* hitung baris */
+            col = 0; /* hitung kolom */
+
+            /* Iterasi untuk membaca isi file */
+            while (myReader.hasNextLine()) {
+                data = myReader.nextLine();
+                IsiData = data.split("");
+                for (col = 0; col < IsiData.length; col++) {
+                    MatrixString[row][col] = IsiData[col];
+                }
+                row++;
+                col = IsiData.length;
+            }
+            myReader.close();
+            
+            /* Inisialisasi ukuran matriks */
+            float MatrixHasil[][] = new float[row][col];
+            
+            /* Mengisi matrix hasil dengan casting hasil matrix dari matrix string */
+            for (i = 0; i < row; i++) {
+                for (j = 0; j < col; j++) {
+                    MatrixHasil[i][j] = Float.valueOf(MatrixString[i][j]);
+                }
+            }
+
+            /* Output Matrix hasil akhir */
+            for(i=0;i<row;i++){
+                for(j=0;j<col;j++){
+                    System.out.print(MatrixHasil[i][j] + " ");
+                }
+                System.out.println();
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak ditemukan");
         }
     } 
 
