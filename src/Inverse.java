@@ -3,7 +3,7 @@ import src.Matrix;
 import src.Determinant.*;
 import java.util.*;
 
-import org.w3c.dom.TypeInfo;
+// import org.w3c.dom.TypeInfo;
 
 public class Inverse {
     public static Matrix getInversebyOBE (Matrix matrix){

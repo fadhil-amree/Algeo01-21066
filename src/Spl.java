@@ -55,7 +55,8 @@ public class Spl {
         int inputType, nRow, nCol,i;
         float[] solusi;
         String file;
-        Matrix augmented;
+        Matrix augmented,matrixkoef,matrixres;
+        Matrix[] listMatrix = new Matrix[2];
         // ALGORITMA
         System.out.println("Tipe input");
         System.out.println("1. Input Keyboard");
@@ -86,9 +87,9 @@ public class Spl {
                 System.out.println("");
             } while (nCol<0);
             System.out.println("Matrixkoef: ");
-            Matrix matrixkoef = new Matrix(nRow, nCol-1);
+            matrixkoef = new Matrix(nRow, nCol-1);
             System.out.println("Matrixres: ");
-            Matrix matrixres = new Matrix(nRow,1); 
+            matrixres = new Matrix(nRow,1); 
             System.out.println("Matrixkoef: ");
             matrixkoef.displayMatrix();
             System.out.println("Matrixres: ");
@@ -100,7 +101,10 @@ public class Spl {
             // Input file
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            
+            augmented = new Matrix(file);
+            listMatrix = Matrix.splitAugmented(augmented);
+            matrixkoef = listMatrix[0];
+            matrixres = listMatrix[1];
         }
 
         switch (menu){

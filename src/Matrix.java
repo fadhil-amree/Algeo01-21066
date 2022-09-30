@@ -31,19 +31,20 @@ public class Matrix {
     }
 
     //Konstruktor input dari file
-    public Matrix(String namaFile) throws IOException{
-        // Untuk nerima matriks
-        // I.S Matrix sembarang
-        // F.S matrix terdefinisi sesuai matrix yang ada pada file
-        File file = new File(namaFile);
-        Scanner scan = new Scanner(file);
+    public Matrix(String namaFile) {}
+    // {throws IOException{
+    //     // // Untuk nerima matriks
+    //     // // I.S Matrix sembarang
+    //     // // F.S matrix terdefinisi sesuai matrix yang ada pada file
+    //     // File file = new File(namaFile);
+    //     // Scanner scan = new Scanner(file);
 
-        String fileContent = "";
-        while (scan.hasNextLine())
-        {
-            fileContent = fileContent.concat(scan.nextLine() + "\n");
-        }
-    } 
+    //     // String fileContent = "";
+    //     // while (scan.hasNextLine())
+    //     // {
+    //     //     fileContent = fileContent.concat(scan.nextLine() + "\n");
+    //     // }
+    // } }
 
     //Konstruktor input berupa matriks
     public Matrix(float[][] matrix, int nRow, int nCol){
@@ -211,17 +212,42 @@ public class Matrix {
         return transposeMatrix;
     }
 
-    public static void saveHasil(boolean isMatrix){
-        // write
-        Scanner input = new Scanner(System.in);
-        System.out.println("Masukkan nama file yang diinginkan");
-        String temp = input.nextLine();
-        String path = "../test/" + temp + ".txt";
-        FileWriter writer = new FileWriter(path);
-        // write ke txt tersebut
-        writer.write();
-
+    public static Matrix[] splitAugmented(Matrix augmented){
+        // Fungsi untuk mengembalikan list of Matrix yang berisi matrixkoef dan matrixre
+        // KAMUS LOKAL
+        Matrix[] listMatrix = new Matrix[2];
+        float[][] matrixk, matrixr;
+        Matrix matrixkoef, matrixres;
+        int i,j;
+        // ALGORITMA
+        matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
+        matrixr = new float[augmented.getNRow()][1];
+        for (i=0;i<augmented.getNRow();i++){
+            for(j=0;j<augmented.getNCol()-1;j++){
+                if (j == 0){
+                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                }
+                matrixk[i][j] = augmented.getElmtContent(i, j);
+            }
+        }
+        matrixkoef = new Matrix(matrixk,augmented.getNRow(),augmented.getNCol()-1);
+        matrixres = new Matrix(matrixr, augmented.getNRow(), 1);
+        listMatrix[0] = matrixkoef;
+        listMatrix[1] = matrixres;
+        return listMatrix;
     }
+
+    // public static void saveHasil(boolean isMatrix){
+    //     // write
+    //     Scanner input = new Scanner(System.in);
+    //     System.out.println("Masukkan nama file yang diinginkan");
+    //     String temp = input.nextLine();
+    //     String path = "../test/" + temp + ".txt";
+    //     FileWriter writer = new FileWriter(path);
+    //     // write ke txt tersebut
+    //     writer.write();
+
+    // }
     
 
 }

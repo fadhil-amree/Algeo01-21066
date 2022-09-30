@@ -112,25 +112,25 @@ public class Main {
                 }
         }
 }
-        public Matrix IsFile()
-        {
-                int IsInput;
-                Matrix matrix = new Matrix(); 
-                Scanner input = new Scanner(System.in);
-                System.out.println("1. Input dari keyboard");
-                System.out.println("2. Input dari file");
-                System.out.println("");
+        // public Matrix IsFile()
+        // {
+        //         int IsInput;
+        //         Matrix matrix = new Matrix(); 
+        //         Scanner input = new Scanner(System.in);
+        //         System.out.println("1. Input dari keyboard");
+        //         System.out.println("2. Input dari file");
+        //         System.out.println("");
 
-                System.out.print("Masukkan Pilihan Anda: ");
-                IsInput = input.nextInt();
+        //         System.out.print("Masukkan Pilihan Anda: ");
+        //         IsInput = input.nextInt();
 
-                if (IsInput == 1)
-                {
-                        return matrix ;
-                        // Input dari keyboard
-                } else // IsFile == 2
-                {
-                        // Input dari file
-                }
-        }
+        //         if (IsInput == 1)
+        //         {
+        //                 return matrix ;
+        //                 // Input dari keyboard
+        //         } else // IsFile == 2
+        //         {
+        //                 // Input dari file
+        //         }
+        // }
 }
