@@ -17,7 +17,7 @@ public class BicubicInterpolation {
         
         tempfloatmat = new float[16][16];
         matx1 = new Matrix(tempfloatmat, 16, 16);
-        matx1.displayMatrix();
+        // matx1.displayMatrix();
         
         // sigma[j] sigma[i] aij xi, yj -
         // x = -2; y = -1;
@@ -46,10 +46,10 @@ public class BicubicInterpolation {
             }
             
         }
+        */
 
         System.out.print((float) ( Math.pow(0,0) * Math.pow(0, 0)));
- */
-        matx1 = createModelBicubicMatrix(-1,-1);
+        // matx1 = createModelBicubicMatrix(-1,-1);
         matx1.displayMatrix();
 
     }
