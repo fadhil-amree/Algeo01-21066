@@ -112,6 +112,7 @@ public class Main {
                 }
         }
 }
+<<<<<<< HEAD
         // public Matrix IsFile()
         // {
         //         int IsInput;
@@ -120,10 +121,21 @@ public class Main {
         //         System.out.println("1. Input dari keyboard");
         //         System.out.println("2. Input dari file");
         //         System.out.println("");
+=======
+        public void IsFile()
+        {
+                int IsInput;
+                // Matrix matrix = new Matrix(); 
+                Scanner input = new Scanner(System.in);
+                System.out.println("1. Input dari keyboard");
+                System.out.println("2. Input dari file");
+                System.out.println("");
+>>>>>>> 6d6abce3acfc49d4f712dac5e7836bed91c1306f
 
         //         System.out.print("Masukkan Pilihan Anda: ");
         //         IsInput = input.nextInt();
 
+<<<<<<< HEAD
         //         if (IsInput == 1)
         //         {
         //                 return matrix ;
@@ -133,4 +145,15 @@ public class Main {
         //                 // Input dari file
         //         }
         // }
+=======
+                // if (IsInput == 1)
+                // {
+                   //     return matrix ;
+                        // Input dari keyboard
+                // } else // IsFile == 2
+                // {
+                        // Input dari file
+                // }
+        }
+>>>>>>> 6d6abce3acfc49d4f712dac5e7836bed91c1306f
 }
