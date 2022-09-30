@@ -2,7 +2,7 @@ package src;
 import src.Matrix;
 import src.SPL.*;
 import java.util.*;
-import java.io.IOException;
+import java.io.*;
 import java.lang.Math;
 
 public class PolinomialInterpolation {

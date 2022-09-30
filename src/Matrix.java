@@ -47,7 +47,8 @@ public class Matrix {
         
         /* Membaca file */
         try {
-            File isiFile = new File(namaFile);
+            String temp = "../test/input/"+namaFile;
+            File isiFile = new File(temp);
             Scanner myReader = new Scanner(isiFile);
 
             row = 0; /* hitung baris */
@@ -252,6 +253,74 @@ public class Matrix {
         }
         Matrix transposeMatrix = new Matrix(tMatrix,matrix.getNRow(),matrix.getNCol());
         return transposeMatrix;
+    }
+
+    public static void saveHasil(Matrix matrix, String namaFile) throws IOException{
+        // namaFile sudah dalam .txt
+        // write hasil dalam Matrix
+
+        //KAMUS LOKAL
+        int i,j;
+        String text;
+
+        //ALGORITMA
+        String path = "../test/hasil/"+namaFile; 
+        File fout = new File(path);
+        FileOutputStream fos = new FileOutputStream(fout);
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        
+        for (i = 0 ; i < matrix.getNRow(); i++)
+        {
+            text = "";
+            for (j = 0 ; j < matrix.getNCol(); j++)
+            {
+                if (j != matrix.getNCol()-1)
+                {
+                    text += String.valueOf(matrix.getElmtContent(i,j)) + " ";
+                }
+                else
+                {
+                    text += String.valueOf(matrix.getElmtContent(i,j));
+                }
+            }
+            bw.write(text);
+            if (i != matrix.getNRow()-1)
+            {
+                bw.newLine();
+            }
+        }
+        bw.close();
+    }
+    
+    public static void saveHasil(float[] array, String namaFile) throws IOException{
+        // namaFile sudah dalam .txt
+        // write hasil dalam array
+        
+        //KAMUS LOKAL
+        int i;
+        String text = "";
+    
+        //ALGORITMA
+        String path = "../test/hasil/"+namaFile; 
+        File fout = new File(path);
+        FileOutputStream fos = new FileOutputStream(fout);
+    
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+        for (i = 0 ; i < array.length; i++)
+        {
+            if (i != array.length-1)
+            {
+                text += String.valueOf(array[i]) + " ";
+            }
+            else
+            {
+                text += String.valueOf(array[i]);
+            }
+        }
+        bw.write(text); 
+        bw.close();
     }
 
     public static Matrix[] splitAugmented(Matrix augmented){
