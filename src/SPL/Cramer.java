@@ -27,7 +27,7 @@ public class Cramer {
                     {
                         // kalau j == n, maka masukkan nilai-nilai matrix res ke temp
 
-                        temp.setElmtContent(i, j, matrixres.getElmtContent(i, n));
+                        temp.setElmtContent(i, j, matrixres.getElmtContent(i, 0));
                     }
                     else
                     {
