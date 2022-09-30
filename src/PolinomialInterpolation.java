@@ -2,6 +2,7 @@ package src;
 import src.Matrix;
 import src.SPL.*;
 import java.util.*;
+import java.io.IOException;
 import java.lang.Math;
 
 public class PolinomialInterpolation {
@@ -97,7 +98,7 @@ public class PolinomialInterpolation {
         System.out.println(polinom);
     }
 
-    public static void menuPolinomialInterpolation(){
+    public static void menuPolinomialInterpolation() throws IOException{
         // Prosedur untuk menjalankan menu Polinomial Interpolation
         // I.S Sembarang
         // F.S Menampilkan Polinom Interpolasi dan taksiran nilai fungsi pada x yang diberikan

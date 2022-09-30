@@ -211,17 +211,17 @@ public class Matrix {
         return transposeMatrix;
     }
 
-    public static void saveHasil(boolean isMatrix){
-        // write
-        Scanner input = new Scanner(System.in);
-        System.out.println("Masukkan nama file yang diinginkan");
-        String temp = input.nextLine();
-        String path = "../test/" + temp + ".txt";
-        FileWriter writer = new FileWriter(path);
-        // write ke txt tersebut
-        writer.write();
+    // public static void saveHasil(boolean isMatrix){
+    //     // write
+    //     Scanner input = new Scanner(System.in);
+    //     System.out.println("Masukkan nama file yang diinginkan");
+    //     String temp = input.nextLine();
+    //     String path = "../test/" + temp + ".txt";
+    //     FileWriter writer = new FileWriter(path);
+    //     // write ke txt tersebut
+    //     writer.write();
 
-    }
+    // }
     
 
 }
