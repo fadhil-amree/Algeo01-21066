@@ -64,6 +64,7 @@ public class GaussJordan {
         //ALGORITMA
         // eres: elemen result matriks konstanta, etemp: elemen temporary matriks koefisien 
         //Dibuat ada satu augmented matrix
+        nParameter = 0; //inisialisasi nilai nParameter 
         if (matrixkoef.getNRow()>=2){
             for(i=0;i<=tempMatrix.getNRow()-1;i++)
             {   // i : indeks baris patokan
@@ -172,7 +173,6 @@ public class GaussJordan {
                     solusi = getlistUndef(tempMatrix.getNCol());
                 }
                 else { //Jika punya tak hingga solusi
-                    nParameter = 0;
                     for (i=0;i<=matrixkoef.getNCol()-1;i++){
                         if (tempMatrix.getNRow()>=i){ //Jika indeks baris masih dalam jangkauan  
                             ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0

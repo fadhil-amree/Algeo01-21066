@@ -6,43 +6,30 @@ import src.SPL.*;
 public class Spl {
     static float parametric = 9999, undef = -9999;
 
-    public static boolean isEmpty(float[] solusi){
+    public static boolean isEmpty(String[] solusi){
         // Mengembalikan true jika solusi kosong
         // KAMUS LOKAL
         int length = 0;
         // ALGORITMA
-        for (float x: solusi){
+        for (String x: solusi){
             length++;
         }
         return (length == 0);
     }
 
 
-    public static boolean isUndef(float[] solusi){
+    public static boolean isUndef(String[] solusi){
         // Mengembalikan true, jika tidak ada solusi
         // KAMUS LOKAL
-        boolean no_solution = true;
+        boolean no_solution = false;
         // ALGORITMA
-        for (float x :solusi){
-            if (x != undef){
-                no_solution = false;
+        for (String x :solusi){
+            if (x == "-9999"){
+                no_solution = true;
                 break;
             }
         }
         return no_solution;
-    }
-    public static boolean isParametric(float[] solusi){
-        // Mengembalikan true, jika tidak ada solusi
-        // KAMUS LOKAL
-        boolean parametric_solution = false;
-        // ALGORITMA
-        for (float x :solusi){
-            if (x == parametric){
-                parametric_solution = true;
-                break;
-            }
-        }
-        return parametric_solution;
     }
 
     public static void menuSPL(int menu){
@@ -53,7 +40,7 @@ public class Spl {
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
         int inputType, nRow, nCol,i;
-        float[] solusi;
+        String[] solusi;
         String file;
         Matrix augmented,matrixkoef,matrixres;
         Matrix[] listMatrix = new Matrix[2];
@@ -95,7 +82,7 @@ public class Spl {
             System.out.println("Matrixres: ");
             matrixres.displayMatrix();
             System.out.println("solusi: ");
-            solusi = new float[nCol-1];
+            solusi = new String[nCol-1];
 
         } else{ // inputType == 2
             // Input file
@@ -105,6 +92,7 @@ public class Spl {
             listMatrix = Matrix.splitAugmented(augmented);
             matrixkoef = listMatrix[0];
             matrixres = listMatrix[1];
+            solusi = new String[matrixkoef.getNCol()];
         }
 
         switch (menu){
@@ -119,22 +107,22 @@ public class Spl {
         }
 
         // Penanganan Kasus solusi
-        if (isUndef(solusi)){
-            if (menu == 3 && isEmpty(solusi)){
+        if (isEmpty(solusi)){
+            if (menu == 3){
                 System.out.println("Matriks tidak punya balikan!");
             } else if (menu == 4 && isEmpty(solusi)){
                 System.out.println("Determinan Matriks = 0");
-            } else {
-                System.out.println("SPL tidak mempunyai solusi");
+            } 
+        }else{
+            if (isUndef(solusi)){
+                System.out.println("SPL tidak mempunyai solusi yang memenuhi");
             }
-        } else{
-            if (isParametric(solusi)){
-            }
-            else { // Jika solusi unik
+            else { // Jika solusi ada, bisa parametrik, bisa unik
                 for (i=0; i<=nCol-2;i++){
-                    System.out.printf("x[%d]: %.02f\n",i,solusi[i]);
+                    System.out.printf("x[%d]: %s\n",i,solusi[i]);
                 }
             }
         }
     }
 }
+
