@@ -25,7 +25,7 @@ public class Spl {
         boolean no_solution = false;
         // ALGORITMA
         for (String x :solusi){
-            if (x == "-9999"){
+            if (x == "-9999.0"){
                 no_solution = true;
                 break;
             }
@@ -117,7 +117,7 @@ public class Spl {
                     break;
             case 3: solusi = MatrixBalikan.splybyMatrixBalikan(matrixkoef, matrixres);
                     break;
-            default: solusi = Cramer.splbyCramer(matrixkoef, matrixres); //menu == 4
+            case 4: solusi = Cramer.splbyCramer(matrixkoef, matrixres); //menu == 4
                     break;
         }
 
