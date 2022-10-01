@@ -1,9 +1,10 @@
 package src;
 import java.util.*;
 import java.io.*;
-import src.*;
-import src.SPL.GaussJordan;
-import java.io.*;
+import src.Spl;
+import src.Determinant.*;
+import src.SPL.*;
+;
 
 public class Main {
         
@@ -118,13 +119,4 @@ public class Main {
         }
 }
 
-        public void IsFile()
-        {
-                int IsInput;
-                // Matrix matrix = new Matrix(); 
-                Scanner input = new Scanner(System.in);
-                System.out.println("1. Input dari keyboard");
-                System.out.println("2. Input dari file");
-                System.out.println("");
-        }
 }

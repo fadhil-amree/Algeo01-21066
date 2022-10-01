@@ -1,17 +1,15 @@
 package src.Determinant;
-
+import java.lang.Math;
 import src.Matrix;
 
 public class ReduksiBaris {
-    private static float tukarBaris = 0,kaliDengan = 1, hasil = 1, temp;
     public static boolean IsSegitiga(Matrix matrix)
     {
         // KAMUS
         int i = 0, j;
         boolean found = true;
-
         // ALGORITMA
-        while (i < matrix.getNCol() && found)
+        while (i < matrix.getNRow() && found)
         {
             j = 0;
             while (j < i)
@@ -22,16 +20,16 @@ public class ReduksiBaris {
                 }
                 j++;
             }
+            i++;
         }
         return found;
     }
-
-    public static Matrix MatReduksi(Matrix matrix)
+    
+    
+    public static float detReduksi(Matrix matrix)
     {
-        
-        // KAMUS
-
-        // ALGORITMA
+        // Kamus
+        float tukarBaris = 0, kaliDengan = 1, hasil = 1, temp;
         while (!(IsSegitiga(matrix)))
         {
             // Tukar baris matrix yang elemen diagonalnya 0
@@ -52,7 +50,7 @@ public class ReduksiBaris {
                     }
                 }
             }
-
+            
             // tambah baris dengan baris lainnya
             for (i = 0; i < matrix.getNCol(); i++)
             {
@@ -61,11 +59,11 @@ public class ReduksiBaris {
                     // Cek apakah elemen pada matrix bernilai 0
                     if (matrix.getElmtContent(i, j) != 0)
                     {
-
+                        
                         // Cari KPK
                         float KPK = matrix.getElmtContent(i, j) * matrix.getElmtContent(j, j);
                         float kali = KPK / matrix.getElmtContent(i, j);
-
+                        
                         // kalikan baris i dengan konstanta kali
                         int col;
                         for (col = 0; col < matrix.getNCol(); col++)
@@ -73,26 +71,21 @@ public class ReduksiBaris {
                             temp = matrix.getElmtContent(i, col) * kali;
                             matrix.setElmtContent(i, col, temp);
                         }
-
+                        
                         float kelipatan = KPK / matrix.getElmtContent(j, j);
-
+                        
                         for (col = 0; col < matrix.getNCol(); col++)
                         {
                             temp = matrix.getElmtContent(i, col) - (matrix.getElmtContent(j, col) * kelipatan);
                             matrix.setElmtContent(i, col, temp);
                         }
-
+                        
                         kaliDengan *= matrix.getElmtContent(j, j);
                     }
                 }
             }
         }
-        return matrix;
-    }
-
-    public static float detReduksi(Matrix matrix)
-    {
-        matrix = MatReduksi(matrix);
+        
         for (int i = 0; i < matrix.getNCol(); i++)
         {
             hasil *= matrix.getElmtContent(i, i);
