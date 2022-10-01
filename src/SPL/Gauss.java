@@ -102,10 +102,18 @@ public class Gauss {
         {
             for (i = matrixkoef.getNCol() - 1; i >= 0; i--)
             {
-                tempresult[i] = matrixkoef.getElmtContent(i, matrixkoef.getNCol());
-                for (j1 = matrixkoef.getNCol() - 1; j1 > i; j1--)
+                if (i == matrixkoef.getNCol() - 1)
                 {
-                    // tempresult[i] -= matrixkoef.getElmtContent(i, j1) * tempresult[j1];
+                    tempresult[i] = matrixres.getElmtContent(i, 0);
+                }
+                else
+                {
+                    temp = 0;
+                    for (j = i + 1; j < matrixkoef.getNCol(); j++)
+                    {
+                        temp = temp + (matrixkoef.getElmtContent(i, j) * tempresult[j]);
+                    }
+                    tempresult[i] = matrixres.getElmtContent(i, 0) - temp;
                 }
             }
         }

@@ -10,8 +10,10 @@ public class MLR {
         float[] result = new float[matrixkoef.getNCol()];
 
         // ALGORITMA
-        tempkoef = new Matrix(matrixkoef.getNCol() + 1, matrixkoef.getNCol() +1);
-        tempres = new Matrix(tempkoef.getNRow(), 1);
+        float[][] x = new float[matrixkoef.getNCol() + 1][matrixkoef.getNCol() + 1]; 
+        tempkoef = new Matrix(x, matrixkoef.getNCol() + 1, matrixkoef.getNCol() +1);
+        x = new float[tempkoef.getNRow()][1];
+        tempres = new Matrix(x, tempkoef.getNRow(), 1);
         /* Lakukan normal equation */
         for (i = 0; i < tempkoef.getNCol() ; i++)
         {
@@ -54,8 +56,10 @@ public class MLR {
             /* kalau ga invertible, hapus 1 kolom*/
             /* Copy Matrixkoef ke tempMatKoef dan menghilangkan parameter pada ke-x */
             Matrix tempMatKoef = MinorMatKoef(matrixkoef, col);
-            tempkoef = new Matrix(tempMatKoef.getNCol() + 1, tempMatKoef.getNCol() +1);
-            tempres = new Matrix(tempkoef.getNRow(), 1);
+            x = new float[tempMatKoef.getNCol() + 1][tempMatKoef.getNCol() + 1];
+            tempkoef = new Matrix(x, tempMatKoef.getNCol() + 1, tempMatKoef.getNCol() +1);
+            x = new float[tempkoef.getNRow()][1];
+            tempres = new Matrix(x, tempkoef.getNRow(), 1);
             
             for (i = 0; i < tempkoef.getNCol() ; i++)
             {
@@ -170,7 +174,8 @@ public class MLR {
     {
         /* I.S matrix terdefinisi */
         /* F.S mengembalikan matriks minor dari matrixkoef dengan menghilangkan kolom ke-col */
-        Matrix result = new Matrix(matrixkoef.getNRow(), matrixkoef.getNCol() - 1);
+        float[][] x = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - 1];
+        Matrix result = new Matrix(x, matrixkoef.getNRow(), matrixkoef.getNCol() - 1);
         int iMinor = 0, jMinor = 0;
         int i, j;
 
