@@ -1,4 +1,5 @@
 package src;
+import java.io.IOException;
 import java.util.*;
 import src.Matrix;
 import src.SPL.*;   
@@ -46,7 +47,7 @@ public class Spl {
         return parametric;
     }
 
-    public static void menuSPL(int menu){
+    public static void menuSPL(int menu) throws IOException{
         // Prosedur untuk menjalankan menu SPL
         // I.S Sembarang, menu == 1 or menu == 2 or menu == 3 or menu == 4
         // F.S Menampilkan solusi SPL dari input user
@@ -132,7 +133,7 @@ public class Spl {
                 System.out.println("SPL tidak mempunyai solusi yang memenuhi");
             }
             else { // Jika solusi ada, bisa parametrik, bisa unik
-                for (i=0; i<=nCol-2;i++){
+                for (i=0; i<= matrixkoef.getNCol() - 1;i++){
                     System.out.printf("x[%d]: %s\n",i,solusi[i]);
                 }
             }

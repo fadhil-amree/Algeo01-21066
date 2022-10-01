@@ -1,5 +1,4 @@
 package src;
-import src.Matrix;
 import src.Determinant.*;
 import java.util.*;
 import java.io.*;
@@ -45,7 +44,7 @@ public class Determinan {
             inputMatrix = new Matrix(file);    
         }
 
-        // Mencari inverse
+        // Mencari determinan
         if (menu == 1){
             detMatrix = ReduksiBaris.detReduksi(inputMatrix);
         } else { // menu == 2
