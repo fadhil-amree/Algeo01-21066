@@ -3,12 +3,12 @@ import src.Matrix;
 import src.Determinant.*;
 
 public class Cramer {
-    public static float[] splbyCramer(Matrix matrixkoef,Matrix matrixres)
+    public static String[] splbyCramer(Matrix matrixkoef,Matrix matrixres)
     {
         // KAMUS
         int i, j, n; /*iterasi*/
         Matrix temp = new Matrix(matrixkoef.getNRow(),matrixkoef.getNCol()); /* temp untuk mencari determinan kecilnya */
-        float[] result = new float[matrixkoef.getNCol()]; /*array untuk menampung hasil*/
+        String[] result = new String[matrixkoef.getNCol()]; /*array untuk menampung hasil*/
         float detUtama; /* determinan Matrix utama */
 
         // ALGORITMA
@@ -35,11 +35,11 @@ public class Cramer {
                     }
                 }
             }
-            result[n] = Kofaktor.detKofaktor(temp) / detUtama;
+            result[n] = String.valueOf(Kofaktor.detKofaktor(temp) / detUtama);
         }
     } else 
     {
-        result = null; // gaada
+        result = new String[0]; // gaada
     }
     
     return result;

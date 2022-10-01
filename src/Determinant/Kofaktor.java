@@ -13,7 +13,7 @@ public class Kofaktor
     public static float detKofaktor(Matrix matrix)
     {
         float result = 0;
-        int i,j;
+        int i;
         if (matrix.getNCol() > 2)
         {
             for (i=0;i<matrix.getNCol();i++)
@@ -30,7 +30,9 @@ public class Kofaktor
 
     public static Matrix getMinor(Matrix matrix, int col)
     {
-        Matrix minor = new Matrix(matrix.getNRow()-1,matrix.getNCol()-1);
+        float[][] temp;
+        temp = new float[matrix.getNRow()-1][matrix.getNCol()-1];
+        Matrix minor = new Matrix(temp, matrix.getNRow()-1,matrix.getNCol()-1);
         
         int iMinor = 0, jMinor = 0;
         int i, j;
