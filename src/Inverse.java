@@ -176,7 +176,7 @@ public class Inverse {
         }
     }
     
-    public static void menuInverse(int menu) throws IOException{
+    public static void menuInverse(int menu) throws Exception{
         // Prosedur untuk menjalankan menu Inverse
         // I.S sembarang, menu == 1 atau menu == 2 
         // F.S Menampilkan invers dari matriks yang diinputkan 
@@ -210,7 +210,7 @@ public class Inverse {
         } else{ // inputType == 2
             System.out.println("Masukkan nama file: ");
             file = input.next();      
-            inputMatrix = new Matrix(file);    
+            inputMatrix = Read.BacaFile(file);    
         }
 
         // Mencari inverse

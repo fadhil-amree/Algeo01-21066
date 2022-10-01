@@ -31,63 +31,65 @@ public class Matrix {
     }
 
     //Konstruktor input dari file
-    public Matrix(String namaFile) throws IOException{
-        // Untuk nerima matriks
-        // I.S Matrix sembarang
-        // F.S matrix terdefinisi sesuai matrix yang ada pada file
-        // KAMUS LOKAL
-        String[][] MatrixString; //matriks string berasal dari File
-        String data; //data yang dibaca dari file
-        String[] IsiData; //data yang sudah di split
-        int row, col, i, j; //index
+    // public Matrix(String namaFile) throws IOException{
+    //     // Untuk nerima matriks
+    //     // I.S Matrix sembarang
+    //     // F.S matrix terdefinisi sesuai matrix yang ada pada file
+    //     // KAMUS LOKAL
+    //     String[][] MatrixString; //matriks string berasal dari File
+    //     String data; //data yang dibaca dari file
+    //     String[] IsiData; //data yang sudah di split
+    //     int row, col, i, j; //index
         
-        //ALGORITMA
-        /* Inisialisasi */
-        MatrixString = new String[9999][9999];
-        
-        /* Membaca file */
-        try {
-            String temp = "../test/input/"+namaFile;
-            File isiFile = new File(temp);
-            Scanner myReader = new Scanner(isiFile);
+    //     //ALGORITMA
+    //     /* Inisialisasi */
+    //     MatrixString = new String[9999][9999];
+    //     System.out.println("do sawjfaw");
+    //     System.out.println(namaFile);
+    //     /* Membaca file */
+    //     try {
+    //         String temp = "/../test/input/MLR.txt";
+    //         System.out.println(temp);
+    //         FileReader isiFile = new File("../test/input/MLR.txt");
+    //         Scanner myReader = new Scanner(isiFile);
 
-            row = 0; /* hitung baris */
-            col = 0; /* hitung kolom */
+    //         row = 0; /* hitung baris */
+    //         col = 0; /* hitung kolom */
 
-            /* Iterasi untuk membaca isi file */
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
-                IsiData = data.split("");
-                for (col = 0; col < IsiData.length; col++) {
-                    MatrixString[row][col] = IsiData[col];
-                }
-                row++;
-                col = IsiData.length;
-            }
-            myReader.close();
+    //         /* Iterasi untuk membaca isi file */
+    //         while (myReader.hasNextLine()) {
+    //             data = myReader.nextLine();
+    //             IsiData = data.split(" ");
+    //             for (col = 0; col < IsiData.length; col++) {
+    //                 MatrixString[row][col] = IsiData[col];
+    //             }
+    //             row++;
+    //             col = IsiData.length;
+    //         }
+    //         myReader.close();
             
-            /* Inisialisasi ukuran matriks */
-            float MatrixHasil[][] = new float[row][col];
+    //         /* Inisialisasi ukuran matriks */
+    //         float MatrixHasil[][] = new float[row][col];
             
-            /* Mengisi matrix hasil dengan casting hasil matrix dari matrix string */
-            for (i = 0; i < row; i++) {
-                for (j = 0; j < col; j++) {
-                    MatrixHasil[i][j] = Float.valueOf(MatrixString[i][j]);
-                }
-            }
+    //         /* Mengisi matrix hasil dengan casting hasil matrix dari matrix string */
+    //         for (i = 0; i < row; i++) {
+    //             for (j = 0; j < col; j++) {
+    //                 MatrixHasil[i][j] = Float.valueOf(MatrixString[i][j]);
+    //             }
+    //         }
 
-            /* Output Matrix hasil akhir */
-            for(i=0;i<row;i++){
-                for(j=0;j<col;j++){
-                    System.out.print(MatrixHasil[i][j] + " ");
-                }
-                System.out.println();
-            }
+    //         /* Output Matrix hasil akhir */
+    //         for(i=0;i<row;i++){
+    //             for(j=0;j<col;j++){
+    //                 System.out.print(MatrixHasil[i][j] + " ");
+    //             }
+    //             System.out.println();
+    //         }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File tidak ditemukan");
-        }
-    } 
+    //     } catch (FileNotFoundException e) {
+    //         System.out.println("File tidak ditemukan");
+    //     }
+    // } 
 
     //Konstruktor input berupa matriks
     public Matrix(float[][] matrix, int nRow, int nCol){
@@ -364,9 +366,9 @@ public class Matrix {
         for (i=0;i<augmented.getNRow();i++){
             for(j=0;j<augmented.getNCol()-1;j++){
                 if (j == 0){
-                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                    matrixr[i][0] = augmented.getElmtContent(i, 0);
                 } 
-                if (j != 0){
+                else{
                     matrixk[i][j-1] = augmented.getElmtContent(i, j);
                 }
             }
@@ -377,5 +379,11 @@ public class Matrix {
         listMatrix[1] = matrixres;
         return listMatrix;   
     }
+
+    // public static void main(String[] args) throws IOException
+    // {
+    //     String namaFile = "test.txt";
+    //     Matrix matrix = new Matrix(namaFile);
+    // }
     
 }

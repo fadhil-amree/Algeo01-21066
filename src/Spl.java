@@ -47,7 +47,7 @@ public class Spl {
         return parametric;
     }
 
-    public static void menuSPL(int menu) throws IOException{
+    public static void menuSPL(int menu) throws Exception{
         // Prosedur untuk menjalankan menu SPL
         // I.S Sembarang, menu == 1 or menu == 2 or menu == 3 or menu == 4
         // F.S Menampilkan solusi SPL dari input user
@@ -103,7 +103,7 @@ public class Spl {
             // Input file
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            augmented = new Matrix(file);
+            augmented = Read.BacaFile(file);
             listMatrix = Matrix.splitAugmented(augmented);
             matrixkoef = listMatrix[0];
             matrixres = listMatrix[1];

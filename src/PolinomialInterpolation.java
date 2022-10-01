@@ -103,7 +103,7 @@ public class PolinomialInterpolation {
         System.out.println(polinom);
     }
 
-    public static void menuPolinomialInterpolation() throws IOException{
+    public static void menuPolinomialInterpolation() throws Exception{
         // Prosedur untuk menjalankan menu Polinomial Interpolation
         // I.S Sembarang
         // F.S Menampilkan Polinom Interpolasi dan taksiran nilai fungsi pada x yang diberikan
@@ -157,7 +157,7 @@ public class PolinomialInterpolation {
             // Input file
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            MsetOfTitik = new Matrix(file);
+            MsetOfTitik = Read.BacaFile(file);
             n = MsetOfTitik.getNRow()-1; 
         }
         
