@@ -7,7 +7,9 @@ public class Cramer {
     {
         // KAMUS
         int i, j, n; /*iterasi*/
-        Matrix temp = new Matrix(matrixkoef.getNRow(),matrixkoef.getNCol()); /* temp untuk mencari determinan kecilnya */
+        float[][] btemp;
+        btemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol()];
+        Matrix temp = new Matrix(btemp,matrixkoef.getNRow(),matrixkoef.getNCol()); /* temp untuk mencari determinan kecilnya */
         String[] result = new String[matrixkoef.getNCol()]; /*array untuk menampung hasil*/
         float detUtama; /* determinan Matrix utama */
 

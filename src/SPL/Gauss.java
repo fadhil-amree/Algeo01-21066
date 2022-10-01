@@ -14,7 +14,7 @@ public class Gauss {
         Matrix tempMatrixkoef = new Matrix(matrixkoef.getNRow(), matrixkoef.getNCol());
 
         // ALGORITMA
-        /* Lakukan OBE */
+        /* Lakukan OBE */ /* Benerin dulu OBE-nya mas */
 
         /* Lakukan perhitungan hasil */
 
