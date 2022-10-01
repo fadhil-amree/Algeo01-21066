@@ -334,11 +334,13 @@ public class Matrix {
         matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
         matrixr = new float[augmented.getNRow()][1];
         for (i=0;i<augmented.getNRow();i++){
-            for(j=0;j<augmented.getNCol()-1;j++){
-                if (j == 0){
+            for(j=0;j<augmented.getNCol();j++){
+                if (j == augmented.getNCol()-1){
                     matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
                 }
-                matrixk[i][j] = augmented.getElmtContent(i, j);
+                if (j != augmented.getNCol()-1){
+                    matrixk[i][j] = augmented.getElmtContent(i, j);
+                }
             }
         }
         matrixkoef = new Matrix(matrixk,augmented.getNRow(),augmented.getNCol()-1);
@@ -347,4 +349,33 @@ public class Matrix {
         listMatrix[1] = matrixres;
         return listMatrix;
     }
+    
+    public static Matrix[] splitAugmentedMLR(Matrix augmented)
+    {
+        // Fungsi untuk mengembalikan list of Matrix yang berisi matrixkoef dan matrixre
+        // KAMUS LOKAL
+        Matrix[] listMatrix = new Matrix[2];
+        float[][] matrixk, matrixr;
+        Matrix matrixkoef, matrixres;
+        int i,j;
+        // ALGORITMA
+        matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
+        matrixr = new float[augmented.getNRow()][1];
+        for (i=0;i<augmented.getNRow();i++){
+            for(j=0;j<augmented.getNCol()-1;j++){
+                if (j == 0){
+                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                } 
+                if (j != 0){
+                    matrixk[i][j-1] = augmented.getElmtContent(i, j);
+                }
+            }
+        }
+        matrixkoef = new Matrix(matrixk,augmented.getNRow(),augmented.getNCol()-1);
+        matrixres = new Matrix(matrixr, augmented.getNRow(), 1);
+        listMatrix[0] = matrixkoef;
+        listMatrix[1] = matrixres;
+        return listMatrix;   
+    }
+    
 }

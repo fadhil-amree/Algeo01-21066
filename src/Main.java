@@ -108,6 +108,7 @@ public class Main {
                         break;
                         case 6: 
                         System.out.println("Melakukan Regresi Linier Berganda");
+                        MLR.menuMLR();
                         break;
                         case 7:
                         System.out.println("Keluar dari Program");
