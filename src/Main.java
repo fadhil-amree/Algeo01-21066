@@ -69,8 +69,10 @@ public class Main {
                         
                         switch(menu){
                                 case 1: System.out.println("Mencari Determinan Matriks dengan Metode Reduksi Baris");
+                                        Determinan.menuDeterminan(1);
                                 break;
                                 case 2: System.out.println("Mencari Determinan Matriks dengan Metode Ekspansi Kofaktor");
+                                        Determinan.menuDeterminan(2);
                                 break;
                                 default: System.out.println("Pilihan Anda tidak terdapat pada menu!");
                                 break;
