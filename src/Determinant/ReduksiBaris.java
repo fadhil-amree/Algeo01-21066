@@ -26,7 +26,7 @@ public class ReduksiBaris {
         return found;
     }
 
-    public Matrix MatReduksi(Matrix matrix)
+    public static Matrix MatReduksi(Matrix matrix)
     {
         
         // KAMUS
@@ -90,7 +90,7 @@ public class ReduksiBaris {
         return matrix;
     }
 
-    public float detReduksi(Matrix matrix)
+    public static float detReduksi(Matrix matrix)
     {
         matrix = MatReduksi(matrix);
         for (int i = 0; i < matrix.getNCol(); i++)

@@ -175,7 +175,7 @@ public class MLR {
         /* I.S matrix terdefinisi */
         /* F.S mengembalikan matriks minor dari matrixkoef dengan menghilangkan kolom ke-col */
         float[][] x = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - 1];
-        Matrix result = new Matrix(x, matrixkoef.getNRow(), matrixkoef.getNCol() - 1);
+        Matrix result = new Matrix(x,matrixkoef.getNRow(), matrixkoef.getNCol() - 1);
         int iMinor = 0, jMinor = 0;
         int i, j;
 
