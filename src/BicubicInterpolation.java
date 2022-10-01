@@ -1,106 +1,75 @@
 package src;
 
-import src.Inverse;
-import src.Matrix;
+// import src.Inverse;
+// import src.Matrix;
 
-import java.util.*;
-import java.lang.Math.*;
+// import java.util.*;
+
+// import javax.print.StreamPrintService;
+
+// import java.lang.Math.*;
 
 public class BicubicInterpolation {
 
     public static void main(String[] args) {
-        
-        float[][] tempfloatmat;
-        Matrix matx1;
-        int i, j;
-        int x,y;
-        
-        tempfloatmat = new float[16][16];
-        matx1 = new Matrix(tempfloatmat, 16, 16);
-        // matx1.displayMatrix();
-        
-        // sigma[j] sigma[i] aij xi, yj -
-        x = -2; y = -1;
-
-        for (j = 0; j < 16; j++) {
-            
-            if (x == 2) {
-                x = -1;
-            }
-            else {
-                x++;
-            }
-            // System.out.print(j+" ");
-            // System.out.print("("+x+","+y+")");
-            // System.out.print("\n");
-            // System.out.print("(j=" + j%4 + ") ");
-            for (i = 0; i < 16; i++) {
-                matx1.setElmtContent( i, j, (float) (Math.pow(x,i%4)*Math.pow(y,j%4)) );
-                // System.out.print( (float) (Math.pow(x,i%4)*Math.pow(y,j%4)) + " ");
-                // System.out.print( xyFunctionValue(x, i%4, y, j%4) + " ");
-                // System.out.print("(" + i%4 + ") ");
-            }
-            // System.out.print("\n");
-            if (x == 2) {
-                y++; 
-            }
-            
-        }
-
-        System.out.print((float) ( Math.pow(0,0) * Math.pow(0, 0)));
-
-        // matx1.displayMatrix();
 
     }
 
 
-    /** RUMUS FUNGSI **/
-    public static float functionValue(Matrix a) {
+    /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
+    public static void menuBicubicInterpolation(int menu) {
+        
+    }
+
+
+    /** RUMUS FUNGSI f(x,y) **/
+    public static float interpolasiBicub(Matrix fxy, float x, float y) {
         // mengembalikan nilai f(x,y) = sigma[j] sigma[i] a[i,j] * x^i * y^j
         // untuk nilai sigma[i] 0..i dan sigma[j] 0..j
-        int i, j, x, y;
-        double sum;
+        float sum;
+        float[][] temp;
+        Matrix matxAij;
 
+        int itrCol;
+        int i, j;
+
+        temp = new float[16][1];
+        matxAij = new Matrix(temp, 16, 1);
+
+        matxAij = createMatrixofAij(fxy);
+
+        x = x - 1;
+        i = 0; j = 0;
         sum = 0;
 
-        x = -2; y = -1;
-        
-        for (j = 0; j < 16; j++) {
+        for (itrCol = 0; itrCol < 16; itrCol++) {
 
-            if (x == 2) {
-                x = -1;
-            }
-            else {
-                x++;
-            }
+            i = itrCol%4;
 
-            for (i = 0; i < 16; i++) {
-                sum = a.getElmtContent(i,0)*Math.pow(x,i%4)*Math.pow(y,j%4);
-            }
-
-            if (y == 2) {
-                y = -1;
-            }
-            else if (x == 2) {
-                y++; 
-            }
-
+            sum += matxAij.getElmtContent(itrCol, 0) * Math.pow(x, i) * Math.pow(y,j);
+            
+            j = j + (i/3);
         }
 
-        return (float) sum;
+        return sum;
     }
 
+
+    /** FUNGSI PEMBENTUK MATRIX A[i][j] **/
     public static Matrix createMatrixofAij(Matrix fxy) {
+        // Mencari nilai a[i][j] untu i,j = 0,1,2,3. dari model matrix
 
-
-        Matrix matxBicub, fxyMatrixCol, tempMatx, resultMatx;
+        // KAMUS LOKAL
+        Matrix invModel, fxyMatrixCol, tempMatx, resultMatx;
         float[][] temp;
 
+        // ALGORITMA
+        // inisial
         temp = new float[16][16];
         tempMatx = new Matrix(temp, 16, 16);
         
         temp = new float[16][16];
-        matxBicub = new Matrix(temp, 16, 16);
+        invModel = new Matrix(temp, 16, 16);
 
         temp = new float[16][1];
         fxyMatrixCol = new Matrix(temp, 16, 1);
@@ -108,57 +77,35 @@ public class BicubicInterpolation {
         temp = new float[16][1];
         resultMatx = new Matrix(temp, 16, 1);
 
-        tempMatx = createModelBicubicMatrix(-1, -1);
-        matxBicub = Inverse.getInversebyOBE(tempMatx); // dapat invers dari rumus bicubic
+        // f(x,y) = Ca -> C-1f(x,y) 
+        tempMatx = createModelBicubicMatrix();
+        invModel = Inverse.getInversebyOBE(tempMatx); // dapat invers dari rumus bicubic
         
         fxyMatrixCol = squareMatxToColMatx(fxy);
         
-        resultMatx = Matrix.multiplyMatrix(fxyMatrixCol, matxBicub);
-
-        // kali matrix matxBicub dengan fxyMatrixCol
-
-        // dapat matrix Aij
+        resultMatx = Matrix.multiplyMatrix(invModel, fxyMatrixCol);
         
         return resultMatx;
     }
     
-    public static Matrix squareMatxToColMatx(Matrix matx) {
-        // I.S : matx1 terdefinisi
-        // F.S : matx1 berubah menjadi matrix colom dengan jumlah elemen sama
-        // matrix colom yaitu matrix yang hanya memiliki 1 colom
 
-        Matrix m;
-        // float[][] temp;
-        int i, j, itr1;
-
-        // temp = new float[matx.getNRow()*matx.getNCol()][1];
-        m = new Matrix(matx.getNRow()*matx.getNCol(), 1);
-        itr1 = 0;
-
-        for (j = 0; j < matx.getNCol(); j++) {
-            for (i = 0; i < matx.getNRow(); i++) {
-                m.setElmtContent(i+j+itr1, 0, matx.getElmtContent(i, j));
-            }
-            itr1 += i-1;
-        }
-
-        return m;
-    }
-
-    public static Matrix createModelBicubicMatrix(double x, double y) {
+    public static Matrix createModelBicubicMatrix() {
         // membuat matrix bicubic dari formula
         // x dan y terdefinisi dan memiliki selisih 4 sebagain integer
         float[][] m1;
         Matrix bicubic;
-        int i, j;
+        int itrRow, itrCol;
+        int x, y, i, j;
 
         m1 = new float[16][16];
         bicubic = new Matrix(m1, 16, 16);
 
-        // sigma[j] sigma[i] aij xi, yj -
-        x = x - 1;
-
-        for (j = 0; j < 16; j++) {
+        // sigma[j] sigma[i] aij x^i y^j
+        // inisial
+        x = -1 - 1; y = -1;
+        i = 0; j =0;
+        
+        for (itrRow = 0; itrRow < 16; itrRow++) {
 
             if (x == 2) {
                 x = -1;
@@ -167,21 +114,79 @@ public class BicubicInterpolation {
                 x++;
             }
 
-            for (i = 0; i < 16; i++) {
-                bicubic.setElmtContent((int) i, (int) j, (float) (Math.pow(x,i%4)*Math.pow(y,j%4)));
+            for (itrCol = 0; itrCol < 16; itrCol++) {
+
+                i = itrCol%4;
+
+                bicubic.setElmtContent(itrRow, itrCol, (float) (Math.pow(x, i) * Math.pow(y, j)) );
+                
+                j = j + (i/3);
             }
 
-            if (y == 2) {
-                y = -1;
+            j = 0;
+            if (x == 2) {
+                y++;
             }
-            else if (x == 2) {
-                y++; 
-            }
-
         }
 
         return bicubic;
     }
+
+    /** OPERASI BENTUK MATRIX **/
+    public static Matrix squareMatxToColMatx(Matrix matx) {
+        // matx1 berubah menjadi matrix colom dengan jumlah elemen sama
+        // matrix colom yaitu matrix yang hanya memiliki 1 colom
+
+        Matrix matxCol;
+        float[][] temp;
+        int i, j, itrRow;
+
+        temp = new float[matx.getNRow()*matx.getNCol()][1];
+        matxCol = new Matrix(temp, matx.getNRow()*matx.getNCol(), 1);
+        itrRow = 0;
+
+        for (i = 0; i < matx.getNCol(); i++) {
+            for (j = 0; j < matx.getNRow(); j++) {
+                matxCol.setElmtContent(j+i+itrRow, 0, matx.getElmtContent(i, j));
+            }
+            itrRow += j-1;
+        }
+
+        return matxCol;
+    }
+
+    public static Matrix colMatxToSquareMatx(Matrix matx) {
+        // matx1 berubah menjadi matrix square
+        // precond : jumlah elemen matrix adalah n^2 dengan n = 1,2,3,..
+
+        int incr;
+        int i, j, itrRow;
+        float[][] temp;
+        Matrix matxSquare;
+
+        incr = 1;
+
+        while (incr*incr != matx.getNRow()) {
+            incr += 1;
+        }
+
+        System.out.println(incr+"iniincr");
+
+        temp = new float[matx.getNRow() / incr][matx.getNRow() / incr];
+        matxSquare = new Matrix(temp, matx.getNRow() / incr, matx.getNRow() / incr);
+
+        itrRow = 0;
+
+        for (i = 0; i < matx.getNRow() / incr; i++) {
+            for (j = 0; j< matx.getNRow() / incr; j++) {
+                matxSquare.setElmtContent(i, j, matx.getElmtContent(i+j+itrRow, 0));
+            }
+            itrRow += j-1;
+        }
+
+        return matxSquare;
+    }
+
 
 
 
