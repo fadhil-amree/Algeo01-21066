@@ -32,6 +32,20 @@ public class Spl {
         return no_solution;
     }
 
+    public static boolean isParametric(float[] solusi){
+        // Mengembalikan true jika solusi parametric
+        // KAMUS LOKAL
+        boolean parametric = false;
+        // ALGROITMA
+        for(float x: solusi){
+            if (x == 9999){
+                parametric = true;
+                break;
+            }
+        }
+        return parametric;
+    }
+
     public static void menuSPL(int menu){
         // Prosedur untuk menjalankan menu SPL
         // I.S Sembarang, menu == 1 or menu == 2 or menu == 3 or menu == 4

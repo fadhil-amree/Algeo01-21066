@@ -1,6 +1,5 @@
 package src.SPL;
 import src.*;
-import java.util.*;
 public class GaussJordan {
     public static boolean inListInt (int[] li, int x){
         //Fungsi mengecek apakah suatu elemen terdapat dalam list
