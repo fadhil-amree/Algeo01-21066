@@ -1,7 +1,7 @@
 package src;
 import java.util.*;
 import src.Matrix;
-import src.SPL.*;
+import src.SPL.*;   
 
 public class Spl {
     static float parametric = 9999, undef = -9999;
