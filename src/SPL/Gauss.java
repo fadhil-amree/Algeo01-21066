@@ -9,27 +9,88 @@ public class Gauss {
         /* Lakukan OBE */
         float[] tempresult = new float[matrixkoef.getNCol()];
         String[] result;
-        int i1, j1, j2, k, n, i; /*iterasi*/
+        int i1, j1, j2, k, n, i, j; /*iterasi*/
         float temp;
-        Matrix tempMatrixkoef = new Matrix(matrixkoef.getNRow(), matrixkoef.getNCol());
+        float[][] btemp;
+        btemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol()];
+        Matrix tempMatrixkoef = new Matrix(btemp, matrixkoef.getNRow(), matrixkoef.getNCol());
 
         // ALGORITMA
         /* Lakukan OBE */ /* Benerin dulu OBE-nya mas */
+        // ALGORITMA
+        while (!(ReduksiBaris.IsSegitiga(matrixkoef)))
+        {
+            // Tukar baris matrix yang elemen diagonalnya 0
+            for (i = 0; i < matrixkoef.getNRow(); i++)
+            {
+                if (matrixkoef.getElmtContent(i, i) == 0)
+                {
+                    j = i + 1;
+                    while (j < matrixkoef.getNCol())
+                    {
+                        if (matrixkoef.getElmtContent(j, i)!= 0)
+                        {
+                            ReduksiBaris.tukarBaris(matrixkoef, i, j);
+                            ReduksiBaris.tukarBaris(matrixres, i, j);
+                        }
+                        j++;
+                    }
+                }
+            }
+
+            // tambah baris dengan baris lainnya
+            for (i = 0; i < matrixkoef.getNRow(); i++)
+            {
+                for (j = 0; j < i; j++)
+                {
+                    // Cek apakah elemen pada matrix bernilai 0
+                    if (matrixkoef.getElmtContent(i, j) != 0)
+                    {
+
+                        // Cari KPK
+                        float KPK = matrixkoef.getElmtContent(i, j) * matrixkoef.getElmtContent(j, j);
+                        float kali = KPK / matrixkoef.getElmtContent(i, j);
+
+                        // kalikan baris i dengan konstanta kali
+                        int col;
+                        for (col = 0; col < matrixkoef.getNCol(); col++)
+                        {
+                            temp = matrixkoef.getElmtContent(i, col) * kali;
+                            matrixkoef.setElmtContent(i, col, temp);
+                            temp = matrixres.getElmtContent(i, 0) * kali;
+                            matrixres.setElmtContent(i, 0, temp);
+                        }
+
+                        float kelipatan = KPK / matrixkoef.getElmtContent(j, j);
+
+                        for (col = 0; col < matrixkoef.getNCol(); col++)
+                        {
+                            temp = matrixkoef.getElmtContent(i, col) - (matrixkoef.getElmtContent(j, col) * kelipatan);
+                            matrixkoef.setElmtContent(i, col, temp);
+                            temp = matrixres.getElmtContent(i, 0) - (matrixres.getElmtContent(j, 0) * kelipatan);
+                            matrixres.setElmtContent(i, 0, temp);
+                        }
+                    }
+                }
+            }
+        }
+        
 
         /* Lakukan perhitungan hasil */
 
-        for (i1 = 0; i1 < tempMatrixkoef.getNRow(); i1++)
+        for (i1 = 0; i1 < matrixkoef.getNRow(); i1++)
         {
-            for (j1 = 0; j1 < tempMatrixkoef.getNCol(); j1++)
+            for (j1 = 0; j1 < matrixkoef.getNCol(); j1++)
             {
                 /* Ubah elemen jika pada elemen pertama tidak nol */
-                if (tempMatrixkoef.getElmtContent(i1, j1) != 0)
+                if (matrixkoef.getElmtContent(i1, j1) != 0)
                 {
-                    temp = tempMatrixkoef.getElmtContent(i1, j1);
-                    for (j2 = 0; j2 < tempMatrixkoef.getNCol(); j2++)
+                    temp = matrixkoef.getElmtContent(i1, j1);
+                    for (j2 = 0; j2 < matrixkoef.getNCol(); j2++)
                     {
-                        tempMatrixkoef.setElmtContent(i1, j2, tempMatrixkoef.getElmtContent(i1, j2) / temp);
+                        matrixkoef.setElmtContent(i1, j2, matrixkoef.getElmtContent(i1, j2) / temp);
                     }
+                    matrixres.setElmtContent(i1, 0, matrixres.getElmtContent(i1, 0) / temp);
                     break;
                 }
             }
@@ -37,23 +98,23 @@ public class Gauss {
 
         /* Olah Hasil */
         /* Kasus 1 : Solusi Tunggal */
-        if (tempMatrixkoef.getNCol() == tempMatrixkoef.getNRow() && DiagonalUtama1(tempMatrixkoef))
+        if (matrixkoef.getNCol() == matrixkoef.getNRow() && DiagonalUtama1(matrixkoef))
         {
-            for (i = tempMatrixkoef.getNCol() - 1; i >= 0; i--)
+            for (i = matrixkoef.getNCol() - 1; i >= 0; i--)
             {
-                tempresult[i] = tempMatrixkoef.getElmtContent(i, tempMatrixkoef.getNCol());
-                for (j1 = tempMatrixkoef.getNCol() - 1; j1 > i; j1--)
+                tempresult[i] = matrixkoef.getElmtContent(i, matrixkoef.getNCol());
+                for (j1 = matrixkoef.getNCol() - 1; j1 > i; j1--)
                 {
-                    tempresult[i] -= tempMatrixkoef.getElmtContent(i, j1) * tempresult[j1];
+                    // tempresult[i] -= matrixkoef.getElmtContent(i, j1) * tempresult[j1];
                 }
             }
         }
 
         /* Kasus 2 : Solusi Banyak */
-        else if (DiagonalUtama1(tempMatrixkoef) && )
-        {
+        // else if (DiagonalUtama1(matrixkoef) && )
+        // {
 
-        }
+        // }
         /* Kasus 3 : Tidak ada Solusi */
         return null;
     }
@@ -82,67 +143,72 @@ public class Gauss {
         return foundNotOne;
     }
 
-    public Matrix MatOBE(Matrix matrixkoef, Matrix matrixres)
-    {
-        float temp;
+    // public Matrix MatOBE(Matrix matrixkoef, Matrix matrixres)
+    // {
+    //     float temp;
         
-        // KAMUS
+    //     // KAMUS
 
-        // ALGORITMA
-        while (!(ReduksiBaris.IsSegitiga(matrixkoef)))
-        {
-            // Tukar baris matrix yang elemen diagonalnya 0
-            int i, j;
-            for (i = 0; i < matrixkoef.getNCol(); i++)
-            {
-                if (matrixkoef.getElmtContent(i, i) == 0)
-                {
-                    j = i + 1;
-                    while (j < matrixkoef.getNCol())
-                    {
-                        if (matrixkoef.getElmtContent(j, i)!= 0)
-                        {
-                            ReduksiBaris.tukarBaris(matrixkoef, i, j);
-                        }
-                        j++;
-                    }
-                }
-            }
+    //     // ALGORITMA
+    //     while (!(ReduksiBaris.IsSegitiga(matrixkoef)))
+    //     {
+    //         // Tukar baris matrix yang elemen diagonalnya 0
+    //         int i, j;
+    //         for (i = 0; i < matrixkoef.getNRow(); i++)
+    //         {
+    //             if (matrixkoef.getElmtContent(i, i) == 0)
+    //             {
+    //                 j = i + 1;
+    //                 while (j < matrixkoef.getNCol())
+    //                 {
+    //                     if (matrixkoef.getElmtContent(j, i)!= 0)
+    //                     {
+    //                         ReduksiBaris.tukarBaris(matrixkoef, i, j);
+    //                         ReduksiBaris.tukarBaris(matrixres, i, j);
+    //                     }
+    //                     j++;
+    //                 }
+    //             }
+    //         }
 
-            // tambah baris dengan baris lainnya
-            for (i = 0; i < matrix.getNCol(); i++)
-            {
-                for (j = 0; j < i; j++)
-                {
-                    // Cek apakah elemen pada matrix bernilai 0
-                    if (matrix.getElmtContent(i, j) != 0)
-                    {
+    //         // tambah baris dengan baris lainnya
+    //         for (i = 0; i < matrixkoef.getNRow(); i++)
+    //         {
+    //             for (j = 0; j < i; j++)
+    //             {
+    //                 // Cek apakah elemen pada matrix bernilai 0
+    //                 if (matrixkoef.getElmtContent(i, j) != 0)
+    //                 {
 
-                        // Cari KPK
-                        float KPK = matrix.getElmtContent(i, j) * matrix.getElmtContent(j, j);
-                        float kali = KPK / matrix.getElmtContent(i, j);
+    //                     // Cari KPK
+    //                     float KPK = matrixkoef.getElmtContent(i, j) * matrixkoef.getElmtContent(j, j);
+    //                     float kali = KPK / matrixkoef.getElmtContent(i, j);
 
-                        // kalikan baris i dengan konstanta kali
-                        int col;
-                        for (col = 0; col < matrix.getNCol(); col++)
-                        {
-                            temp = matrix.getElmtContent(i, col) * kali;
-                            matrix.setElmtContent(i, col, temp);
-                        }
+    //                     // kalikan baris i dengan konstanta kali
+    //                     int col;
+    //                     for (col = 0; col < matrixkoef.getNCol(); col++)
+    //                     {
+    //                         temp = matrixkoef.getElmtContent(i, col) * kali;
+    //                         matrixkoef.setElmtContent(i, col, temp);
+    //                         temp = matrixres.getElmtContent(i, 0) * kali;
+    //                         matrixres.setElmtContent(i, 0, temp);
+    //                     }
 
-                        float kelipatan = KPK / matrix.getElmtContent(j, j);
+    //                     float kelipatan = KPK / matrixkoef.getElmtContent(j, j);
 
-                        for (col = 0; col < matrix.getNCol(); col++)
-                        {
-                            temp = matrix.getElmtContent(i, col) - (matrix.getElmtContent(j, col) * kelipatan);
-                            matrix.setElmtContent(i, col, temp);
-                        }
-                    }
-                }
-            }
-        }
-        return matrix;
-    }
+    //                     for (col = 0; col < matrixkoef.getNCol(); col++)
+    //                     {
+    //                         temp = matrixkoef.getElmtContent(i, col) - (matrixkoef.getElmtContent(j, col) * kelipatan);
+    //                         matrixkoef.setElmtContent(i, col, temp);
+    //                         temp = matrixres.getElmtContent(i, 0) - (matrixres.getElmtContent(j, 0) * kelipatan);
+    //                         matrixres.setElmtContent(i, 0, temp);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return matrixkoef;
+    // }
 
     
 }
