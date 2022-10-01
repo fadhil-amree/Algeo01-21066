@@ -3,7 +3,7 @@ import src.Matrix;
 import src.Determinant.*;
 
 public class Cramer {
-    public float[] splbyCramer(Matrix matrixkoef,Matrix matrixres)
+    public static float[] splbyCramer(Matrix matrixkoef,Matrix matrixres)
     {
         // KAMUS
         int i, j, n; /*iterasi*/
