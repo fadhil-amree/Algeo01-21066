@@ -1,41 +1,120 @@
 package src;
 
-import src.Inverse;
-import src.Matrix;
+import java.util.Scanner;
 
-import java.util.*;
+// import src.Inverse;
+// import src.Matrix;
 
-import javax.print.StreamPrintService;
+// import java.util.*;
 
-import java.lang.Math.*;
+// import java.lang.Math.*;
 
 public class BicubicInterpolation {
 
     public static void main(String[] args) {
-        Matrix fxy, modelBic;
-        float[][] temp;
-        float y;
+        // Matrix fxy, modelBic, invmodel;
+        // float[][] temp;
+        // float y;
 
-        temp = new float[4][4];
-        fxy = new Matrix(temp,4,4);
+        // temp = new float[4][4];
+        // fxy = new Matrix(temp,4,4);
         
-        temp = new float[16][16];
-        modelBic = new Matrix(temp, 16, 16);
-        modelBic = createModelBicubicMatrix();
+        // temp = new float[16][16];
+        // modelBic = new Matrix(temp, 16, 16);
+        
+        // temp = new float[16][16];
+        // invmodel = new Matrix(temp, 16, 16);
 
-        modelBic.displayMatrix();
 
-        modelBic = Inverse.getInversebyAdj(modelBic);
-
-        // System.out.print("\n\n");
+        // modelBic = createModelBicubicMatrix();
 
         // modelBic.displayMatrix();
+
+        // modelBic = Inverse.getInversebyOBE(modelBic);
+
+        // System.out.print("\n aaaaaaa \n");
+
+        // modelBic.displayMatrix();
+        menuBicubicInterpolation();
     }
 
 
     /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
-    public static void menuBicubicInterpolation(int menu) {
+    public static void menuBicubicInterpolation() {
+
+        Scanner input = new Scanner(System.in);
+        int inputType;
+        int i, j, valueModel;
+        float[][] tempMatx;
+        Matrix fxyMatx;
+        String file;
+        float a, b, fabValue;
+
+        System.out.println("Tipe input");
+        System.out.println("1. Input Keyboard");
+        System.out.println("2. Input File");
+
+        System.out.print("Masukkan tipe input: ");
+        inputType = input.nextInt();
+
+        while (inputType != 1 && inputType != 2) {
+            System.out.println("Tipe input yang anda pilih tidak tersedia!");
+            System.out.println("Tipe input");
+            System.out.println("1. Input Keyboard");
+            System.out.println("2. Input File");
+    
+            System.out.print("Masukkan tipe input: ");
+            inputType = input.nextInt();
+        }
+
+        tempMatx = new float[4][4];
+        fxyMatx = new Matrix(tempMatx, 4, 4);
+
+        if (inputType == 1) {
+
+            System.out.println("Masukkan nilai f(-1,-1),f(0,-1),..,f(2,2).");
+            
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    System.out.printf("f(%d,%d) = ", j-1,i-1);
+                    valueModel = input.nextInt();
+                    // System.out.print("\n");
+
+                    fxyMatx.setElmtContent(i, j, valueModel);
+                }
+            }
+        }
+        // inputType == 2
+        else { 
+
+            System.out.print("Masukkan nama file: ");
+            file = input.next();
+            fxyMatx = new Matrix(file);
+        }
+
+        System.out.println("Masukkan nilai a dan b untuk f(a,b)");
+        System.out.println("yang ingin di interpolasi.");
+        System.out.println("Syarat a dan b dalam rentang 0..1");
         
+        System.out.print("a = ");
+        a = input.nextFloat();
+        System.out.print("b = ");
+        b = input.nextFloat();
+        
+        while ( a < 0 && a > 1.0 && b < 0 && b > 1.0) {
+            System.out.println("input tidak sesuai");
+            System.out.println("Syarat a dan b dalam rentang 0..1");
+            
+            System.out.print("a = ");
+            a = input.nextFloat();
+            System.out.print("b = ");
+            b = input.nextFloat();
+        }
+
+        fabValue = interpolasiBicub(fxyMatx, a, b);
+
+        System.out.printf("f(%f,&f) = %f", a, b, fabValue);
+
     }
 
 
