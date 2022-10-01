@@ -1,18 +1,35 @@
 package src;
 
-// import src.Inverse;
-// import src.Matrix;
+import src.Inverse;
+import src.Matrix;
 
-// import java.util.*;
+import java.util.*;
 
-// import javax.print.StreamPrintService;
+import javax.print.StreamPrintService;
 
-// import java.lang.Math.*;
+import java.lang.Math.*;
 
 public class BicubicInterpolation {
 
     public static void main(String[] args) {
+        Matrix fxy, modelBic;
+        float[][] temp;
+        float y;
 
+        temp = new float[4][4];
+        fxy = new Matrix(temp,4,4);
+        
+        temp = new float[16][16];
+        modelBic = new Matrix(temp, 16, 16);
+        modelBic = createModelBicubicMatrix();
+
+        modelBic.displayMatrix();
+
+        modelBic = Inverse.getInversebyAdj(modelBic);
+
+        // System.out.print("\n\n");
+
+        // modelBic.displayMatrix();
     }
 
 
@@ -169,8 +186,6 @@ public class BicubicInterpolation {
         while (incr*incr != matx.getNRow()) {
             incr += 1;
         }
-
-        System.out.println(incr+"iniincr");
 
         temp = new float[matx.getNRow() / incr][matx.getNRow() / incr];
         matxSquare = new Matrix(temp, matx.getNRow() / incr, matx.getNRow() / incr);
