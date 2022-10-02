@@ -54,6 +54,7 @@ public class GaussJordan {
         String esolusi_string;
         Matrix tempMatrix = new Matrix(matrixkoef);
         Matrix resMatrix = new Matrix(matrixres);
+        Matrix tesMatrix = new Matrix(matrixkoef);
         int i,j,k,l; //indeks
         int ctr, nParameter; //counter
         int[] idxParameter = new int[matrixkoef.getNCol()];
@@ -143,7 +144,7 @@ public class GaussJordan {
                     }
                 }
             }
-            if (Matrix.isInvertible(tempMatrix) || tempMatrix.getNRow()>tempMatrix.getNCol()){ //Punya solusi unik
+            if (Matrix.isInvertible(tesMatrix) || tempMatrix.getNRow()>tempMatrix.getNCol()){ //Punya solusi unik
                 for (i=0;i<=matrixkoef.getNCol()-1;i++){
                     solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
                 }
@@ -209,10 +210,10 @@ public class GaussJordan {
             for (i=0;i<matrixkoef.getNCol();i++){
                 if (!inListInt(idxParameter, i,nParameter)){ //Jika bukan parameter
                     esolusi_string = "";
-                    esolusi_string += String.valueOf(resMatrix.getElmtContent(i, 0));
+                    esolusi_string += String.valueOf((double)resMatrix.getElmtContent(i, 0));
                     esolusi_string += " - ";
                     for(j=0;j<nParameter;j++){
-                        esolusi_string += String.valueOf(tempMatrix.getElmtContent(i, idxParameter[j]))+" "+listParameter[j];
+                        esolusi_string += String.valueOf((double)tempMatrix.getElmtContent(i, idxParameter[j]))+" "+listParameter[j];
                         if (j!=nParameter-1){
                             esolusi_string += " - ";
                         }
@@ -225,7 +226,7 @@ public class GaussJordan {
         
         } else{
             for (i=0;i<matrixkoef.getNCol();i++){
-                solusi_string[i] = String.valueOf(solusi[i]);
+                solusi_string[i] = String.valueOf((double)solusi[i]);
             }
         }
         return solusi_string;
