@@ -58,7 +58,7 @@ public class BicubicInterpolation {
         int inputType;
         int i, j, valueModel;
         float[][] tempMatx;
-        Matrix fxyMatx;
+        Matrix fxyMatx, tempMatrix;
         String file;
         float a, b, fabValue;
 
@@ -79,11 +79,11 @@ public class BicubicInterpolation {
             inputType = input.nextInt();
         }
 
-        tempMatx = new float[4][4];
-        fxyMatx = new Matrix(tempMatx, 4, 4);
-
+        
         if (inputType == 1) {
-
+            tempMatx = new float[4][4];
+            fxyMatx = new Matrix(tempMatx, 4, 4);
+            
             System.out.println("Masukkan nilai f(-1,-1),f(0,-1),..,f(2,2).");
             
             for (i = 0; i < 4; i++) {
@@ -95,33 +95,41 @@ public class BicubicInterpolation {
                     fxyMatx.setElmtContent(i, j, valueModel);
                 }
             }
-        }
-        // inputType == 2
-        else { 
 
-            System.out.print("Masukkan nama file: ");
-            file = input.next();
-            fxyMatx = new Matrix(file);
-        }
-
-        System.out.println("\nMasukkan nilai a dan b untuk f(a,b)");
-        System.out.println("yang ingin di interpolasi.");
-        System.out.println("Syarat a dan b dalam rentang 0..1");
-        
-        System.out.print("a = ");
-        a = input.nextFloat();
-        System.out.print("b = ");
-        b = input.nextFloat();
-        
-        while ( (a < 0 || a > 1.0) || (b < 0 || b > 1.0) ) {
-            System.out.println("input tidak sesuai");
+            System.out.println("\nMasukkan nilai a dan b untuk f(a,b)");
+            System.out.println("yang ingin di interpolasi.");
             System.out.println("Syarat a dan b dalam rentang 0..1");
             
             System.out.print("a = ");
             a = input.nextFloat();
             System.out.print("b = ");
             b = input.nextFloat();
+            
+            while ( (a < 0 || a > 1.0) || (b < 0 || b > 1.0) ) {
+                System.out.println("input tidak sesuai");
+                System.out.println("Syarat a dan b dalam rentang 0..1");
+                
+                System.out.print("a = ");
+                a = input.nextFloat();
+                System.out.print("b = ");
+                b = input.nextFloat();
+            }
         }
+        // inputType == 2
+        else { 
+            tempMatx = new float[5][4];
+            tempMatrix = new Matrix(tempMatx, 5, 4);
+
+            System.out.print("Masukkan nama file: ");
+            file = input.next();
+            tempMatrix = new Matrix(file);
+
+            a = tempMatrix.getElmtContent(4, 0);
+            b = tempMatrix.getElmtContent(4, 1);
+
+            fxyMatx = new Matrix(tempMatrix.getContent(),4,4);
+        }
+
 
         fabValue = interpolasiBicub(fxyMatx, a, b);
 
