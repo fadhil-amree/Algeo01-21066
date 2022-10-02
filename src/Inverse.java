@@ -140,7 +140,7 @@ public class Inverse {
                                 }
                             }
                             Mminor = new Matrix(minor,matrix.getNRow()-1,matrix.getNCol()-1);
-                            det = Kofaktor.detKofaktor(Mminor); // Menghitung determinan dari matriks minor
+                            det = ReduksiBaris.detReduksi(Mminor); // Menghitung determinan dari matriks minor
                             if ((i+j)%2==0){ //Menentukan tanda cofactor
                                 c = 1;
                             } else{
@@ -154,7 +154,7 @@ public class Inverse {
                     }
                     kofaktorMatrix = new Matrix(cofactorMatrix, matrix.getNRow(), matrix.getNCol());
                     inverseMatrix = Matrix.getTransposeMatrix(kofaktorMatrix);
-                    det = Kofaktor.detKofaktor(matrix); //menghitung determinan matriks
+                    det = ReduksiBaris.detReduksi(matrix); //menghitung determinan matriks
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;
                 } else { 
@@ -163,7 +163,7 @@ public class Inverse {
                     cofactorMatrix[1][1] = matrix.getElmtContent(0,0);
                     cofactorMatrix[0][1] = (-1) * matrix.getElmtContent(0,1);
                     cofactorMatrix[1][0] = (-1) * matrix.getElmtContent(1,0);
-                    det = Kofaktor.detKofaktor(matrix); //menghitung determinan matriks
+                    det = ReduksiBaris.detReduksi(matrix); //menghitung determinan matriks
                     inverseMatrix = new Matrix(cofactorMatrix, matrix.getNRow(),matrix.getNCol());
                     inverseMatrix.multiplybyConstant(1/det); // 1/det * adj(matriks)
                     return inverseMatrix;           
