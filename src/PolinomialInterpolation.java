@@ -117,6 +117,7 @@ public class PolinomialInterpolation {
         Matrix MsetOfTitik;
         Matrix augmented;
         String file;
+        String[] sfunc;
 
         // ALGORITMA
 
@@ -180,6 +181,22 @@ public class PolinomialInterpolation {
         Y = estimateY(func, n+1 ,X);
             //Menampilkan
         System.out.printf("P(%.04f) = %.04f\n",X,Y);
+        System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+        String response = input.next();
+        while (!response.equals("y") && !response.equals("n")){
+            System.out.println("Input tidak valid!");
+            System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+            response = input.next();
+        }
+        if (response.equals("y")){
+            System.out.print("Masukkan nama file: ");
+            file = input.next();
+            sfunc = new String[n+1];
+            for (i=0;i<n+1;i++){
+                sfunc[i] =  String.valueOf(func[i]);
+            }
+            Write.saveHasil(sfunc, file);
+        }
     }
 
 }

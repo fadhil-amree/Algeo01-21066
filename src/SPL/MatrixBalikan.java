@@ -8,12 +8,14 @@ public class MatrixBalikan {
         // Fungsi mencari solusi SPL dengan metode MatrixBalikan
         // Prekondisi matrixkoef dan matrixres tak kosong
         // KAMUS LOKAL
-        float[] solusi = new float[matrixkoef.getNCol()]; //
-        String[] solusi_string = new String[matrixkoef.getNCol()]; //
+        float[] solusi; //
+        String[] solusi_string; //
         int i; //indeks
         //ALGORITMA
         if (matrixkoef.getNCol()>=2){
             if (Matrix.isInvertible(matrixkoef)){ // Jika punya solusi unik
+                solusi = new float[matrixkoef.getNCol()];
+                solusi_string = new String[matrixkoef.getNCol()];
                 Matrix inverseMatrix = Inverse.getInversebyOBE(matrixkoef);
                 Matrix matrixSolusi = Matrix.multiplyMatrix(inverseMatrix, matrixres);
                 for (i = 0; i <= matrixSolusi.getNRow()-1;i++){
@@ -21,10 +23,13 @@ public class MatrixBalikan {
                 }
             } else { // Jika tak punya matrix balikan
                 solusi = new float[0]; //Tak punya balikan
+                solusi_string = new String[0];
             }
 
         }
         else{ //matrixkoef.getNCol()==1
+            solusi = new float[matrixkoef.getNCol()];
+            solusi_string = new String[matrixkoef.getNCol()];
             if ((matrixkoef.getElmtContent(0, 0) == 0) && (matrixres.getElmtContent(0, 0)!=0)){
                 solusi =  GaussJordan.getlistUndef(1); //Jika tak punya solusi
             } else if ((matrixkoef.getElmtContent(0, 0) == 0) && (matrixres.getElmtContent(0, 0)==0)){

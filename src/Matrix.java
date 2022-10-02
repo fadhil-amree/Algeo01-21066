@@ -151,7 +151,11 @@ public class Matrix {
         return m3;
     }
     public static boolean isInvertible(Matrix matrix){
-        return (Kofaktor.detKofaktor(matrix)!=0);
+        if (matrix.getNRow() == matrix.getNCol()){
+            return (Kofaktor.detKofaktor(matrix)!=0);
+        } else{
+            return false;
+        }
     }
 
     public static Matrix getIdentityMatrix(int order){
@@ -175,7 +179,7 @@ public class Matrix {
         //ALGORITMA
         for(i=0;i<order;i++){
             for(j=0;j<order;j++){
-            undefMatrix[i][i] = -999;
+            undefMatrix[i][j] = -9999;
             }
         }
         Matrix undefinedMatrix = new Matrix(undefMatrix,order,order);
@@ -318,6 +322,31 @@ public class Matrix {
         listMatrix[0] = matrixkoef;
         listMatrix[1] = matrixres;
         return listMatrix;   
+    }
+
+    public static boolean isEqualMatrix(Matrix m1, Matrix m2){
+        // Fungsi untuk mengecek apakah dua buah matriks sama, jika iya mengembalikan true, jika tidak mengembalikan false
+        // KAMUS LOKAL
+        int i,j;
+        boolean equal = true; 
+        // ALGORITMA
+        if ((m1.getNRow()!=m2.getNRow()) || (m1.getNCol()!=m2.getNCol())){
+            equal = false;
+        } else { //ukuran sama
+            i =0;
+            while (i<m1.getNRow() && equal){
+                j = 0;
+                while (j < m2.getNCol() && equal){
+                    if (m1.getElmtContent(i, j)!=m2.getElmtContent(i, j)){
+                        equal = false;
+                    }
+                    j++;
+                }
+                i++;
+            }
+        }
+
+        return equal;
     }
     
 }
