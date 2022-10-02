@@ -8,8 +8,6 @@ import javax.swing.border.StrokeBorder;
 
 import src.SPL.GaussJordan;
 
-import src.Read;
-
 // import src.Matrix;
 
 // import java.util.*;
@@ -18,7 +16,7 @@ import src.Read;
 
 public class BicubicInterpolation {
 
-    /*** MENU UNTUK BICUBIC INTERPOLATION ***/
+    /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
     public static void menuBicubicInterpolation() throws Exception {
 
         Scanner input = new Scanner(System.in);
@@ -89,7 +87,7 @@ public class BicubicInterpolation {
 
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            tempMatrix = Read.BacaFile(file);
+            tempMatrix =  Read.BacaFile(file);
 
             a = tempMatrix.getElmtContent(4, 0);
             b = tempMatrix.getElmtContent(4, 1);
