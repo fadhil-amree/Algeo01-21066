@@ -24,7 +24,7 @@ public class BicubicInterpolation {
         int inputType;
         int i, j, valueModel;
         float[][] tempMatx;
-        Matrix fxyMatx, tempMatrix;
+        Matrix fxyMatx, resultMatx, tempMatrix;
         String file;
         float a, b, fabValue;
 
@@ -105,7 +105,27 @@ public class BicubicInterpolation {
 
         fabValue = interpolasiBicub(fxyMatx, a, b);
 
-        System.out.printf("f(%f,%f) = %f\n\n", a, b, fabValue);
+        System.out.printf("f(%f,%f) = %f\n", a, b, fabValue);
+
+
+        System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+            String response = input.next();
+            while (!response.equals("y") && !response.equals("n")){
+                System.out.println("Input tidak valid!");
+                System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                response = input.next();
+            }
+            if (response.equals("y")){
+
+                tempMatx = new float[1][2];
+                tempMatx[0][0] = a;
+                tempMatx[0][1] = b;
+                resultMatx = new Matrix(tempMatx, 1, 2);
+                
+                System.out.print("Masukkan nama file: ");
+                file = input.next();
+                Write.saveHasil(resultMatx, file);
+            }
 
     }
 
