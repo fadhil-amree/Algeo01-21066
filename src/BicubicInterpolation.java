@@ -1,8 +1,13 @@
 package src;
 
+// import java.io.IOError;
+import java.io.IOException;
 import java.util.Scanner;
 
-// import src.Inverse;
+import javax.swing.border.StrokeBorder;
+
+import src.SPL.GaussJordan;
+
 // import src.Matrix;
 
 // import java.util.*;
@@ -12,35 +17,42 @@ import java.util.Scanner;
 public class BicubicInterpolation {
 
     public static void main(String[] args) {
-        // Matrix fxy, modelBic, invmodel;
-        // float[][] temp;
-        // float y;
+        Matrix fxy, modelBic, aijMatx;
+        float[][] temp;
 
-        // temp = new float[4][4];
-        // fxy = new Matrix(temp,4,4);
+        temp = new float[16][1];
+        fxy = new Matrix(4,4);
         
-        // temp = new float[16][16];
-        // modelBic = new Matrix(temp, 16, 16);
+        temp = new float[16][16];
+        modelBic = new Matrix(temp, 16, 16);
         
-        // temp = new float[16][16];
-        // invmodel = new Matrix(temp, 16, 16);
+        temp = new float[16][1];
+        aijMatx = new Matrix(temp, 16, 1);
 
 
-        // modelBic = createModelBicubicMatrix();
+        modelBic = createModelBicubicMatrix();
 
         // modelBic.displayMatrix();
 
-        // modelBic = Inverse.getInversebyOBE(modelBic);
+        aijMatx = createMatrixofAij(fxy);
+
+        System.out.println("---------------------------");
+        aijMatx.displayMatrix();
+        
+        aijMatx = Matrix.multiplyMatrix(modelBic, aijMatx);
+        
+        System.out.println("---------------------------");
+        aijMatx.displayMatrix();
+
 
         // System.out.print("\n aaaaaaa \n");
 
         // modelBic.displayMatrix();
-        menuBicubicInterpolation();
     }
 
 
     /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
-    public static void menuBicubicInterpolation() {
+    public static void menuBicubicInterpolation() throws IOException {
 
         Scanner input = new Scanner(System.in);
         int inputType;
@@ -92,7 +104,7 @@ public class BicubicInterpolation {
             fxyMatx = new Matrix(file);
         }
 
-        System.out.println("Masukkan nilai a dan b untuk f(a,b)");
+        System.out.println("\nMasukkan nilai a dan b untuk f(a,b)");
         System.out.println("yang ingin di interpolasi.");
         System.out.println("Syarat a dan b dalam rentang 0..1");
         
@@ -101,7 +113,7 @@ public class BicubicInterpolation {
         System.out.print("b = ");
         b = input.nextFloat();
         
-        while ( a < 0 && a > 1.0 && b < 0 && b > 1.0) {
+        while ( (a < 0 || a > 1.0) || (b < 0 || b > 1.0) ) {
             System.out.println("input tidak sesuai");
             System.out.println("Syarat a dan b dalam rentang 0..1");
             
@@ -113,7 +125,7 @@ public class BicubicInterpolation {
 
         fabValue = interpolasiBicub(fxyMatx, a, b);
 
-        System.out.printf("f(%f,&f) = %f", a, b, fabValue);
+        System.out.printf("f(%f,%f) = %f\n\n", a, b, fabValue);
 
     }
 
@@ -133,19 +145,21 @@ public class BicubicInterpolation {
         matxAij = new Matrix(temp, 16, 1);
 
         matxAij = createMatrixofAij(fxy);
+        matxAij.displayMatrix();
 
-        x = x - 1;
         i = 0; j = 0;
         sum = 0;
 
         for (itrCol = 0; itrCol < 16; itrCol++) {
 
+            // System.out.println(j);
             i = itrCol%4;
 
             sum += matxAij.getElmtContent(itrCol, 0) * Math.pow(x, i) * Math.pow(y,j);
             
             j = j + (i/3);
         }
+
 
         return sum;
     }
@@ -156,17 +170,16 @@ public class BicubicInterpolation {
         // Mencari nilai a[i][j] untu i,j = 0,1,2,3. dari model matrix
 
         // KAMUS LOKAL
-        Matrix invModel, fxyMatrixCol, tempMatx, resultMatx;
+        Matrix fxyMatrixCol, modelMatx, resultMatx;
+        String[] strAKoef;
         float[][] temp;
+        int i;
 
         // ALGORITMA
         // inisial
         temp = new float[16][16];
-        tempMatx = new Matrix(temp, 16, 16);
+        modelMatx = new Matrix(temp, 16, 16);
         
-        temp = new float[16][16];
-        invModel = new Matrix(temp, 16, 16);
-
         temp = new float[16][1];
         fxyMatrixCol = new Matrix(temp, 16, 1);
 
@@ -174,12 +187,15 @@ public class BicubicInterpolation {
         resultMatx = new Matrix(temp, 16, 1);
 
         // f(x,y) = Ca -> C-1f(x,y) 
-        tempMatx = createModelBicubicMatrix();
-        invModel = Inverse.getInversebyOBE(tempMatx); // dapat invers dari rumus bicubic
-        
+        modelMatx = createModelBicubicMatrix();
         fxyMatrixCol = squareMatxToColMatx(fxy);
+
+        strAKoef = GaussJordan.splbyGaussJordan(modelMatx, fxyMatrixCol);
+
+        for (i = 0; i < 16; i++) {
+            resultMatx.setElmtContent(i, 0, Float.valueOf(strAKoef[i]));
+        }
         
-        resultMatx = Matrix.multiplyMatrix(invModel, fxyMatrixCol);
         
         return resultMatx;
     }

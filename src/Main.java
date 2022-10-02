@@ -105,6 +105,7 @@ public class Main {
                         break;
                         case 5:
                         System.out.println("Melakukan Interpolasi Bicubic");
+                                BicubicInterpolation.menuBicubicInterpolation();
                         break;
                         case 6: 
                         System.out.println("Melakukan Regresi Linier Berganda");

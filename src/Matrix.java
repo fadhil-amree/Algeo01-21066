@@ -2,6 +2,9 @@ package src;
 
 import java.io.*;
 import java.util.*;
+
+import javax.xml.transform.Source;
+
 import src.Determinant.*;
 
 public class Matrix {
@@ -209,7 +212,7 @@ public class Matrix {
         return m3;
     }
     public static boolean isInvertible(Matrix matrix){
-        return (Kofaktor.detKofaktor(matrix)!=0);
+        return (ReduksiBaris.detReduksi(matrix)!=0);
     }
 
     public static Matrix getIdentityMatrix(int order){
