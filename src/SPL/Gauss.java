@@ -361,11 +361,8 @@ public class Gauss {
             int batasatasParam = matrixkoef.getNCol() - 1;
             
             /* inisialisasi matriks untuk menyimpan hasil */
-            /* Sususan Mtemp = new float[nNonParam][nParam] */
-            float[][] dumpMtemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
-            Matrix Mtemp = new Matrix(dumpMtemp, matrixkoef.getNRow(), matrixkoef.getNCol() - matrixkoef.getNRow() + 1);
             
-            /* Simpan identitas variable yang bukan parameter */
+            /* Simpan identitas variable yang bukan parameter dan berupa hasil*/
             for (i = matrixkoef.getNRow() - 1; i >= 0; i--)
             {
                 if (isRowOnlyContainOne(matrixkoef, i))
@@ -373,13 +370,20 @@ public class Gauss {
                     resultFloat[getIdxOne(matrixkoef, i)] = matrixres.getElmtContent(i, 0);
                 }
             }
-
+            
+            /* Sususan Mtemp = new float[nNonParam][nParam] */
+            float[][] dumpMtemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
+            Matrix Mtemp = new Matrix(dumpMtemp, matrixkoef.getNRow(), matrixkoef.getNCol() - matrixkoef.getNRow() + 1);
+            
             /* Masukkan semua variable yang berupa parameter */
-            i  = resultStr.length - 1;
-            while (i >= batasbawahParam)
+            col = resultStr.length - 1;
+            while (col >= batasbawahParam)
             {
-                resultStr[i] = a + String.valueOf(i + 1);
-                i--;
+                if (resultFloat[col] == 0)
+                {
+                    resultStr[col] = a + String.valueOf(col + 1);
+                }
+                col--;
             }
 
             /* Kalkulasikan variable yang berupa hasil */
