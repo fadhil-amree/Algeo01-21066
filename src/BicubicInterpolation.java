@@ -118,7 +118,6 @@ public class BicubicInterpolation {
         matxAij = new Matrix(temp, 16, 1);
 
         matxAij = createMatrixofAij(fxy);
-        matxAij.displayMatrix();
 
         i = 0; j = 0;
         sum = 0;
