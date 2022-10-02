@@ -3,6 +3,58 @@ import src.*;
 import src.Determinant.*;
 
 public class Gauss {
+    public static int getIdxOne(Matrix matrixkoef, int row)
+    {
+        int col = 0;
+        while (col < matrixkoef.getNCol() - 1 && !(matrixkoef.getElmtContent(row, col) == 1))
+        {
+            col++;
+        }
+        return col;
+    }
+    public static boolean isRowOnlyContainOne(Matrix matrixkoef, int row)
+    {
+        int countOne = 0;
+        for (int j = 0 ; j < matrixkoef.getNCol(); j++)
+        {
+            if (matrixkoef.getElmtContent(row, j) == 1)
+            {
+                countOne++;
+            }
+        }
+        return (countOne == 1);
+    }
+    public static boolean isAllColZero(Matrix M, int col) {
+        int i;
+        for (i = 0; i < M.getNRow(); i++) {
+            if (M.getElmtContent(i, col) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static Matrix hapusRowMatKoef(Matrix matrixkoef, int row){
+        float[][] iTemp = new float[row + 1][matrixkoef.getNCol()];
+        Matrix tempMatrix = new Matrix(iTemp,row + 1, matrixkoef.getNCol());
+        for (int i = 0; i <= row; i++) {
+            for (int j = 0; j < matrixkoef.getNCol(); j++) {
+                tempMatrix.setElmtContent(i, j, matrixkoef.getElmtContent(i, j));
+            }
+        }
+        return tempMatrix;
+    }
+    
+    public static Matrix hapusRowMatRes(Matrix matrixres, int row)
+    {
+        float[][] iTemp = new float[row + 1][1];
+        Matrix tempMatrix = new Matrix(iTemp, row + 1, 1);
+        for (int i = 0; i <= row; i++) {
+            for (int j = 0; j < matrixres.getNCol(); j++) {
+                tempMatrix.setElmtContent(i, j, matrixres.getElmtContent(i, j));
+            }
+        }
+        return tempMatrix;
+    }
 
     public static void subtractOfRowMatrix(Matrix matrix, int row1, int row2, float pengali)
     {
@@ -298,6 +350,91 @@ public class Gauss {
                 }
             } else {
                 /* Banyak solusi tipe 2 ada persamaan yang sebenarnya adalah scaling dari persamaan lainnya*/
+                matrixkoef = hapusRowMatKoef(matrixkoef, i);
+                matrixres = hapusRowMatRes(matrixres, i);
+
+                /* Cari hasil */
+                 /* inisialisasi string parameter */
+            String a = "a";
+            int itemp, jtemp;
+            int batasbawahParam = matrixkoef.getNRow();
+            int batasatasParam = matrixkoef.getNCol() - 1;
+            
+            /* inisialisasi matriks untuk menyimpan hasil */
+            /* Sususan Mtemp = new float[nNonParam][nParam] */
+            float[][] dumpMtemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
+            Matrix Mtemp = new Matrix(dumpMtemp, matrixkoef.getNRow(), matrixkoef.getNCol() - matrixkoef.getNRow() + 1);
+            
+            /* Simpan identitas variable yang bukan parameter */
+            for (i = matrixkoef.getNRow() - 1; i >= 0; i--)
+            {
+                if (isRowOnlyContainOne(matrixkoef, i))
+                {
+                    resultFloat[getIdxOne(matrixkoef, i)] = matrixres.getElmtContent(i, 0);
+                }
+            }
+
+            /* Masukkan semua variable yang berupa parameter */
+            i  = resultStr.length - 1;
+            while (i >= batasbawahParam)
+            {
+                resultStr[i] = a + String.valueOf(i + 1);
+                i--;
+            }
+
+            /* Kalkulasikan variable yang berupa hasil */
+            itemp = Mtemp.getNRow() - 1; // batas atas Mtemp
+            /* Hasil ini adalah hasil yang bilangan float */
+            while (itemp >= 0)
+            {
+                Mtemp.setElmtContent(itemp, 0, matrixres.getElmtContent(itemp, 0));
+                j = matrixkoef.getNCol() - 1;
+                jtemp = Mtemp.getNCol() - 1;
+                while (j >= batasbawahParam && jtemp > 0)
+                {
+                    /* Isikan koefisien pada matriks" dengan minusnya */
+                    Mtemp.setElmtContent(itemp, jtemp, -(matrixkoef.getElmtContent(itemp, j)));
+                    jtemp--;
+                    j--;
+                }
+                itemp -= 1;
+            }
+
+            /* Cari hasil */
+            for (i = Mtemp.getNRow() - 1; i >= 0; i--)
+            {
+                j = i + 1;
+                while(j < Mtemp.getNRow())
+                {
+                    subtractOfRowMatrix(Mtemp, i, j, matrixkoef.getElmtContent(i, j));
+                    j++;
+                }
+            }
+            
+            
+            /* Masukkan hasil ke dalam resultStr */
+            i = 0;
+            String tempStr;
+            while (i < Mtemp.getNRow())
+            {
+                tempStr = "";
+                for(j = 0; j < Mtemp.getNCol(); j++)
+                {
+                    if (Mtemp.getElmtContent(i, j) != 0)
+                    {
+                        if (j == 0)
+                        {
+                            tempStr += String.valueOf(Mtemp.getElmtContent(i,j));
+                        }
+                        else
+                        {
+                                tempStr +=  " + " + String.valueOf(Mtemp.getElmtContent(i,j)) + " " + resultStr[j + batasbawahParam - 1];
+                        }
+                    }
+                }
+                resultStr[i] = tempStr;
+                i++;
+            }
             }
         }
 

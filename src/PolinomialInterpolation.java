@@ -4,6 +4,7 @@ import src.SPL.*;
 import java.util.*;
 import java.io.*;
 import java.lang.Math;
+import src.Write;
 
 public class PolinomialInterpolation {
     public static Matrix setOfTitikToMatrix (float[][] setOfTitik,int nRow){
@@ -180,6 +181,19 @@ public class PolinomialInterpolation {
         Y = estimateY(func, n+1 ,X);
             //Menampilkan
         System.out.printf("P(%.04f) = %.04f\n",X,Y);
+
+        System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                String response = input.next();
+                while (!response.equals("y") && !response.equals("n")){
+                    System.out.println("Input tidak valid!");
+                    System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                    response = input.next();
+                }
+                if (response.equals("y")){
+                    System.out.print("Masukkan nama file: ");
+                    file = input.next();
+                    Write.saveHasil(func, file);
+                }
     }
 
 }
