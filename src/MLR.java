@@ -1,6 +1,8 @@
 package src;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
+import src.Read;
+import src.SPL.*;
 
 import src.Matrix;
 
@@ -113,12 +115,32 @@ public class MLR {
                 tempres.setElmtContent(i, 0, sumOfTwoColumn(arrOfColumn(matrixres, 0), arrOfColumn(matrixkoef, i-1)));
             }
         }
+
+        /* print A */
+        // for (i = 0; i < tempkoef.getNRow(); i++)
+        // {
+        //     for (j = 0; j < tempkoef.getNCol(); j++)
+        //     {
+        //         System.out.print(tempkoef.getElmtContent(i, j) + " ");
+        //     }
+        //     System.out.println();
+        // }
+
+        // /* print H */
+        // for (i = 0; i < tempres.getNRow(); i++)
+        // {
+        //     System.out.println(tempres.getElmtContent(i, 0));
+        // }
         
         /* jika invertible lakukan b = A^-1 * H */
         
-        result = arrOfColumn(Matrix.multiplyMatrix(Inverse.getInversebyAdj(tempkoef), tempres), 0) ;
-        
-        System.out.println(result.toString());
+        String[] resultStr = MatrixBalikan.splybyMatrixBalikan(tempkoef, tempres);
+
+        result = new float[resultStr.length];
+        for (i = 0; i < resultStr.length; i++)
+        {
+            result[i] = Float.valueOf(resultStr[i]);
+        }
         /* return b */
         return result;
     }
@@ -128,7 +150,7 @@ public class MLR {
     {
         // KAMUS
         int i ;
-        float[] result = new float[matrix.getNCol()];
+        float[] result = new float[matrix.getNRow()];
         
         // ALGORITMA
         for (i = 0; i < matrix.getNRow(); i++)
@@ -249,39 +271,17 @@ public class MLR {
             matrixkoef = new Matrix(inputMatrixk, Nrow, Nvar);
             matrixres = new Matrix(inputMatrixr, Nrow, 1);
             result = MLR(matrixkoef, matrixres);
+
             System.out.println("Hasil Regresi Linear Berganda: ");
             System.out.print("y =");
             for (int i = 0; i < result.length; i++){
                 /* Dibiarin jika ada minus cth +-1 */
-                System.out.print(result[i] + "x" + (i+1));
-            }
-            System.out.println();
-            System.out.println("Masukka nilai yang ingin ditaksir: ");
-            xtaksiran = new float[Nvar];
-            for (int i = 0; i < Nvar; i++){
-                System.out.println("Masukkan nilai x" + (i+1) + ": ");
-                xtaksiran[i] = input.nextFloat();
-            }
-            System.out.println("Hasil taksiran: ");
-            for  (int i = 0; i < Nvar; i++){
-                y += result[i] * xtaksiran[i];
-            }
-            System.out.println("y = " + y);
-            
-        }
-        else{
-            System.out.println("Masukkan nama file: ");
-            file = input.next();
-            inputMatrixFile = new Matrix(file);
-            Matrix[] matrix = Matrix.splitAugmentedMLR(inputMatrixFile);
-            Matrix matrixkoef = matrix[0];
-            Matrix matrixres = matrix[1];
-            result = MLR(matrixkoef, matrixres);
-            System.out.println("Hasil Regresi Linear Berganda: ");
-            System.out.print("y =");
-            for (int i = 0; i < result.length; i++){
-                /* Dibiarin jika ada minus cth +-1 */
-                System.out.print(result[i] + "x" + (i+1));
+                if (i == 0){
+                    System.out.print(" " + result[i]);
+                }
+                else{
+                    System.out.print(" + " + result[i] + "x" + (i));	
+                }
             }
             System.out.println();
             System.out.println("Masukka nilai yang ingin ditaksir: ");
@@ -292,10 +292,77 @@ public class MLR {
                 xtaksiran[i] = input.nextFloat();
             }
             System.out.println("Hasil taksiran: ");
-            for  (int i = 0; i < Nvar; i++){
-                y += result[i] * xtaksiran[i];
+            for  (int i = 0; i < Nvar + 1; i++){
+                if (i == 0){
+                    y += result[i];
+                }
+                else{
+                    y += result[i] * xtaksiran[i-1];
+                }
             }
             System.out.println("y = " + y);
+            
+        }
+        else{
+            try {
+                System.out.println("Masukkan nama file: ");
+                file = input.next();
+                
+                inputMatrixFile = Read.BacaFile(file);
+                
+                /* Inisialisasi Matriks res */
+                float[][] res = new float[inputMatrixFile.getNRow()][1];
+                for(int i = 0; i < inputMatrixFile.getNRow(); i++){
+                    res[i][0] = inputMatrixFile.getElmtContent(i, 0);
+                }
+                Matrix matrixres = new Matrix(res, inputMatrixFile.getNRow(), 1);
+                
+                /* Inisialisasi Matriks koef */
+                float[][] koef = new float[inputMatrixFile.getNRow()][inputMatrixFile.getNCol()-1];
+                for(int i = 0; i < inputMatrixFile.getNRow(); i++){
+                    int jkoef = 0;
+                    for(int j = 0; j < inputMatrixFile.getNCol()-1; j++){
+                        koef[i][jkoef] = inputMatrixFile.getElmtContent(i, j+1);
+                        jkoef += 1;
+                    }
+                }
+                Matrix matrixkoef = new Matrix(koef, inputMatrixFile.getNRow(), inputMatrixFile.getNCol()-1);
+                
+                result = MLR(matrixkoef, matrixres);
+                
+                System.out.println("Hasil Regresi Linear Berganda: ");
+                System.out.print("y =");
+                for (int i = 0; i < result.length; i++){
+                    /* Dibiarin jika ada minus cth +-1 */
+                    if (i == 0){
+                        System.out.print(" " + result[i]);
+                    }
+                    else{
+                        System.out.print(" + " + result[i] + "x" + (i));	
+                    }
+                }
+                System.out.println();
+                System.out.println("Masukka nilai yang ingin ditaksir: ");
+                Nvar = matrixkoef.getNCol();
+                xtaksiran = new float[Nvar];
+                for (int i = 0; i < Nvar; i++){
+                    System.out.println("Masukkan nilai x" + (i+1) + ": ");
+                    xtaksiran[i] = input.nextFloat();
+                }
+                System.out.println("Hasil taksiran: ");
+                for  (int i = 0; i < Nvar + 1; i++){
+                    if (i == 0){
+                        y += result[i];
+                    }
+                    else{
+                        y += result[i] * xtaksiran[i-1];
+                    }
+                }
+                System.out.println("y = " + y);
+                
+            } catch (Exception e) {
+                System.out.println("");
+            }
         }
         
     }

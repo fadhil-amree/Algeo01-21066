@@ -10,25 +10,21 @@ public class Spl {
     public static boolean isEmpty(String[] solusi){
         // Mengembalikan true jika solusi kosong
         // KAMUS LOKAL
-        int length = 0;
         // ALGORITMA
-        for (String x: solusi){
-            length++;
-        }
-        return (length == 0);
+        return (solusi.length == 0);
     }
-
 
     public static boolean isUndef(String[] solusi){
         // Mengembalikan true, jika tidak ada solusi
         // KAMUS LOKAL
         boolean no_solution = false;
+        int i = 0;
         // ALGORITMA
-        for (String x :solusi){
-            if (x == "-9999"){
+        while(!no_solution && i < solusi.length){
+            if (solusi[i].equals("-9999.0")){
                 no_solution = true;
-                break;
             }
+            i++;
         }
         return no_solution;
     }
@@ -47,7 +43,7 @@ public class Spl {
         return parametric;
     }
 
-    public static void menuSPL(int menu) throws IOException{
+    public static void menuSPL(int menu) throws Exception{
         // Prosedur untuk menjalankan menu SPL
         // I.S Sembarang, menu == 1 or menu == 2 or menu == 3 or menu == 4
         // F.S Menampilkan solusi SPL dari input user
@@ -103,7 +99,7 @@ public class Spl {
             // Input file
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            augmented = new Matrix(file);
+            augmented = Read.BacaFile(file);
             listMatrix = Matrix.splitAugmented(augmented);
             matrixkoef = listMatrix[0];
             matrixres = listMatrix[1];
@@ -117,7 +113,7 @@ public class Spl {
                     break;
             case 3: solusi = MatrixBalikan.splybyMatrixBalikan(matrixkoef, matrixres);
                     break;
-            default: solusi = Cramer.splbyCramer(matrixkoef, matrixres); //menu == 4
+            case 4: solusi = Cramer.splbyCramer(matrixkoef, matrixres); //menu == 4
                     break;
         }
 
@@ -125,7 +121,7 @@ public class Spl {
         if (isEmpty(solusi)){
             if (menu == 3){
                 System.out.println("Matriks tidak punya balikan!");
-            } else if (menu == 4 && isEmpty(solusi)){
+            } else if (menu == 4 ){
                 System.out.println("Determinan Matriks = 0");
             } 
         }else{
@@ -135,6 +131,18 @@ public class Spl {
             else { // Jika solusi ada, bisa parametrik, bisa unik
                 for (i=0; i<= matrixkoef.getNCol() - 1;i++){
                     System.out.printf("x[%d]: %s\n",i,solusi[i]);
+                }
+                System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                String response = input.next();
+                while (!response.equals("y") && !response.equals("n")){
+                    System.out.println("Input tidak valid!");
+                    System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                    response = input.next();
+                }
+                if (response.equals("y")){
+                    System.out.print("Masukkan nama file: ");
+                    file = input.next();
+                    Write.saveHasil(solusi, file);
                 }
             }
         }

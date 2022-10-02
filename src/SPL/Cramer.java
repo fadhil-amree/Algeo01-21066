@@ -1,5 +1,5 @@
 package src.SPL;
-import src.Matrix;
+import src.*;
 import src.Determinant.*;
 
 public class Cramer {
@@ -12,6 +12,7 @@ public class Cramer {
         Matrix temp = new Matrix(btemp,matrixkoef.getNRow(),matrixkoef.getNCol()); /* temp untuk mencari determinan kecilnya */
         String[] result = new String[matrixkoef.getNCol()]; /*array untuk menampung hasil*/
         float detUtama; /* determinan Matrix utama */
+        float detKecil; /* determinan Matrix kecil */   
 
         // ALGORITMA
         /* Cari determinan utama */
@@ -19,32 +20,34 @@ public class Cramer {
 
         if (detUtama != 0)
         {
-        for (n = 0; n < matrixkoef.getNCol() ; n++)
-        {
-            for (i = 0; i < matrixkoef.getNRow() ; i++)
+            for (i = 0; i < matrixkoef.getNCol(); i++)
             {
-                for (j = 0; j < matrixkoef.getNCol() - 1; j++)
+                /* Copy matrix koefisien ke temp */
+                for (j = 0; j < matrixkoef.getNRow(); j++)
                 {
-                    if (j == n)
+                    for (n = 0; n < matrixkoef.getNCol(); n++)
                     {
-                        // kalau j == n, maka masukkan nilai-nilai matrix res ke temp
-
-                        temp.setElmtContent(i, j, matrixres.getElmtContent(i, 0));
-                    }
-                    else
-                    {
-                        temp.setElmtContent(i, j, matrixkoef.getElmtContent(i, j));
+                        temp.setElmtContent(j, n, matrixkoef.getElmtContent(j, n));
                     }
                 }
-            }
-            result[n] = String.valueOf(Kofaktor.detKofaktor(temp) / detUtama);
-        }
-    } else 
-    {
-        result = new String[0]; // gaada
-    }
-    
-    return result;
-    }
 
-}
+                /* Ganti kolom ke-i dengan matrix hasil */
+                for (j = 0; j < matrixres.getNRow(); j++)
+                {
+                    temp.setElmtContent(j, i, matrixres.getElmtContent(j, 0));
+                }
+
+                /* Cari determinan kecil */
+                detKecil = Kofaktor.detKofaktor(temp);
+
+                /* Cari hasil */
+                result[i] = String.valueOf(detKecil/detUtama);
+            }
+        }
+        else
+        {
+            result = new String[0];
+        }
+        return result;
+    } 
+    }

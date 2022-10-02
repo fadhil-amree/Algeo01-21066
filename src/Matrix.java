@@ -33,64 +33,6 @@ public class Matrix {
         }
     }
 
-    //Konstruktor input dari file
-    public Matrix(String namaFile) throws IOException{
-        // Untuk nerima matriks
-        // I.S Matrix sembarang
-        // F.S matrix terdefinisi sesuai matrix yang ada pada file
-        // KAMUS LOKAL
-        String[][] MatrixString; //matriks string berasal dari File
-        String data; //data yang dibaca dari file
-        String[] IsiData; //data yang sudah di split
-        int row, col, i, j; //index
-        
-        //ALGORITMA
-        /* Inisialisasi */
-        MatrixString = new String[9999][9999];
-        
-        /* Membaca file */
-        try {
-            String temp = "../test/input/"+namaFile;
-            File isiFile = new File(temp);
-            Scanner myReader = new Scanner(isiFile);
-
-            row = 0; /* hitung baris */
-            col = 0; /* hitung kolom */
-
-            /* Iterasi untuk membaca isi file */
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
-                IsiData = data.split("");
-                for (col = 0; col < IsiData.length; col++) {
-                    MatrixString[row][col] = IsiData[col];
-                }
-                row++;
-                col = IsiData.length;
-            }
-            myReader.close();
-            
-            /* Inisialisasi ukuran matriks */
-            float MatrixHasil[][] = new float[row][col];
-            
-            /* Mengisi matrix hasil dengan casting hasil matrix dari matrix string */
-            for (i = 0; i < row; i++) {
-                for (j = 0; j < col; j++) {
-                    MatrixHasil[i][j] = Float.valueOf(MatrixString[i][j]);
-                }
-            }
-
-            /* Output Matrix hasil akhir */
-            for(i=0;i<row;i++){
-                for(j=0;j<col;j++){
-                    System.out.print(MatrixHasil[i][j] + " ");
-                }
-                System.out.println();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File tidak ditemukan");
-        }
-    } 
 
     //Konstruktor input berupa matriks
     public Matrix(float[][] matrix, int nRow, int nCol){
@@ -212,7 +154,15 @@ public class Matrix {
         return m3;
     }
     public static boolean isInvertible(Matrix matrix){
+<<<<<<< HEAD
         return (ReduksiBaris.detReduksi(matrix)!=0);
+=======
+        if (matrix.getNRow() == matrix.getNCol()){
+            return (Kofaktor.detKofaktor(matrix)!=0);
+        } else{
+            return false;
+        }
+>>>>>>> 0a9cb5b41ba96f7f102a024ee24ea27ef9b8e53a
     }
 
     public static Matrix getIdentityMatrix(int order){
@@ -236,7 +186,7 @@ public class Matrix {
         //ALGORITMA
         for(i=0;i<order;i++){
             for(j=0;j<order;j++){
-            undefMatrix[i][i] = -999;
+            undefMatrix[i][j] = -9999;
             }
         }
         Matrix undefinedMatrix = new Matrix(undefMatrix,order,order);
@@ -258,7 +208,7 @@ public class Matrix {
         return transposeMatrix;
     }
 
-    public static void saveHasil(Matrix matrix, String namaFile) throws IOException{
+    public static void saveHasil(Matrix matrix, String namaFile) throws Exception{
         // namaFile sudah dalam .txt
         // write hasil dalam Matrix
 
@@ -267,7 +217,7 @@ public class Matrix {
         String text;
 
         //ALGORITMA
-        String path = "../test/hasil/"+namaFile; 
+        String path = ".\\test\\hasil\\"+namaFile; 
         File fout = new File(path);
         FileOutputStream fos = new FileOutputStream(fout);
 
@@ -339,7 +289,7 @@ public class Matrix {
         for (i=0;i<augmented.getNRow();i++){
             for(j=0;j<augmented.getNCol();j++){
                 if (j == augmented.getNCol()-1){
-                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                    matrixr[i][0] = augmented.getElmtContent(i, augmented.getNCol()-1);
                 }
                 if (j != augmented.getNCol()-1){
                     matrixk[i][j] = augmented.getElmtContent(i, j);
@@ -365,11 +315,11 @@ public class Matrix {
         matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
         matrixr = new float[augmented.getNRow()][1];
         for (i=0;i<augmented.getNRow();i++){
-            for(j=0;j<augmented.getNCol()-1;j++){
+            for(j=0;j<augmented.getNCol();j++){
                 if (j == 0){
-                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                    matrixr[i][0] = augmented.getElmtContent(i, 0);
                 } 
-                if (j != 0){
+                else{
                     matrixk[i][j-1] = augmented.getElmtContent(i, j);
                 }
             }
@@ -379,6 +329,31 @@ public class Matrix {
         listMatrix[0] = matrixkoef;
         listMatrix[1] = matrixres;
         return listMatrix;   
+    }
+
+    public static boolean isEqualMatrix(Matrix m1, Matrix m2){
+        // Fungsi untuk mengecek apakah dua buah matriks sama, jika iya mengembalikan true, jika tidak mengembalikan false
+        // KAMUS LOKAL
+        int i,j;
+        boolean equal = true; 
+        // ALGORITMA
+        if ((m1.getNRow()!=m2.getNRow()) || (m1.getNCol()!=m2.getNCol())){
+            equal = false;
+        } else { //ukuran sama
+            i =0;
+            while (i<m1.getNRow() && equal){
+                j = 0;
+                while (j < m2.getNCol() && equal){
+                    if (m1.getElmtContent(i, j)!=m2.getElmtContent(i, j)){
+                        equal = false;
+                    }
+                    j++;
+                }
+                i++;
+            }
+        }
+
+        return equal;
     }
     
 }

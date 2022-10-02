@@ -8,7 +8,7 @@ import src.SPL.*;
 
 public class Main {
         
-        public static void  main (String[] args) throws IOException {
+        public static void  main (String[] args) throws Exception {
                 int nRow, nCol, menu; //deklarasi jumlah baris dan kolom pada matriks
                 Scanner input = new Scanner(System.in); //inisiasi variabel untuk melakukan input
                 boolean runProgram = true;
