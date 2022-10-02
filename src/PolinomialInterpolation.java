@@ -96,7 +96,7 @@ public class PolinomialInterpolation {
                 polinom += (Double.toString((double)koefisien[i])+"x"+"^"+ String.valueOf(i));
             }
             if (i!= length-1){
-                polinom += "+ ";
+                polinom += " + ";
             }
         }
 
