@@ -8,6 +8,8 @@ import javax.swing.border.StrokeBorder;
 
 import src.SPL.GaussJordan;
 
+import src.Read;
+
 // import src.Matrix;
 
 // import java.util.*;
@@ -16,43 +18,8 @@ import src.SPL.GaussJordan;
 
 public class BicubicInterpolation {
 
-    public static void main(String[] args) {
-        Matrix fxy, modelBic, aijMatx;
-        float[][] temp;
-
-        temp = new float[16][1];
-        fxy = new Matrix(4,4);
-        
-        temp = new float[16][16];
-        modelBic = new Matrix(temp, 16, 16);
-        
-        temp = new float[16][1];
-        aijMatx = new Matrix(temp, 16, 1);
-
-
-        modelBic = createModelBicubicMatrix();
-
-        // modelBic.displayMatrix();
-
-        aijMatx = createMatrixofAij(fxy);
-
-        System.out.println("---------------------------");
-        aijMatx.displayMatrix();
-        
-        aijMatx = Matrix.multiplyMatrix(modelBic, aijMatx);
-        
-        System.out.println("---------------------------");
-        aijMatx.displayMatrix();
-
-
-        // System.out.print("\n aaaaaaa \n");
-
-        // modelBic.displayMatrix();
-    }
-
-
-    /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
-    public static void menuBicubicInterpolation() throws IOException {
+    /*** MENU UNTUK BICUBIC INTERPOLATION ***/
+    public static void menuBicubicInterpolation() throws Exception {
 
         Scanner input = new Scanner(System.in);
         int inputType;
@@ -122,7 +89,7 @@ public class BicubicInterpolation {
 
             System.out.print("Masukkan nama file: ");
             file = input.next();
-            tempMatrix = new Matrix(file);
+            tempMatrix = Read.BacaFile(file);
 
             a = tempMatrix.getElmtContent(4, 0);
             b = tempMatrix.getElmtContent(4, 1);
