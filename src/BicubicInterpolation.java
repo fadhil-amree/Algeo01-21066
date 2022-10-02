@@ -2,6 +2,7 @@ package src;
 
 // import java.io.IOError;
 import java.io.IOException;
+import java.time.temporal.TemporalAmount;
 import java.util.Scanner;
 
 import javax.swing.border.StrokeBorder;
@@ -82,8 +83,10 @@ public class BicubicInterpolation {
         }
         // inputType == 2
         else { 
-            tempMatx = new float[5][4];
-            tempMatrix = new Matrix(tempMatx, 5, 4);
+            tempMatx = new float[5][5];
+            tempMatrix = new Matrix(tempMatx, 5, 5);
+            tempMatx = new float[4][4];
+            fxyMatx = new Matrix(tempMatx, 4, 4);
 
             System.out.print("Masukkan nama file: ");
             file = input.next();
@@ -92,7 +95,11 @@ public class BicubicInterpolation {
             a = tempMatrix.getElmtContent(4, 0);
             b = tempMatrix.getElmtContent(4, 1);
 
-            fxyMatx = new Matrix(tempMatrix.getContent(),4,4);
+            for (i = 0; i < 4; i ++) {
+                for (j = 0; j < 4; j++) {
+                    fxyMatx.setElmtContent( i, j, tempMatrix.getElmtContent(i, j) );
+                }
+            }
         }
 
 
