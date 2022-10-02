@@ -2,6 +2,7 @@ package src;
 
 // import java.io.IOError;
 import java.io.IOException;
+import java.time.temporal.TemporalAmount;
 import java.util.Scanner;
 
 import javax.swing.border.StrokeBorder;
@@ -15,6 +16,52 @@ import src.SPL.GaussJordan;
 // import java.lang.Math.*;
 
 public class BicubicInterpolation {
+
+    public static void main(String[] args) {
+        // mengembalikan nilai f(x,y) = sigma[j] sigma[i] a[i,j] * x^i * y^j
+        // untuk nilai sigma[i] 0..i dan sigma[j] 0..j
+        float sum;
+        float[][] temp;
+        Matrix tempMatx, matxAij, fxy, bicub, modelBic, fxyMatrixCol;
+        String[] strKoef;
+
+        int itrCol;
+        int i, j;
+        float x, y;
+
+        temp = new float[16][16];
+        modelBic = new Matrix(temp, 16, 16);
+
+        modelBic = createModelBicubicMatrix();
+
+        modelBic.displayMatrix(); // done
+
+        temp = new float[4][4];
+        fxy = new Matrix(4,4);
+        
+        fxy.displayMatrix(); //done
+        
+        temp = new float[16][1];
+        // matxAij = createMatrixofAij(fxy);
+        tempMatx = new Matrix(temp, 16, 1);
+        matxAij = new Matrix(temp, 16, 1);
+        fxyMatrixCol = new Matrix(temp, 16, 1);
+
+        fxyMatrixCol = squareMatxToColMatx(fxy); // bener
+
+        // fxyMatrixCol.displayMatrix(); //banaer
+
+        strKoef = GaussJordan.splbyGaussJordan(modelBic, fxyMatrixCol);
+
+        // for (i = 0; i < 16; i++) {
+        //     matxAij.setElmtContent(i, 0, Float.valueOf(strKoef[i]));
+        // }
+
+        // matxAij.displayMatrix();
+
+
+
+    }
 
     /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
     public static void menuBicubicInterpolation() throws Exception {
@@ -118,7 +165,6 @@ public class BicubicInterpolation {
         matxAij = new Matrix(temp, 16, 1);
 
         matxAij = createMatrixofAij(fxy);
-        matxAij.displayMatrix();
 
         i = 0; j = 0;
         sum = 0;
