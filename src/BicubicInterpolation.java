@@ -1,41 +1,112 @@
 package src;
 
-import src.Inverse;
-import src.Matrix;
+// import java.io.IOError;
+import java.io.IOException;
+import java.time.temporal.TemporalAmount;
+import java.util.Scanner;
 
-import java.util.*;
+import javax.swing.border.StrokeBorder;
 
-import javax.print.StreamPrintService;
+import src.SPL.GaussJordan;
 
-import java.lang.Math.*;
+// import src.Matrix;
+
+// import java.util.*;
+
+// import java.lang.Math.*;
 
 public class BicubicInterpolation {
 
-    public static void main(String[] args) {
-        Matrix fxy, modelBic;
-        float[][] temp;
-        float y;
-
-        temp = new float[4][4];
-        fxy = new Matrix(temp,4,4);
-        
-        temp = new float[16][16];
-        modelBic = new Matrix(temp, 16, 16);
-        modelBic = createModelBicubicMatrix();
-
-        modelBic.displayMatrix();
-
-        modelBic = Inverse.getInversebyAdj(modelBic);
-
-        // System.out.print("\n\n");
-
-        // modelBic.displayMatrix();
-    }
-
-
     /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
-    public static void menuBicubicInterpolation(int menu) {
+    public static void menuBicubicInterpolation() throws Exception {
+
+        Scanner input = new Scanner(System.in);
+        int inputType;
+        int i, j, valueModel;
+        float[][] tempMatx;
+        Matrix fxyMatx, tempMatrix;
+        String file;
+        float a, b, fabValue;
+
+        System.out.println("Tipe input");
+        System.out.println("1. Input Keyboard");
+        System.out.println("2. Input File");
+
+        System.out.print("Masukkan tipe input: ");
+        inputType = input.nextInt();
+
+        while (inputType != 1 && inputType != 2) {
+            System.out.println("Tipe input yang anda pilih tidak tersedia!");
+            System.out.println("Tipe input");
+            System.out.println("1. Input Keyboard");
+            System.out.println("2. Input File");
+    
+            System.out.print("Masukkan tipe input: ");
+            inputType = input.nextInt();
+        }
+
         
+        if (inputType == 1) {
+            tempMatx = new float[4][4];
+            fxyMatx = new Matrix(tempMatx, 4, 4);
+            
+            System.out.println("Masukkan nilai f(-1,-1),f(0,-1),..,f(2,2).");
+            
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    System.out.printf("f(%d,%d) = ", j-1,i-1);
+                    valueModel = input.nextInt();
+                    // System.out.print("\n");
+
+                    fxyMatx.setElmtContent(i, j, valueModel);
+                }
+            }
+
+            System.out.println("\nMasukkan nilai a dan b untuk f(a,b)");
+            System.out.println("yang ingin di interpolasi.");
+            System.out.println("Syarat a dan b dalam rentang 0..1");
+            
+            System.out.print("a = ");
+            a = input.nextFloat();
+            System.out.print("b = ");
+            b = input.nextFloat();
+            
+            while ( (a < 0 || a > 1.0) || (b < 0 || b > 1.0) ) {
+                System.out.println("input tidak sesuai");
+                System.out.println("Syarat a dan b dalam rentang 0..1");
+                
+                System.out.print("a = ");
+                a = input.nextFloat();
+                System.out.print("b = ");
+                b = input.nextFloat();
+            }
+        }
+        // inputType == 2
+        else { 
+            tempMatx = new float[5][5];
+            tempMatrix = new Matrix(tempMatx, 5, 5);
+            tempMatx = new float[4][4];
+            fxyMatx = new Matrix(tempMatx, 4, 4);
+
+            System.out.print("Masukkan nama file: ");
+            file = input.next();
+            tempMatrix =  Read.BacaFile(file);
+
+            a = tempMatrix.getElmtContent(4, 0);
+            b = tempMatrix.getElmtContent(4, 1);
+
+            for (i = 0; i < 4; i ++) {
+                for (j = 0; j < 4; j++) {
+                    fxyMatx.setElmtContent( i, j, tempMatrix.getElmtContent(i, j) );
+                }
+            }
+        }
+
+
+        fabValue = interpolasiBicub(fxyMatx, a, b);
+
+        System.out.printf("f(%f,%f) = %f\n\n", a, b, fabValue);
+
     }
 
 
@@ -55,18 +126,19 @@ public class BicubicInterpolation {
 
         matxAij = createMatrixofAij(fxy);
 
-        x = x - 1;
         i = 0; j = 0;
         sum = 0;
 
         for (itrCol = 0; itrCol < 16; itrCol++) {
 
+            // System.out.println(j);
             i = itrCol%4;
 
             sum += matxAij.getElmtContent(itrCol, 0) * Math.pow(x, i) * Math.pow(y,j);
             
             j = j + (i/3);
         }
+
 
         return sum;
     }
@@ -77,17 +149,16 @@ public class BicubicInterpolation {
         // Mencari nilai a[i][j] untu i,j = 0,1,2,3. dari model matrix
 
         // KAMUS LOKAL
-        Matrix invModel, fxyMatrixCol, tempMatx, resultMatx;
+        Matrix fxyMatrixCol, modelMatx, resultMatx;
+        String[] strAKoef;
         float[][] temp;
+        int i;
 
         // ALGORITMA
         // inisial
         temp = new float[16][16];
-        tempMatx = new Matrix(temp, 16, 16);
+        modelMatx = new Matrix(temp, 16, 16);
         
-        temp = new float[16][16];
-        invModel = new Matrix(temp, 16, 16);
-
         temp = new float[16][1];
         fxyMatrixCol = new Matrix(temp, 16, 1);
 
@@ -95,12 +166,15 @@ public class BicubicInterpolation {
         resultMatx = new Matrix(temp, 16, 1);
 
         // f(x,y) = Ca -> C-1f(x,y) 
-        tempMatx = createModelBicubicMatrix();
-        invModel = Inverse.getInversebyOBE(tempMatx); // dapat invers dari rumus bicubic
-        
+        modelMatx = createModelBicubicMatrix();
         fxyMatrixCol = squareMatxToColMatx(fxy);
+
+        strAKoef = GaussJordan.splbyGaussJordan(modelMatx, fxyMatrixCol);
+
+        for (i = 0; i < 16; i++) {
+            resultMatx.setElmtContent(i, 0, Float.valueOf(strAKoef[i]));
+        }
         
-        resultMatx = Matrix.multiplyMatrix(invModel, fxyMatrixCol);
         
         return resultMatx;
     }
