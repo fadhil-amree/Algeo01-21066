@@ -43,7 +43,7 @@ public class ReduksiBaris {
                     {
                         if (matrix.getElmtContent(j, i)!= 0)
                         {
-                            tukarBaris(matrix, i, j);
+                            matrix = tukarBaris(matrix, i, j);
                             tukarBaris++;
                         }
                         j++;
@@ -93,7 +93,7 @@ public class ReduksiBaris {
         return (float) (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
     }
 
-    public static void tukarBaris(Matrix matrix,int i,int j)
+    public static Matrix tukarBaris(Matrix matrix,int i,int j)
     {
         // KAMUS
         float temp;
@@ -105,5 +105,6 @@ public class ReduksiBaris {
             matrix.setElmtContent(i, k, matrix.getElmtContent(j, k)) ;
             matrix.setElmtContent(j, k, temp);
         }
+        return matrix;
     }
 }

@@ -3,8 +3,7 @@ import java.io.*;
 import java.util.Scanner;
 import src.Read;
 import src.SPL.*;
-
-import src.Matrix;
+import src.Write;
 
 public class MLR {
     
@@ -117,20 +116,24 @@ public class MLR {
         }
 
         /* print A */
-        // for (i = 0; i < tempkoef.getNRow(); i++)
-        // {
-        //     for (j = 0; j < tempkoef.getNCol(); j++)
-        //     {
-        //         System.out.print(tempkoef.getElmtContent(i, j) + " ");
-        //     }
-        //     System.out.println();
-        // }
+        System.out.println("Hasil Normal Estimation Equation for Multiple Linear Regression: ");
+        for (i = 0; i < tempkoef.getNRow(); i++)
+        {
+            for (j = 0; j < tempkoef.getNCol() + 1; j++)
+            {
+                if (j == tempkoef.getNCol())
+                {
+                    System.out.print("|");
+                } else if (j == 0)
+                {
+                    System.out.print(tempkoef.getElmtContent(i, j));
+                } else {
+                    System.out.print(" + " + tempkoef.getElmtContent(i, j) + "x" + j);
+                }
+            }
+            System.out.println();
+        }
 
-        // /* print H */
-        // for (i = 0; i < tempres.getNRow(); i++)
-        // {
-        //     System.out.println(tempres.getElmtContent(i, 0));
-        // }
         
         /* jika invertible lakukan b = A^-1 * H */
         
@@ -222,7 +225,7 @@ public class MLR {
         
         return result;
     }
-    public static void menuMLR() throws IOException
+    public static void menuMLR() throws Exception
     {
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
@@ -301,6 +304,19 @@ public class MLR {
                 }
             }
             System.out.println("y = " + y);
+
+            System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                String response = input.next();
+                while (!response.equals("y") && !response.equals("n")){
+                    System.out.println("Input tidak valid!");
+                    System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                    response = input.next();
+                }
+                if (response.equals("y")){
+                    System.out.print("Masukkan nama file: ");
+                    file = input.next();
+                    Write.saveHasil(result, file);
+                }
             
         }
         else{
@@ -359,6 +375,19 @@ public class MLR {
                     }
                 }
                 System.out.println("y = " + y);
+
+                System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                String response = input.next();
+                while (!response.equals("y") && !response.equals("n")){
+                    System.out.println("Input tidak valid!");
+                    System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                    response = input.next();
+                }
+                if (response.equals("y")){
+                    System.out.print("Masukkan nama file: ");
+                    file = input.next();
+                    Write.saveHasil(result, file);
+                }
                 
             } catch (Exception e) {
                 System.out.println("");

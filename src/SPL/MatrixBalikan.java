@@ -10,10 +10,11 @@ public class MatrixBalikan {
         // KAMUS LOKAL
         float[] solusi; //
         String[] solusi_string; //
+        Matrix tesmatriks = new Matrix(matrixkoef);
         int i; //indeks
         //ALGORITMA
         if (matrixkoef.getNCol()>=2){
-            if (Matrix.isInvertible(matrixkoef)){ // Jika punya solusi unik
+            if (Matrix.isInvertible(tesmatriks)){ // Jika punya solusi unik
                 solusi = new float[matrixkoef.getNCol()];
                 solusi_string = new String[matrixkoef.getNCol()];
                 Matrix inverseMatrix = Inverse.getInversebyOBE(matrixkoef);

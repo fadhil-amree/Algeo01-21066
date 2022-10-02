@@ -14,6 +14,7 @@ public class Inverse {
         // Prekondisi : matrix adalah matriks persegi
         //KAMUS LOKAL
         Matrix tempMatrix = new Matrix(matrix);
+        Matrix tesMatrix = new Matrix(matrix);
         Matrix inverseMatrix = new Matrix(Matrix.getIdentityMatrix(matrix.getNRow())); //inisialisasi matriks identitas
         int i,j,k,l;
         float etemp,pengali,einverse; //variabel elemen dan faktor pengali
@@ -24,8 +25,7 @@ public class Inverse {
         //ALGORITMA
         if (matrix.getNRow()>=2){
             //Pengecekan apakah matriks invertible atau tidak
-            if (Matrix.isInvertible(tempMatrix)){
-
+            if (Matrix.isInvertible(tesMatrix)){
                 for(i=0;i<=tempMatrix.getNRow()-1;i++)
                 {   // i : indeks baris patokan
                     // j : indeks baris selain baris i
@@ -108,6 +108,7 @@ public class Inverse {
         // Prekondisi : matrix adalah matriks persegi
         // KAMUS LOKAL
         Matrix kofaktorMatrix, inverseMatrix, Mminor;
+        Matrix tesMatrix = new Matrix(matrix);
         float[][] minor; //matriks minor
         float[][] cofactorMatrix = new float[matrix.getNRow()][matrix.getNCol()];
         int i,j,k,l,bm,km; //indeks
@@ -120,7 +121,7 @@ public class Inverse {
 
         if (matrix.getNRow() >= 2){
 
-            if (Matrix.isInvertible(matrix)){
+            if (Matrix.isInvertible(tesMatrix)){
                 if (matrix.getNRow()>2){
                     for(i=0;i<=matrix.getNRow()-1;i++){
                         for(j=0;j<=matrix.getNCol()-1;j++){
