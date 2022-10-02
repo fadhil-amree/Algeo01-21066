@@ -2,6 +2,9 @@ package src;
 
 import java.io.*;
 import java.util.*;
+
+import javax.xml.transform.Source;
+
 import src.Determinant.*;
 
 public class Matrix {
@@ -151,11 +154,15 @@ public class Matrix {
         return m3;
     }
     public static boolean isInvertible(Matrix matrix){
+<<<<<<< HEAD
+        return (ReduksiBaris.detReduksi(matrix)!=0);
+=======
         if (matrix.getNRow() == matrix.getNCol()){
             return (Kofaktor.detKofaktor(matrix)!=0);
         } else{
             return false;
         }
+>>>>>>> 0a9cb5b41ba96f7f102a024ee24ea27ef9b8e53a
     }
 
     public static Matrix getIdentityMatrix(int order){
