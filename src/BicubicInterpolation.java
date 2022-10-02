@@ -17,52 +17,6 @@ import src.SPL.GaussJordan;
 
 public class BicubicInterpolation {
 
-    public static void main(String[] args) {
-        // mengembalikan nilai f(x,y) = sigma[j] sigma[i] a[i,j] * x^i * y^j
-        // untuk nilai sigma[i] 0..i dan sigma[j] 0..j
-        float sum;
-        float[][] temp;
-        Matrix tempMatx, matxAij, fxy, bicub, modelBic, fxyMatrixCol;
-        String[] strKoef;
-
-        int itrCol;
-        int i, j;
-        float x, y;
-
-        temp = new float[16][16];
-        modelBic = new Matrix(temp, 16, 16);
-
-        modelBic = createModelBicubicMatrix();
-
-        modelBic.displayMatrix(); // done
-
-        temp = new float[4][4];
-        fxy = new Matrix(4,4);
-        
-        fxy.displayMatrix(); //done
-        
-        temp = new float[16][1];
-        // matxAij = createMatrixofAij(fxy);
-        tempMatx = new Matrix(temp, 16, 1);
-        matxAij = new Matrix(temp, 16, 1);
-        fxyMatrixCol = new Matrix(temp, 16, 1);
-
-        fxyMatrixCol = squareMatxToColMatx(fxy); // bener
-
-        // fxyMatrixCol.displayMatrix(); //banaer
-
-        strKoef = GaussJordan.splbyGaussJordan(modelBic, fxyMatrixCol);
-
-        // for (i = 0; i < 16; i++) {
-        //     matxAij.setElmtContent(i, 0, Float.valueOf(strKoef[i]));
-        // }
-
-        // matxAij.displayMatrix();
-
-
-
-    }
-
     /*** MENU UNTUK BICUBIC INTERPOLATION  ***/
     public static void menuBicubicInterpolation() throws Exception {
 
@@ -129,8 +83,10 @@ public class BicubicInterpolation {
         }
         // inputType == 2
         else { 
-            tempMatx = new float[5][4];
-            tempMatrix = new Matrix(tempMatx, 5, 4);
+            tempMatx = new float[5][5];
+            tempMatrix = new Matrix(tempMatx, 5, 5);
+            tempMatx = new float[4][4];
+            fxyMatx = new Matrix(tempMatx, 4, 4);
 
             System.out.print("Masukkan nama file: ");
             file = input.next();
@@ -139,7 +95,11 @@ public class BicubicInterpolation {
             a = tempMatrix.getElmtContent(4, 0);
             b = tempMatrix.getElmtContent(4, 1);
 
-            fxyMatx = new Matrix(tempMatrix.getContent(),4,4);
+            for (i = 0; i < 4; i ++) {
+                for (j = 0; j < 4; j++) {
+                    fxyMatx.setElmtContent( i, j, tempMatrix.getElmtContent(i, j) );
+                }
+            }
         }
 
 
