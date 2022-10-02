@@ -1,32 +1,31 @@
 package src.SPL;
 import src.*;
 public class GaussJordan {
-    public static boolean inListInt (int[] li, int x){
+    public static boolean inListInt (int[] li, int x, int length){
         //Fungsi mengecek apakah suatu elemen terdapat dalam list
         //KAMUS LOKAL
         boolean exist=false;
+        int i =0;
         //ALGORITMA
-        for (int e:li){
-            if (x==e){
+        while (!exist && i<length){
+            if (x == li[i]){
                 exist = true;
-                break;
             }
+            i++;
         }
         return exist;
     }
 
-    public static int getIndexOf(int[] li, int x){
+    public static int getIndexOf(int[] li, int x, int length){
         //Fungsi mengembalikan indeks x dalam list
         //KAMUS LOKAL
         int idx=-1;
         int i=0;
         //ALGORITMA
-        for (int e:li){
-            if (e==x){
+        while (idx==-1 && i<length){
+            if (x == li[i]){
                 idx = i;
-                break;
             }
-
             i++;
         }
         return idx;
@@ -173,7 +172,7 @@ public class GaussJordan {
                 }
                 else { //Jika punya tak hingga solusi
                     for (i=0;i<=matrixkoef.getNCol()-1;i++){
-                        if (tempMatrix.getNRow()>=i){ //Jika indeks baris masih dalam jangkauan  
+                        if (tempMatrix.getNRow()>i){ //Jika indeks baris masih dalam jangkauan  
                             ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0
                             j = 0;
                             while (j<=tempMatrix.getNCol()-1 && ctr == 0){
@@ -207,20 +206,20 @@ public class GaussJordan {
                 listParameter[j] = "a"+String.valueOf(idxParameter[j]);
             }
 
-            for (i=0;i<matrixkoef.getNRow();i++){
-                if (!inListInt(idxParameter, i)){ //Jika bukan parameter
+            for (i=0;i<matrixkoef.getNCol();i++){
+                if (!inListInt(idxParameter, i,nParameter)){ //Jika bukan parameter
                     esolusi_string = "";
                     esolusi_string += String.valueOf(resMatrix.getElmtContent(i, 0));
                     esolusi_string += " - ";
                     for(j=0;j<nParameter;j++){
-                        esolusi_string += listParameter[i];
+                        esolusi_string += String.valueOf(tempMatrix.getElmtContent(i, idxParameter[j]))+" "+listParameter[j];
                         if (j!=nParameter-1){
                             esolusi_string += " - ";
                         }
                     }
                     solusi_string[i] = esolusi_string;
                 } else {
-                    solusi_string[i] = listParameter[getIndexOf(idxParameter, i)];
+                    solusi_string[i] = listParameter[getIndexOf(idxParameter, i,nParameter)];
                 }
             }
         

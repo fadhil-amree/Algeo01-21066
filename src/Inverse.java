@@ -221,6 +221,22 @@ public class Inverse {
         }
 
         System.out.println("Matriks Invers: ");
-        inverseMatrix.displayMatrix();
+        if (!Matrix.isEqualMatrix(Matrix.getUndefMatrix(inverseMatrix.getNRow()), inverseMatrix)){
+            inverseMatrix.displayMatrix();
+            System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+            String response = input.next();
+            while (!response.equals("y") && !response.equals("n")){
+                System.out.println("Input tidak valid!");
+                System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                response = input.next();
+            }
+            if (response.equals("y")){
+                System.out.print("Masukkan nama file: ");
+                file = input.next();
+                Write.saveHasil(inverseMatrix, file);
+            }
+        } else{
+            System.out.println("Matriks tidak mempunyai balikan");
+        }
     }
 }

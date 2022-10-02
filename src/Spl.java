@@ -10,12 +10,8 @@ public class Spl {
     public static boolean isEmpty(String[] solusi){
         // Mengembalikan true jika solusi kosong
         // KAMUS LOKAL
-        int length = 0;
         // ALGORITMA
-        for (String x: solusi){
-            length++;
-        }
-        return (length == 0);
+        return (solusi.length == 0);
     }
 
     public static boolean isUndef(String[] solusi){
@@ -125,7 +121,7 @@ public class Spl {
         if (isEmpty(solusi)){
             if (menu == 3){
                 System.out.println("Matriks tidak punya balikan!");
-            } else if (menu == 4 && isEmpty(solusi)){
+            } else if (menu == 4 ){
                 System.out.println("Determinan Matriks = 0");
             } 
         }else{
