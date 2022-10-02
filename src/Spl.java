@@ -18,17 +18,17 @@ public class Spl {
         return (length == 0);
     }
 
-
     public static boolean isUndef(String[] solusi){
         // Mengembalikan true, jika tidak ada solusi
         // KAMUS LOKAL
         boolean no_solution = false;
+        int i = 0;
         // ALGORITMA
-        for (String x :solusi){
-            if (x == "-9999.0"){
+        while(!no_solution && i < solusi.length){
+            if (solusi[i].equals("-9999.0")){
                 no_solution = true;
-                break;
             }
+            i++;
         }
         return no_solution;
     }
@@ -135,6 +135,18 @@ public class Spl {
             else { // Jika solusi ada, bisa parametrik, bisa unik
                 for (i=0; i<= matrixkoef.getNCol() - 1;i++){
                     System.out.printf("x[%d]: %s\n",i,solusi[i]);
+                }
+                System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                String response = input.next();
+                while (!response.equals("y") && !response.equals("n")){
+                    System.out.println("Input tidak valid!");
+                    System.out.println("Apakah Anda ingin menyimpan solusi [y/n]?");
+                    response = input.next();
+                }
+                if (response.equals("y")){
+                    System.out.print("Masukkan nama file: ");
+                    file = input.next();
+                    Write.saveHasil(solusi, file);
                 }
             }
         }

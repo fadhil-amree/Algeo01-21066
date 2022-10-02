@@ -41,7 +41,7 @@ public class Write {
         bw.close();
     }
     
-    public static void saveHasil(float[] array, String namaFile) throws Exception{
+    public static void saveHasil(String[] array, String namaFile) throws Exception{
         // namaFile sudah dalam .txt
         // write hasil dalam array
         
@@ -58,16 +58,13 @@ public class Write {
 
         for (i = 0 ; i < array.length; i++)
         {
+            text = String.valueOf(array[i]);
+            bw.write(text); 
             if (i != array.length-1)
             {
-                text += String.valueOf(array[i]) + " ";
-            }
-            else
-            {
-                text += String.valueOf(array[i]);
+                bw.newLine();
             }
         }
-        bw.write(text); 
         bw.close();
     }
 

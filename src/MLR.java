@@ -301,35 +301,6 @@ public class MLR {
                 }
             }
             System.out.println("y = " + y);
-
-            // System.out.println("Hasil Regresi Linear Berganda: ");
-            // System.out.print("y =");
-            // for (int i = 0; i < result.length; i++){
-            //     /* Dibiarin jika ada minus cth +-1 */
-            //     if (i == 0){
-            //         System.out.print(" " + result[i]);
-            //     }
-            //     else{
-            //         System.out.print(" + " + result[i] + "x" + i + 1);	
-            //     }
-            // }
-            // System.out.println();
-            // System.out.println("Masukka nilai yang ingin ditaksir: ");
-            // xtaksiran = new float[Nvar];
-            // for (int i = 0; i < Nvar; i++){
-            //     System.out.println("Masukkan nilai x" + (i+1) + ": ");
-            //     xtaksiran[i] = input.nextFloat();
-            // }
-            // System.out.println("Hasil taksiran: ");
-            // for  (int i = 0; i < Nvar; i++){
-            //     if (i == 0){
-            //         y += result[i];
-            //     }
-            //     else{
-            //         y += result[i] * xtaksiran[i-1];
-            //     }
-            // }
-            // System.out.println("y = " + y);
             
         }
         else{

@@ -278,7 +278,7 @@ public class Matrix {
         for (i=0;i<augmented.getNRow();i++){
             for(j=0;j<augmented.getNCol();j++){
                 if (j == augmented.getNCol()-1){
-                    matrixr[i][j] = augmented.getElmtContent(i, augmented.getNCol()-1);
+                    matrixr[i][0] = augmented.getElmtContent(i, augmented.getNCol()-1);
                 }
                 if (j != augmented.getNCol()-1){
                     matrixk[i][j] = augmented.getElmtContent(i, j);
@@ -304,7 +304,7 @@ public class Matrix {
         matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
         matrixr = new float[augmented.getNRow()][1];
         for (i=0;i<augmented.getNRow();i++){
-            for(j=0;j<augmented.getNCol()-1;j++){
+            for(j=0;j<augmented.getNCol();j++){
                 if (j == 0){
                     matrixr[i][0] = augmented.getElmtContent(i, 0);
                 } 
@@ -319,11 +319,5 @@ public class Matrix {
         listMatrix[1] = matrixres;
         return listMatrix;   
     }
-
-    // public static void main(String[] args) throws IOException
-    // {
-    //     String namaFile = "test.txt";
-    //     Matrix matrix = new Matrix(namaFile);
-    // }
     
 }
