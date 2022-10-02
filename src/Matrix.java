@@ -152,7 +152,7 @@ public class Matrix {
     }
     public static boolean isInvertible(Matrix matrix){
         if (matrix.getNRow() == matrix.getNCol()){
-            return (Kofaktor.detKofaktor(matrix)!=0);
+            return (ReduksiBaris.detReduksi(matrix)!=0);
         } else{
             return false;
         }
