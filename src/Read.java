@@ -39,7 +39,6 @@ public class Read {
         return M;
     } catch (FileNotFoundException e) {
       System.out.println("Tidak ditemukan File tersebut.");
-      e.printStackTrace();
       return null;
     }
     }
