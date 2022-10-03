@@ -26,9 +26,9 @@ Beberapa tulisan cara membuat library di Java:
 </pre>
 
 ## How To Run The Program
-1. Buka File Main.java pada Folder src 
-2. Klik Run
-
+1. Buka Terminal
+2. Pastikan working directorynya adalah Algeo01-21066
+3. Gunakan command ``java --enable-preview -jar Algeo01-21066.jar``
 ## Author
 1. 13521066 Muhammad Fadhil Amri
 2. 13521070 Akmal Mahardika Nurwahyu Pratama
