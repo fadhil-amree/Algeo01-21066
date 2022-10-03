@@ -41,7 +41,7 @@ public class MatrixBalikan {
         }
 
         for (i=0;i<solusi.length;i++){
-            solusi_string[i] = String.valueOf(solusi[i]);
+            solusi_string[i] = String.valueOf((double)solusi[i]);
         } 
         return solusi_string;
     }   
