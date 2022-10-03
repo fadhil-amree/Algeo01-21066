@@ -24,3 +24,12 @@ Beberapa tulisan cara membuat library di Java:
 3. https://stackoverflow.com/questions/3612567/how-to-create-my-own-java-libraryapi
 
 </pre>
+
+## How To Run The Program
+1. Buka File Main.java pada Folder src 
+2. Klik Run
+
+## Author
+1. 13521066 Muhammad Fadhil Amri
+2. 13521070 Akmal Mahardika Nurwahyu Pratama
+3. 13521087 Razzan Daksana Yoni
