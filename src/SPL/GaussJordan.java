@@ -44,7 +44,7 @@ public class GaussJordan {
         return listUndef;
     }
 
-    public static String[] splbyGaussJordan(Matrix matrixkoef, Matrix matrixres){
+    public static String[] splbyGaussJordan(Matrix matrixkoef, Matrix matrixres, boolean bicubic){
         // Fungsi mencari solusi SPL dengan metode eliminasi gauss jordan
         // Prekondisi: matrixkoef dan matrixres tak kosong
         // KAMUS LOKAL
@@ -144,58 +144,64 @@ public class GaussJordan {
                     }
                 }
             }
-            if (Matrix.isInvertible(tesMatrix) || tempMatrix.getNRow()>tempMatrix.getNCol()){ //Punya solusi unik
-                for (i=0;i<=matrixkoef.getNCol()-1;i++){
-                    solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
-                }
-            }
-            else{ //not invertible dan tidak memiliki jumlah baris yang lebih banyak daripada jumlah kolom 
-                concistent = true;
-                i = 0;
-                while (i<=tempMatrix.getNRow()-1 && concistent){
-                    ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0
-                    j = 0;
-                    while (j<=tempMatrix.getNCol()-1 && ctr == 0){
-                        if (tempMatrix.getElmtContent(i, j) != 0){
-                            ctr += 1; // Counter bertambah jika ada elemen pada tempMatrix yang tak 0
-                        }
-                        j++;
-                    }
-                    if (ctr == 0 && resMatrix.getElmtContent(i, 0)!=0){
-                        concistent = false; 
-                        //Matrix tidak concistent (tak punya solusi)
-                    }
-                    i++;
-                }
-
-                if (!concistent){ //Jika tak ada solusi
-                    solusi = getlistUndef(tempMatrix.getNCol());
-                }
-                else { //Jika punya tak hingga solusi
+            if (!bicubic){
+                if (Matrix.isInvertible(tesMatrix) || tempMatrix.getNRow()>tempMatrix.getNCol()){ //Punya solusi unik
                     for (i=0;i<=matrixkoef.getNCol()-1;i++){
-                        if (tempMatrix.getNRow()>i){ //Jika indeks baris masih dalam jangkauan  
-                            ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0
-                            j = 0;
-                            while (j<=tempMatrix.getNCol()-1 && ctr == 0){
-                                if (tempMatrix.getElmtContent(i, j) != 0){
-                                    ctr += 1; // Counter bertambah jika ada elemen pada tempMatrix yang tak 0
-                                }
-                                j++;
+                        solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
+                    }
+                }
+                else{ //not invertible dan tidak memiliki jumlah baris yang lebih banyak daripada jumlah kolom 
+                    concistent = true;
+                    i = 0;
+                    while (i<=tempMatrix.getNRow()-1 && concistent){
+                        ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0
+                        j = 0;
+                        while (j<=tempMatrix.getNCol()-1 && ctr == 0){
+                            if (tempMatrix.getElmtContent(i, j) != 0){
+                                ctr += 1; // Counter bertambah jika ada elemen pada tempMatrix yang tak 0
                             }
-                            if (ctr == 0){ //Jika semua elemen suatu baris = 0 dan resultnya juga 0
+                            j++;
+                        }
+                        if (ctr == 0 && resMatrix.getElmtContent(i, 0)!=0){
+                            concistent = false; 
+                            //Matrix tidak concistent (tak punya solusi)
+                        }
+                        i++;
+                    }
+            
+                    if (!concistent){ //Jika tak ada solusi
+                        solusi = getlistUndef(tempMatrix.getNCol());
+                    }
+                    else { //Jika punya tak hingga solusi
+                        for (i=0;i<=matrixkoef.getNCol()-1;i++){
+                            if (tempMatrix.getNRow()>i){ //Jika indeks baris masih dalam jangkauan  
+                                ctr = 0; //inisialisasi counter untuk menghitung pada baris yang semua koefnya 0
+                                j = 0;
+                                while (j<=tempMatrix.getNCol()-1 && ctr == 0){
+                                    if (tempMatrix.getElmtContent(i, j) != 0){
+                                        ctr += 1; // Counter bertambah jika ada elemen pada tempMatrix yang tak 0
+                                    }
+                                    j++;
+                                }
+                                if (ctr == 0){ //Jika semua elemen suatu baris = 0 dan resultnya juga 0
+                                    solusi[i] = 9999; //Mark parametrik
+                                    idxParameter[nParameter] = i;
+                                    nParameter++;
+                                } else{
+                                    solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
+                                }
+                            } else{ // saat terdapat SPL dengan jumlah persamaan < jumlah variabel
                                 solusi[i] = 9999; //Mark parametrik
                                 idxParameter[nParameter] = i;
                                 nParameter++;
-                            } else{
-                                solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
                             }
-                        } else{ // saat terdapat SPL dengan jumlah persamaan < jumlah variabel
-                            solusi[i] = 9999; //Mark parametrik
-                            idxParameter[nParameter] = i;
-                            nParameter++;
-                        }
-                    }           
+                        } 
+                    }          
                 }
+            } else {
+                for (i=0;i<=matrixkoef.getNCol()-1;i++){
+                    solusi[i] = resMatrix.getElmtContent(i, 0); // resMatriks hanya punya satu kolom
+                }   
             }
         } else { // matrix.nRow == 1
             solusi[0] = resMatrix.getElmtContent(0, 0);

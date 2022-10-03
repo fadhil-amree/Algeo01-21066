@@ -56,7 +56,7 @@ public class PolinomialInterpolation {
         matrixres = new Matrix(resMatrix,matrix.getNRow(),1);
 
         // Mencari nilai koefisien 
-        skoefisien = GaussJordan.splbyGaussJordan(matrixkoef, matrixres);
+        skoefisien = GaussJordan.splbyGaussJordan(matrixkoef, matrixres,false);
         // Konversi Solusi String ke Float
         for (i=0;i<matrixkoef.getNCol();i++){
             koefisien[i] = Double.valueOf(skoefisien[i]);
