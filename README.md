@@ -30,6 +30,6 @@ Beberapa tulisan cara membuat library di Java:
 2. Pastikan working directorynya adalah Algeo01-21066
 3. Gunakan command ``java --enable-preview -jar Algeo01-21066.jar``
 ## Author
-1. 13521066 Muhammad Fadhil Amri
-2. 13521070 Akmal Mahardika Nurwahyu Pratama
-3. 13521087 Razzan Daksana Yoni
+1. 13521066 [Muhammad Fadhil Amri](https://github.com/Mehmed13)
+2. 13521070 [Akmal Mahardika Nurwahyu Pratama](https://github.com/4KMALM)
+3. 13521087 [Razzan Daksana Yoni](https://github.com/razzanYoni)
