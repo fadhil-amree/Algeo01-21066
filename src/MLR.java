@@ -124,7 +124,7 @@ public class MLR {
             {
                 if (j == tempkoef.getNCol())
                 {
-                    System.out.print("|");
+                    System.out.print(" = " + tempres.getElmtContent(i, 0));
                 } else if (j == 0)
                 {
                     System.out.print(tempkoef.getElmtContent(i, j));

@@ -24,10 +24,21 @@ public class Gauss {
         }
         return (countOne == 1);
     }
-    public static boolean isAllColZero(Matrix M, int col) {
+    public static boolean isAllRowZero(Matrix M, int col){
         int i;
-        for (i = 0; i < M.getNRow(); i++) {
-            if (M.getElmtContent(i, col) != 0) {
+        for (i = 0; i < M.getNRow(); i++){
+            if (M.getElmtContent(i, col) != 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isAllColZero(Matrix M, int row) {
+        /* Apakah pada baris ke x semua kolomnya bernilai 0 */
+        int j;
+        for (j = 0; j < M.getNCol(); j++) {
+            if (M.getElmtContent(row, j) != 0) {
                 return false;
             }
         }
@@ -105,7 +116,7 @@ public class Gauss {
         
         // ALGORITMA
         i = row + 1;
-        while(i < matrixkoef.getNCol() && isElDiagonal0(matrixkoef, row))
+        while(i < matrixkoef.getNCol() && isElDiagonal0(matrixkoef, row) && i < matrixkoef.getNRow())
         {
             if (matrixkoef.getElmtContent(i, col) != 0)
             {
@@ -155,15 +166,18 @@ public class Gauss {
         /* F.S mengembalikan true jika elemen diagonal matrix bernilai 1 */
         
         // KAMUS
-        int i, n; /*iterasi*/
+        int i; /*iterasi*/
         boolean isOne = true; /*boolean untuk mengecek apakah elemen diagonal matrix bernilai 1*/
 
         // ALGORITMA
         /* Cek apakah elemen diagonal matrix bernilai 1 */
-        for (i = 0; i < matrixkoef.getNRow(); i++) {
-            if (matrixkoef.getElmtContent(i, i) != 1) {
-                isOne = false;
-            }
+        i = 0;
+        while(i < matrixkoef.getNRow() && i < matrixkoef.getNCol() && isOne)
+        {
+        if (matrixkoef.getElmtContent(i, i) != 1) {
+            isOne = false;
+        }
+        i++;
         }
 
         return isOne;
@@ -186,9 +200,11 @@ public class Gauss {
         while (!IsSegitigaBawahZero(matrixkoef)) {
             row = i;
             /* tukar baris */
-            while (isElDiagonal0(matrixkoef, row) && row < matrixkoef.getNRow())
+            while (row < matrixkoef.getNRow() && row < matrixkoef.getNCol())
             {
-                TukarBaris(matrixkoef, matrixres, row);
+                if (isElDiagonal0(matrixkoef, row) && row < matrixkoef.getNRow() - 1 && row < matrixkoef.getNCol() - 1){
+                    TukarBaris(matrixkoef, matrixres, row);
+                }
                 row++;
             }
 
@@ -278,9 +294,10 @@ public class Gauss {
             i  = resultStr.length - 1;
             while (i >= batasbawahParam)
             {
-                resultStr[i] = a + String.valueOf(i + 1);
+                resultStr[i] = a + String.valueOf(i);
                 i--;
             }
+
 
             /* Kalkulasikan variable yang berupa hasil */
             itemp = Mtemp.getNRow() - 1; // batas atas Mtemp
@@ -381,9 +398,17 @@ public class Gauss {
             {
                 if (resultFloat[col] == 0)
                 {
-                    resultStr[col] = a + String.valueOf(col + 1);
+                    resultStr[col] = a + String.valueOf(col);
                 }
                 col--;
+            }
+
+            for (col = 0; col < matrixkoef.getNCol(); col++)
+            {
+                if(isAllRowZero(matrixkoef, col))
+                {
+                    resultStr[col] = a + String.valueOf(col);
+                }
             }
 
             /* Kalkulasikan variable yang berupa hasil */
@@ -414,10 +439,10 @@ public class Gauss {
                     j++;
                 }
             }
-            
-            
+        
             /* Masukkan hasil ke dalam resultStr */
             i = 0;
+
             String tempStr;
             while (i < Mtemp.getNRow())
             {
@@ -432,7 +457,20 @@ public class Gauss {
                         }
                         else
                         {
-                                tempStr +=  " + " + String.valueOf(Mtemp.getElmtContent(i,j)) + " " + resultStr[j + batasbawahParam - 1];
+                            tempStr +=  " + " + String.valueOf(Mtemp.getElmtContent(i,j)) + " " + resultStr[j + batasbawahParam - 1];
+                        }
+                    } else if(Mtemp.getElmtContent(i, j) == 0 && j == 0 && !isAllColZero(Mtemp, i))
+                    {
+                        tempStr += "0";
+                    } 
+                }
+                if (tempStr.equals(""))
+                {
+                    for (col = 0; col < matrixkoef.getNCol(); col++)
+                    {
+                        if (isAllRowZero(matrixkoef, col))
+                        {
+                            tempStr += a + String.valueOf(col);
                         }
                     }
                 }
