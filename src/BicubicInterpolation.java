@@ -190,9 +190,7 @@ public class BicubicInterpolation {
         // f(x,y) = Ca -> C-1f(x,y) 
         modelMatx = createModelBicubicMatrix();
         fxyMatrixCol = squareMatxToColMatx(fxy);
-        modelMatx.displayMatrix();
-        fxyMatrixCol.displayMatrix();
-        strAKoef = GaussJordan.splbyGaussJordan(modelMatx, fxyMatrixCol);
+        strAKoef = GaussJordan.splbyGaussJordan(modelMatx, fxyMatrixCol,true);
 
         for (i = 0; i < 16; i++) {
             resultMatx.setElmtContent(i, 0, Double.valueOf(strAKoef[i]));

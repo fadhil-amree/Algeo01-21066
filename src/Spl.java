@@ -108,7 +108,7 @@ public class Spl {
         switch (menu){
             case 1: solusi = Gauss.splbyGauss(matrixkoef, matrixres);
                     break;
-            case 2: solusi = GaussJordan.splbyGaussJordan(matrixkoef, matrixres);
+            case 2: solusi = GaussJordan.splbyGaussJordan(matrixkoef, matrixres,false);
                     break;
             case 3: solusi = MatrixBalikan.splybyMatrixBalikan(matrixkoef, matrixres);
                     break;
