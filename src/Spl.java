@@ -5,7 +5,6 @@ import src.Matrix;
 import src.SPL.*;   
 
 public class Spl {
-    static float parametric = 9999, undef = -9999;
 
     public static boolean isEmpty(String[] solusi){
         // Mengembalikan true jika solusi kosong
