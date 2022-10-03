@@ -28,10 +28,10 @@ public class Read {
       }
       row = i;
 
-      float[][] Matrixhasil = new float[row][col];
+      double[][] Matrixhasil = new double[row][col];
       for (i = 0; i < row; i++) {
         for (j = 0; j < col; j++) {
-          Matrixhasil[i][j] = Float.valueOf(MatrixStr[i][j]);
+          Matrixhasil[i][j] = Double.valueOf(MatrixStr[i][j]);
           }
         }
 

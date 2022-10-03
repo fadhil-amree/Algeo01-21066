@@ -104,7 +104,7 @@ public class Write {
         bw.close();
     }
     
-    public static void saveHasil(float[] arrayf, String namaFile) throws Exception{
+    public static void saveHasil(double[] arrayf, String namaFile) throws Exception{
         // namaFile sudah dalam .txt
         // write hasil dalam array
         

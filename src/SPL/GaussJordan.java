@@ -32,11 +32,11 @@ public class GaussJordan {
     }
 
 
-    public static float[] getlistUndef(int panjang){
+    public static double[] getlistUndef(int panjang){
         // fungsi mengembalikan list undef
         // KAMUS LOKAL
         int i;
-        float[] listUndef = new float[panjang]; 
+        double[] listUndef = new double[panjang]; 
         // ALGORITMA
         for (i=0;i<=panjang-1;i++){
             listUndef[i] = -9999;
@@ -48,7 +48,7 @@ public class GaussJordan {
         // Fungsi mencari solusi SPL dengan metode eliminasi gauss jordan
         // Prekondisi: matrixkoef dan matrixres tak kosong
         // KAMUS LOKAL
-        float[] solusi = new float[matrixkoef.getNCol()]; 
+        double[] solusi = new double[matrixkoef.getNCol()]; 
         String[] solusi_string = new String[matrixkoef.getNCol()]; 
         String[] listParameter = new String[matrixkoef.getNCol()]; 
         String esolusi_string;
@@ -57,7 +57,7 @@ public class GaussJordan {
         int i,j,k,l; //indeks
         int ctr, nParameter; //counter
         int[] idxParameter = new int[matrixkoef.getNCol()];
-        float etemp,pengali,eres; //variabel elemen dan faktor pengali
+        double etemp,pengali,eres; //variabel elemen dan faktor pengali
         boolean found,concistent,doOBE;
         //ALGORITMA
         // eres: elemen result matriks konstanta, etemp: elemen temporary matriks koefisien 

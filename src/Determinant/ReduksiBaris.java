@@ -26,10 +26,10 @@ public class ReduksiBaris {
     }
     
     
-    public static float detReduksi(Matrix matrix)
+    public static double detReduksi(Matrix matrix)
     {
         // Kamus
-        float tukarBaris = 0, kaliDengan = 1, hasil = 1, temp;
+        double tukarBaris = 0, kaliDengan = 1, hasil = 1, temp;
         while (!(IsSegitiga(matrix)))
         {
             // Tukar baris matrix yang elemen diagonalnya 0
@@ -61,8 +61,8 @@ public class ReduksiBaris {
                     {
                         
                         // Cari KPK
-                        float KPK = matrix.getElmtContent(i, j) * matrix.getElmtContent(j, j);
-                        float kali = KPK / matrix.getElmtContent(i, j);
+                        double KPK = matrix.getElmtContent(i, j) * matrix.getElmtContent(j, j);
+                        double kali = KPK / matrix.getElmtContent(i, j);
                         
                         // kalikan baris i dengan konstanta kali
                         int col;
@@ -72,7 +72,7 @@ public class ReduksiBaris {
                             matrix.setElmtContent(i, col, temp);
                         }
                         
-                        float kelipatan = KPK / matrix.getElmtContent(j, j);
+                        double kelipatan = KPK / matrix.getElmtContent(j, j);
                         
                         for (col = 0; col < matrix.getNCol(); col++)
                         {
@@ -90,13 +90,13 @@ public class ReduksiBaris {
         {
             hasil *= matrix.getElmtContent(i, i);
         }
-        return (float) (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
+        return (Math.pow(-1,tukarBaris) * (1/kaliDengan) * hasil);
     }
 
     public static Matrix tukarBaris(Matrix matrix,int i,int j)
     {
         // KAMUS
-        float temp;
+        double temp;
 
         // ALGORITMA
         for (int k = 0; k < matrix.getNCol(); k++)

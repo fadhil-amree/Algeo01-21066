@@ -23,10 +23,10 @@ public class BicubicInterpolation {
         Scanner input = new Scanner(System.in);
         int inputType;
         int i, j, valueModel;
-        float[][] tempMatx;
+        double[][] tempMatx;
         Matrix fxyMatx, tempMatrix;
         String file;
-        float a, b, fabValue;
+        double a, b, fabValue;
 
         System.out.println("Tipe input");
         System.out.println("1. Input Keyboard");
@@ -47,7 +47,7 @@ public class BicubicInterpolation {
 
         
         if (inputType == 1) {
-            tempMatx = new float[4][4];
+            tempMatx = new double[4][4];
             fxyMatx = new Matrix(tempMatx, 4, 4);
             
             System.out.println("Masukkan nilai f(-1,-1),f(0,-1),..,f(2,2).");
@@ -67,25 +67,25 @@ public class BicubicInterpolation {
             System.out.println("Syarat a dan b dalam rentang 0..1");
             
             System.out.print("a = ");
-            a = input.nextFloat();
+            a = input.nextDouble();
             System.out.print("b = ");
-            b = input.nextFloat();
+            b = input.nextDouble();
             
             while ( (a < 0 || a > 1.0) || (b < 0 || b > 1.0) ) {
                 System.out.println("input tidak sesuai");
                 System.out.println("Syarat a dan b dalam rentang 0..1");
                 
                 System.out.print("a = ");
-                a = input.nextFloat();
+                a = input.nextDouble();
                 System.out.print("b = ");
-                b = input.nextFloat();
+                b = input.nextDouble();
             }
         }
         // inputType == 2
         else { 
-            tempMatx = new float[5][5];
+            tempMatx = new double[5][5];
             tempMatrix = new Matrix(tempMatx, 5, 5);
-            tempMatx = new float[4][4];
+            tempMatx = new double[4][4];
             fxyMatx = new Matrix(tempMatx, 4, 4);
 
             System.out.print("Masukkan nama file: ");
@@ -111,17 +111,17 @@ public class BicubicInterpolation {
 
 
     /** RUMUS FUNGSI f(x,y) **/
-    public static float interpolasiBicub(Matrix fxy, float x, float y) {
+    public static double interpolasiBicub(Matrix fxy, double x, double y) {
         // mengembalikan nilai f(x,y) = sigma[j] sigma[i] a[i,j] * x^i * y^j
         // untuk nilai sigma[i] 0..i dan sigma[j] 0..j
-        float sum;
-        float[][] temp;
+        double sum;
+        double[][] temp;
         Matrix matxAij;
 
         int itrCol;
         int i, j;
 
-        temp = new float[16][1];
+        temp = new double[16][1];
         matxAij = new Matrix(temp, 16, 1);
 
         matxAij = createMatrixofAij(fxy);
@@ -151,18 +151,18 @@ public class BicubicInterpolation {
         // KAMUS LOKAL
         Matrix fxyMatrixCol, modelMatx, resultMatx;
         String[] strAKoef;
-        float[][] temp;
+        double[][] temp;
         int i;
 
         // ALGORITMA
         // inisial
-        temp = new float[16][16];
+        temp = new double[16][16];
         modelMatx = new Matrix(temp, 16, 16);
         
-        temp = new float[16][1];
+        temp = new double[16][1];
         fxyMatrixCol = new Matrix(temp, 16, 1);
 
-        temp = new float[16][1];
+        temp = new double[16][1];
         resultMatx = new Matrix(temp, 16, 1);
 
         // f(x,y) = Ca -> C-1f(x,y) 
@@ -172,7 +172,7 @@ public class BicubicInterpolation {
         strAKoef = GaussJordan.splbyGaussJordan(modelMatx, fxyMatrixCol);
 
         for (i = 0; i < 16; i++) {
-            resultMatx.setElmtContent(i, 0, Float.valueOf(strAKoef[i]));
+            resultMatx.setElmtContent(i, 0, Double.valueOf(strAKoef[i]));
         }
         
         
@@ -183,12 +183,12 @@ public class BicubicInterpolation {
     public static Matrix createModelBicubicMatrix() {
         // membuat matrix bicubic dari formula
         // x dan y terdefinisi dan memiliki selisih 4 sebagain integer
-        float[][] m1;
+        double[][] m1;
         Matrix bicubic;
         int itrRow, itrCol;
         int x, y, i, j;
 
-        m1 = new float[16][16];
+        m1 = new double[16][16];
         bicubic = new Matrix(m1, 16, 16);
 
         // sigma[j] sigma[i] aij x^i y^j
@@ -209,7 +209,7 @@ public class BicubicInterpolation {
 
                 i = itrCol%4;
 
-                bicubic.setElmtContent(itrRow, itrCol, (float) (Math.pow(x, i) * Math.pow(y, j)) );
+                bicubic.setElmtContent(itrRow, itrCol,  (Math.pow(x, i) * Math.pow(y, j)) );
                 
                 j = j + (i/3);
             }
@@ -229,10 +229,10 @@ public class BicubicInterpolation {
         // matrix colom yaitu matrix yang hanya memiliki 1 colom
 
         Matrix matxCol;
-        float[][] temp;
+        double[][] temp;
         int i, j, itrRow;
 
-        temp = new float[matx.getNRow()*matx.getNCol()][1];
+        temp = new double[matx.getNRow()*matx.getNCol()][1];
         matxCol = new Matrix(temp, matx.getNRow()*matx.getNCol(), 1);
         itrRow = 0;
 
@@ -252,7 +252,7 @@ public class BicubicInterpolation {
 
         int incr;
         int i, j, itrRow;
-        float[][] temp;
+        double[][] temp;
         Matrix matxSquare;
 
         incr = 1;
@@ -261,7 +261,7 @@ public class BicubicInterpolation {
             incr += 1;
         }
 
-        temp = new float[matx.getNRow() / incr][matx.getNRow() / incr];
+        temp = new double[matx.getNRow() / incr][matx.getNRow() / incr];
         matxSquare = new Matrix(temp, matx.getNRow() / incr, matx.getNRow() / incr);
 
         itrRow = 0;
