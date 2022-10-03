@@ -210,14 +210,15 @@ public class GaussJordan {
             for (i=0;i<matrixkoef.getNCol();i++){
                 if (!inListInt(idxParameter, i,nParameter)){ //Jika bukan parameter
                     esolusi_string = "";
-                    esolusi_string += String.valueOf((double)resMatrix.getElmtContent(i, 0));
-                    esolusi_string += " - ";
+
+                    esolusi_string += String.valueOf(resMatrix.getElmtContent(i, 0));
                     for(j=0;j<nParameter;j++){
-                        esolusi_string += String.valueOf((double)tempMatrix.getElmtContent(i, idxParameter[j]))+" "+listParameter[j];
-                        if (j!=nParameter-1){
+                        if (tempMatrix.getElmtContent(i, idxParameter[j])!=0){
+
                             esolusi_string += " - ";
+                            esolusi_string += String.valueOf(tempMatrix.getElmtContent(i, idxParameter[j]))+" "+listParameter[j];
                         }
-                    }
+                    } 
                     solusi_string[i] = esolusi_string;
                 } else {
                     solusi_string[i] = listParameter[getIndexOf(idxParameter, i,nParameter)];
