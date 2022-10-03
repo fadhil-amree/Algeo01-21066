@@ -6,11 +6,11 @@ import java.io.*;
 import java.lang.Math;
 
 public class PolinomialInterpolation {
-    public static Matrix setOfTitikToMatrix (float[][] setOfTitik,int nRow){
+    public static Matrix setOfTitikToMatrix (double[][] setOfTitik,int nRow){
         // Fungsi untuk mengembalikan hasil SPL yang terbentuk dari kumpulan titik
         // KAMUS LOKAL
         Matrix augmented;
-        float[][] augMatrix = new float[nRow][nRow+1]; 
+        double[][] augMatrix = new double[nRow][nRow+1]; 
         int i,j;
         double e;
         // ALGORITMA
@@ -18,7 +18,7 @@ public class PolinomialInterpolation {
         for (i=0;i<=nRow-1;i++){
             for (j=0;j<=nRow-1;j++){
                 e = Math.pow(setOfTitik[i][0],j);
-                augMatrix[i][j] = (float)e; // Elemen matrixcoef
+                augMatrix[i][j] = e; // Elemen matrixcoef
             }
             augMatrix[i][nRow] = setOfTitik[i][1]; // Elemen matrixres
         }
@@ -28,17 +28,17 @@ public class PolinomialInterpolation {
     }
 
 
-    public static float[] getPolinomialCoef(Matrix matrix){
+    public static double[] getPolinomialCoef(Matrix matrix){
         // Fungsi untuk mengembalikan list koefisien dari polinomial interpolasi
         // Elemen koefisien terurut sesuai derajat dari x
         // [a0,a1,...an]
 
         // KAMUS LOKAL
         Matrix matrixres, matrixkoef;
-        float[] koefisien = new float[matrix.getNRow()];
+        double[] koefisien = new double[matrix.getNRow()];
         String[] skoefisien = new String[matrix.getNRow()];
-        float[][] coefMatrix = new float[matrix.getNRow()][matrix.getNCol()-1];
-        float[][] resMatrix = new float[matrix.getNRow()][1];
+        double[][] coefMatrix = new double[matrix.getNRow()][matrix.getNCol()-1];
+        double[][] resMatrix = new double[matrix.getNRow()][1];
         int i,j;
         // ALGORITMA
         // Membentuk matrixkoef
@@ -59,12 +59,12 @@ public class PolinomialInterpolation {
         skoefisien = GaussJordan.splbyGaussJordan(matrixkoef, matrixres);
         // Konversi Solusi String ke Float
         for (i=0;i<matrixkoef.getNCol();i++){
-            koefisien[i] = Float.valueOf(skoefisien[i]);
+            koefisien[i] = Double.valueOf(skoefisien[i]);
         }
         return koefisien;
     }
 
-    public static float estimateY(float[] koefisien, int length, float X){
+    public static double estimateY(double[] koefisien, int length, double X){
         // Fungsi mengembalikan taksiran suatu input x terhadap polinom interpolasi
         // KAMUS LOKAL
         double Y;
@@ -74,10 +74,10 @@ public class PolinomialInterpolation {
         for (i=0;i<= length-1;i++){
             Y += koefisien[i]*Math.pow(X,i);
         }
-        return (float)Y;
+        return Y;
     }
 
-    public static void displayPolinom(float[] koefisien, int length){
+    public static void displayPolinom(double[] koefisien, int length){
         // Prosedur untuk menampilkan polinomial interpolasi
         // I.S Koefisien terdefinisi
         // F.S Menampilkan Polinom Interpolasi dengan format:
@@ -111,9 +111,9 @@ public class PolinomialInterpolation {
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
         int n,i,j, inputType;
-        float xi,yi, X, Y;
-        float[] func;
-        float[][] setOfTitik;
+        double xi,yi, X, Y;
+        double[] func;
+        double[][] setOfTitik;
         Matrix MsetOfTitik;
         Matrix augmented;
         String file;
@@ -140,14 +140,14 @@ public class PolinomialInterpolation {
         if (inputType == 1){
             System.out.print("Masukkan derajat Polinomial(n): ");
             n = input.nextInt();
-            setOfTitik = new float [n+1][2]; //Alokasi memori
+            setOfTitik = new double [n+1][2]; //Alokasi memori
             //Input
             for (i=0;i<=n;i++){
                 // Input nilai xi,yi
                 System.out.printf("Masukkan x%d: ",i);
-                xi = input.nextFloat();
+                xi = input.nextDouble();
                 System.out.printf("Masukkan y%d: ",i);
-                yi = input.nextFloat();
+                yi = input.nextDouble();
 
                 // Menyimpan xi,yi ke dalam matriks titik
                 setOfTitik[i][0] = xi;
@@ -164,7 +164,7 @@ public class PolinomialInterpolation {
         
         // input nilai yang akan ditaksir
         System.out.print("Masukkan X: ");
-        X = input.nextFloat();
+        X = input.nextDouble();
 
         // Membentuk Polinom Interpolasi
             // Membentuk Augmented Matrix

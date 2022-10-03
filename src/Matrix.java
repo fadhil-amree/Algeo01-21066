@@ -9,7 +9,7 @@ import src.Determinant.*;
 
 public class Matrix {
     private int nRow,nCol;
-    private float[][] content;
+    private double[][] content;
 
     //Konstruktor input dari keyboard
     public Matrix(int nRow, int nCol){
@@ -18,16 +18,16 @@ public class Matrix {
         // F.S matrix terdefinisi dan berukuran nRow x nCol, bisa berisi atau kosong
         // KAMUS LOKAL
         int i,j; //index
-        float e; //elemen matrix
+        double e; //elemen matrix
         Scanner input = new Scanner(System.in); //input
         //ALGORITMA
         this.nRow = nRow;
         this.nCol = nCol;
-        this.content = new float[this.nRow][this.nCol];
+        this.content = new double[this.nRow][this.nCol];
         for(i=0;i<nRow;i++){ 
             for(j=0;j<nCol;j++){
                 System.out.printf("Masukkan elemen baris ke-%d kolom ke-%d: ",i,j);
-                e = input.nextFloat();
+                e = input.nextDouble();
                 this.content[i][j] = e;
             }
         }
@@ -35,7 +35,7 @@ public class Matrix {
 
 
     //Konstruktor input berupa matriks
-    public Matrix(float[][] matrix, int nRow, int nCol){
+    public Matrix(double[][] matrix, int nRow, int nCol){
         // I.S Matrix sembarang
         // F.S matrix terdefinisi sesuai matrix yang ada pada input 
         // KAMUS LOKAL
@@ -43,7 +43,7 @@ public class Matrix {
         //ALGORITMA
         this.nRow = nRow;
         this.nCol = nCol;
-        this.content = new float[this.nRow][this.nCol];
+        this.content = new double[this.nRow][this.nCol];
         for(i=0;i<this.nRow;i++){ 
             for(j=0;j<this.nCol;j++){
                 this.content[i][j] = matrix[i][j];
@@ -59,7 +59,7 @@ public class Matrix {
         //ALGORITMA
         this.nRow = matrix.nRow;
         this.nCol = matrix.nCol;
-        this.content = new float[this.nRow][this.nCol];
+        this.content = new double[this.nRow][this.nCol];
         for(i=0;i<this.nRow;i++){ 
             for(j=0;j<this.nCol;j++){
                 this.content[i][j] = matrix.content[i][j];
@@ -74,19 +74,19 @@ public class Matrix {
     public int getNCol(){
         return this.nCol;
     }
-    public float getElmtContent(int i, int j){
+    public double getElmtContent(int i, int j){
         return this.content[i][j];
     }
-    public float[][] getContent(){
+    public double[][] getContent(){
         return this.content;
     }
 
     //Setter
 
-    public void setElmtContent(int i, int j, float x){
+    public void setElmtContent(int i, int j, double x){
         this.content[i][j] = x;
     }
-    public void setContent(float[][] newContent){
+    public void setContent(double[][] newContent){
         this.content = newContent;
     }
 
@@ -112,7 +112,7 @@ public class Matrix {
         }
     }
 
-    public void multiplybyConstant(float k){
+    public void multiplybyConstant(double k){
         // Prosedur untuk mengalikan matriks dengan suatu konstanta
         // I.S matrix terdefinisi berisi nilai atau kosong
         // F.S Setiap elemen pada matrix dikali dengan k
@@ -134,9 +134,9 @@ public class Matrix {
         /* Prekondisi : Ukuran kolom  m1 = ukuran baris  m2 */
         /* Mengirim hasil perkalian matriks: salinan m1 * m2 */
         // KAMUS LOKAL
-        float [][] temp = new float[m1.getNRow()][m2.getNCol()];
+        double [][] temp = new double[m1.getNRow()][m2.getNCol()];
         int i,j,k;
-        float e;
+        double e;
         // ALGORITMA
         for(i=0;i<=m1.getNRow()-1;i++)
         {
@@ -164,7 +164,7 @@ public class Matrix {
     public static Matrix getIdentityMatrix(int order){
         // Fungsi mengembalikan Sebuah matriks identitas berorde order
         // KAMUS LOKAL
-        float[][] idMatrix = new float[order][order];
+        double[][] idMatrix = new double[order][order];
         int i;
         //ALGORITMA
         for(i=0;i<order;i++){
@@ -177,7 +177,7 @@ public class Matrix {
     public static Matrix getUndefMatrix(int order){
         // Fungsi mengembalikan Sebuah matriks undefine berorde order
         // KAMUS LOKAL
-        float[][] undefMatrix = new float[order][order];
+        double[][] undefMatrix = new double[order][order];
         int i,j;
         //ALGORITMA
         for(i=0;i<order;i++){
@@ -192,7 +192,7 @@ public class Matrix {
     public static Matrix getTransposeMatrix(Matrix matrix){
         // Fungsi yang menerima sebuah matriks lalu mengembalikan Transpose dari matriks tersebut
         // KAMUS LOKAL
-        float[][] tMatrix = new float[matrix.getNRow()][matrix.getNCol()];
+        double[][] tMatrix = new double[matrix.getNRow()][matrix.getNCol()];
         int i,j;
         //ALGORITMA   
         for (i=0;i<=matrix.getNRow()-1;i++){
@@ -242,7 +242,7 @@ public class Matrix {
         bw.close();
     }
     
-    public static void saveHasil(float[] array, String namaFile) throws IOException{
+    public static void saveHasil(double[] array, String namaFile) throws IOException{
         // namaFile sudah dalam .txt
         // write hasil dalam array
         
@@ -276,12 +276,12 @@ public class Matrix {
         // Fungsi untuk mengembalikan list of Matrix yang berisi matrixkoef dan matrixre
         // KAMUS LOKAL
         Matrix[] listMatrix = new Matrix[2];
-        float[][] matrixk, matrixr;
+        double[][] matrixk, matrixr;
         Matrix matrixkoef, matrixres;
         int i,j;
         // ALGORITMA
-        matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
-        matrixr = new float[augmented.getNRow()][1];
+        matrixk = new double[augmented.getNRow()][augmented.getNCol()-1];
+        matrixr = new double[augmented.getNRow()][1];
         for (i=0;i<augmented.getNRow();i++){
             for(j=0;j<augmented.getNCol();j++){
                 if (j == augmented.getNCol()-1){
@@ -304,12 +304,12 @@ public class Matrix {
         // Fungsi untuk mengembalikan list of Matrix yang berisi matrixkoef dan matrixre
         // KAMUS LOKAL
         Matrix[] listMatrix = new Matrix[2];
-        float[][] matrixk, matrixr;
+        double[][] matrixk, matrixr;
         Matrix matrixkoef, matrixres;
         int i,j;
         // ALGORITMA
-        matrixk = new float[augmented.getNRow()][augmented.getNCol()-1];
-        matrixr = new float[augmented.getNRow()][1];
+        matrixk = new double[augmented.getNRow()][augmented.getNCol()-1];
+        matrixr = new double[augmented.getNRow()][1];
         for (i=0;i<augmented.getNRow();i++){
             for(j=0;j<augmented.getNCol();j++){
                 if (j == 0){

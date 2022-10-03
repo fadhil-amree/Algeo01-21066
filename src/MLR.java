@@ -7,17 +7,17 @@ import src.Write;
 
 public class MLR {
     
-    public static float[] MLR(Matrix matrixkoef, Matrix matrixres)
+    public static double[] MLR(Matrix matrixkoef, Matrix matrixres)
     {
         // KAMUS
         int i, j, col;
         Matrix tempkoef, tempres;
-        float[] result = new float[matrixkoef.getNCol()];
+        double[] result = new double[matrixkoef.getNCol()];
         
         // ALGORITMA
-        float[][] x = new float[matrixkoef.getNCol() + 1][matrixkoef.getNCol() + 1]; 
+        double[][] x = new double[matrixkoef.getNCol() + 1][matrixkoef.getNCol() + 1]; 
         tempkoef = new Matrix(x, matrixkoef.getNCol() + 1, matrixkoef.getNCol() +1);
-        x = new float[tempkoef.getNRow()][1];
+        x = new double[tempkoef.getNRow()][1];
         tempres = new Matrix(x, tempkoef.getNRow(), 1);
         /* Lakukan normal equation */
         for (i = 0; i < tempkoef.getNCol() ; i++)
@@ -56,14 +56,15 @@ public class MLR {
         /* jika sudah cek apakah matriks A invertible */
         /* jika non invertible lakukan while do normal equation dengan menghapus salah satu parameter bisa dimulai dari 1 lalu 2 lalu 3  dengan membuat temporary matrix baru dengan col lama -1*/
         col = 0;
-        while (!Matrix.isInvertible(tempkoef) && col < matrixkoef.getNCol())
+        Matrix tesMatrix = new Matrix(tempkoef);
+        while (!Matrix.isInvertible(tesMatrix) && col < matrixkoef.getNCol())
         {
             /* kalau ga invertible, hapus 1 kolom*/
             /* Copy Matrixkoef ke tempMatKoef dan menghilangkan parameter pada ke-x */
             Matrix tempMatKoef = MinorMatKoef(matrixkoef, col);
-            x = new float[tempMatKoef.getNCol() + 1][tempMatKoef.getNCol() + 1];
+            x = new double[tempMatKoef.getNCol() + 1][tempMatKoef.getNCol() + 1];
             tempkoef = new Matrix(x, tempMatKoef.getNCol() + 1, tempMatKoef.getNCol() +1);
-            x = new float[tempkoef.getNRow()][1];
+            x = new double[tempkoef.getNRow()][1];
             tempres = new Matrix(x, tempkoef.getNRow(), 1);
             
             for (i = 0; i < tempkoef.getNCol() ; i++)
@@ -139,21 +140,21 @@ public class MLR {
         
         String[] resultStr = MatrixBalikan.splybyMatrixBalikan(tempkoef, tempres);
 
-        result = new float[resultStr.length];
+        result = new double[resultStr.length];
         for (i = 0; i < resultStr.length; i++)
         {
-            result[i] = Float.valueOf(resultStr[i]);
+            result[i] = Double.valueOf(resultStr[i]);
         }
         /* return b */
         return result;
     }
     
     
-    public static float[] arrOfColumn(Matrix matrix, int j)
+    public static double[] arrOfColumn(Matrix matrix, int j)
     {
         // KAMUS
         int i ;
-        float[] result = new float[matrix.getNRow()];
+        double[] result = new double[matrix.getNRow()];
         
         // ALGORITMA
         for (i = 0; i < matrix.getNRow(); i++)
@@ -164,9 +165,9 @@ public class MLR {
         return result;
     }
     
-    public static float sumOf(float[] arr) /* untuk satu kolom */
+    public static double sumOf(double[] arr) /* untuk satu kolom */
     {
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < arr.length; i++)
         {
             sum += arr[i];
@@ -174,11 +175,11 @@ public class MLR {
         return sum;
     }
     
-    public static float sumOfSquare(float[] arr) /* untuk kuadratik satu kolom */
+    public static double sumOfSquare(double[] arr) /* untuk kuadratik satu kolom */
     {
         /* I.S array of Float terdefinisi */
         /* F.S mengembalikan hasil penjumlahan perkalian arr[i] dengan dirinya sendiri */
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < arr.length; i++)
         {
             sum += (arr[i] * arr[i]);
@@ -187,11 +188,11 @@ public class MLR {
         return sum;
     }
     
-    public static float sumOfTwoColumn(float[] arr1, float[] arr2) /* untuk perkalian dua kolom */
+    public static double sumOfTwoColumn(double[] arr1, double[] arr2) /* untuk perkalian dua kolom */
     {
         /* I.S array of Float terdefinisi */
         /* F.S mengembalikan hasil penjumlahan perkalian arr1[i] dengan arr2[i] */
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < arr1.length; i++)
         {
             sum += (arr1[i] * arr2[i]);
@@ -204,7 +205,7 @@ public class MLR {
     {
         /* I.S matrix terdefinisi */
         /* F.S mengembalikan matriks minor dari matrixkoef dengan menghilangkan kolom ke-col */
-        float[][] x = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - 1];
+        double[][] x = new double[matrixkoef.getNRow()][matrixkoef.getNCol() - 1];
         Matrix result = new Matrix(x,matrixkoef.getNRow(), matrixkoef.getNCol() - 1);
         int iMinor = 0, jMinor = 0;
         int i, j;
@@ -229,11 +230,11 @@ public class MLR {
     {
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
-        float[][] inputMatrixr, inputMatrixk, inputMatrix;
+        double[][] inputMatrixr, inputMatrixk, inputMatrix;
         int inputType, Nvar, Nrow;
         String file;
-        float[] result, xtaksiran;
-        float y = 0;
+        double[] result, xtaksiran;
+        double y = 0;
         Matrix inputMatrixFile;
 
         // ALGORITMA
@@ -259,17 +260,17 @@ public class MLR {
             Nvar = input.nextInt();
             System.out.println("Masukkan jumlah sampel: ");
             Nrow = input.nextInt();
-            inputMatrixk = new float[Nrow][Nvar];
-            inputMatrixr = new float[Nrow][1];
+            inputMatrixk = new double[Nrow][Nvar];
+            inputMatrixr = new double[Nrow][1];
             Matrix matrixkoef, matrixres;
 
             for (int i = 0; i < Nrow; i++){
                 for (int j = 0; j < Nvar; j++){
                     System.out.println("Masukkan nilai x" + (j+1) + " pada sampel ke-" + (i+1) + ": ");
-                    inputMatrixk[i][j] = input.nextFloat();
+                    inputMatrixk[i][j] = input.nextDouble();
                 }
                 System.out.println("Masukkan nilai y pada sampel ke-" + (i+1) + ": ");
-                inputMatrixr[i][0] = input.nextFloat();
+                inputMatrixr[i][0] = input.nextDouble();
             }
             matrixkoef = new Matrix(inputMatrixk, Nrow, Nvar);
             matrixres = new Matrix(inputMatrixr, Nrow, 1);
@@ -289,10 +290,10 @@ public class MLR {
             System.out.println();
             System.out.println("Masukka nilai yang ingin ditaksir: ");
             Nvar = matrixkoef.getNCol();
-            xtaksiran = new float[Nvar];
+            xtaksiran = new double[Nvar];
             for (int i = 0; i < Nvar; i++){
                 System.out.println("Masukkan nilai x" + (i+1) + ": ");
-                xtaksiran[i] = input.nextFloat();
+                xtaksiran[i] = input.nextDouble();
             }
             System.out.println("Hasil taksiran: ");
             for  (int i = 0; i < Nvar + 1; i++){
@@ -327,14 +328,14 @@ public class MLR {
                 inputMatrixFile = Read.BacaFile(file);
                 
                 /* Inisialisasi Matriks res */
-                float[][] res = new float[inputMatrixFile.getNRow()][1];
+                double[][] res = new double[inputMatrixFile.getNRow()][1];
                 for(int i = 0; i < inputMatrixFile.getNRow(); i++){
                     res[i][0] = inputMatrixFile.getElmtContent(i, 0);
                 }
                 Matrix matrixres = new Matrix(res, inputMatrixFile.getNRow(), 1);
                 
                 /* Inisialisasi Matriks koef */
-                float[][] koef = new float[inputMatrixFile.getNRow()][inputMatrixFile.getNCol()-1];
+                double[][] koef = new double[inputMatrixFile.getNRow()][inputMatrixFile.getNCol()-1];
                 for(int i = 0; i < inputMatrixFile.getNRow(); i++){
                     int jkoef = 0;
                     for(int j = 0; j < inputMatrixFile.getNCol()-1; j++){
@@ -360,10 +361,10 @@ public class MLR {
                 System.out.println();
                 System.out.println("Masukka nilai yang ingin ditaksir: ");
                 Nvar = matrixkoef.getNCol();
-                xtaksiran = new float[Nvar];
+                xtaksiran = new double[Nvar];
                 for (int i = 0; i < Nvar; i++){
                     System.out.println("Masukkan nilai x" + (i+1) + ": ");
-                    xtaksiran[i] = input.nextFloat();
+                    xtaksiran[i] = input.nextDouble();
                 }
                 System.out.println("Hasil taksiran: ");
                 for  (int i = 0; i < Nvar + 1; i++){

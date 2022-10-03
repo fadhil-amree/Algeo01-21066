@@ -17,7 +17,7 @@ public class Inverse {
         Matrix tesMatrix = new Matrix(matrix);
         Matrix inverseMatrix = new Matrix(Matrix.getIdentityMatrix(matrix.getNRow())); //inisialisasi matriks identitas
         int i,j,k,l;
-        float etemp,pengali,einverse; //variabel elemen dan faktor pengali
+        double etemp,pengali,einverse; //variabel elemen dan faktor pengali
         boolean found;
 
         // Proses Mereduksi dua buah matrix tetapi seolah-seolah seperti augmented matrix
@@ -109,10 +109,10 @@ public class Inverse {
         // KAMUS LOKAL
         Matrix kofaktorMatrix, inverseMatrix, Mminor;
         Matrix tesMatrix = new Matrix(matrix);
-        float[][] minor; //matriks minor
-        float[][] cofactorMatrix = new float[matrix.getNRow()][matrix.getNCol()];
+        double[][] minor; //matriks minor
+        double[][] cofactorMatrix = new double[matrix.getNRow()][matrix.getNCol()];
         int i,j,k,l,bm,km; //indeks
-        float det, c;
+        double det, c;
         // ALGORITMA
         //i,k: indeks baris
         //j,l: indeks kolom
@@ -125,7 +125,7 @@ public class Inverse {
                 if (matrix.getNRow()>2){
                     for(i=0;i<=matrix.getNRow()-1;i++){
                         for(j=0;j<=matrix.getNCol()-1;j++){
-                            minor = new float[matrix.getNRow()-1][matrix.getNCol()-1]; //Inisiasi matriks minor 
+                            minor = new double[matrix.getNRow()-1][matrix.getNCol()-1]; //Inisiasi matriks minor 
                             bm =0;
                             for(k=0;k<=matrix.getNRow()-1;k++){
                                 km = 0;

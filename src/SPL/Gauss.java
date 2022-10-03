@@ -34,7 +34,7 @@ public class Gauss {
         return true;
     }
     public static Matrix hapusRowMatKoef(Matrix matrixkoef, int row){
-        float[][] iTemp = new float[row + 1][matrixkoef.getNCol()];
+        double[][] iTemp = new double[row + 1][matrixkoef.getNCol()];
         Matrix tempMatrix = new Matrix(iTemp,row + 1, matrixkoef.getNCol());
         for (int i = 0; i <= row; i++) {
             for (int j = 0; j < matrixkoef.getNCol(); j++) {
@@ -46,7 +46,7 @@ public class Gauss {
     
     public static Matrix hapusRowMatRes(Matrix matrixres, int row)
     {
-        float[][] iTemp = new float[row + 1][1];
+        double[][] iTemp = new double[row + 1][1];
         Matrix tempMatrix = new Matrix(iTemp, row + 1, 1);
         for (int i = 0; i <= row; i++) {
             for (int j = 0; j < matrixres.getNCol(); j++) {
@@ -56,12 +56,12 @@ public class Gauss {
         return tempMatrix;
     }
 
-    public static void subtractOfRowMatrix(Matrix matrix, int row1, int row2, float pengali)
+    public static void subtractOfRowMatrix(Matrix matrix, int row1, int row2, double pengali)
     {
         // Mengembalikan hasil pengurangan baris row1 dengan row2
         // KAMUS LOKAL
         int i;
-        float temp;
+        double temp;
         // ALGORITMA
         for (i = 0; i < matrix.getNCol(); i++)
         {
@@ -101,7 +101,7 @@ public class Gauss {
         
         // KAMUS
         int col = row, i, j;
-        float temp;
+        double temp;
         
         // ALGORITMA
         i = row + 1;
@@ -177,8 +177,8 @@ public class Gauss {
         // KAMUS
         int i, j, n, row, col; /*iterasi*/
         String[] resultStr = new String[matrixkoef.getNCol()]; /*array untuk menampung hasil dalam string*/
-        float[] resultFloat = new float[matrixkoef.getNCol()]; /*array untuk menampung hasil dalam float*/
-        float pembagi, pengurang; /*variabel untuk mencari KPK*/
+        double[] resultFloat = new double[matrixkoef.getNCol()]; /*array untuk menampung hasil dalam float*/
+        double pembagi, pengurang; /*variabel untuk mencari KPK*/
 
         // ALGORITMA
         /* Cari hasil */
@@ -271,7 +271,7 @@ public class Gauss {
             
             /* inisialisasi matriks untuk menyimpan hasil */
             /* Sususan Mtemp = new float[nNonParam][nParam] */
-            float[][] dumpMtemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
+            double[][] dumpMtemp = new double[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
             Matrix Mtemp = new Matrix(dumpMtemp, matrixkoef.getNRow(), matrixkoef.getNCol() - matrixkoef.getNRow() + 1);
 
             /* Masukkan semua variable yang berupa parameter */
@@ -372,7 +372,7 @@ public class Gauss {
             }
             
             /* Sususan Mtemp = new float[nNonParam][nParam] */
-            float[][] dumpMtemp = new float[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
+            double[][] dumpMtemp = new double[matrixkoef.getNRow()][matrixkoef.getNCol() - matrixkoef.getNRow() + 1];
             Matrix Mtemp = new Matrix(dumpMtemp, matrixkoef.getNRow(), matrixkoef.getNCol() - matrixkoef.getNRow() + 1);
             
             /* Masukkan semua variable yang berupa parameter */

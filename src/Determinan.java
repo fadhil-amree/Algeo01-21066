@@ -13,7 +13,7 @@ public class Determinan {
         // KAMUS LOKAL
         Scanner input = new Scanner(System.in);
         Matrix inputMatrix;
-        float detMatrix;
+        double detMatrix;
         int inputType, N;
         String file;
         // ALGORITMA

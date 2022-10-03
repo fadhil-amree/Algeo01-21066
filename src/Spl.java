@@ -28,12 +28,12 @@ public class Spl {
         return no_solution;
     }
 
-    public static boolean isParametric(float[] solusi){
+    public static boolean isParametric(double[] solusi){
         // Mengembalikan true jika solusi parametric
         // KAMUS LOKAL
         boolean parametric = false;
         // ALGROITMA
-        for(float x: solusi){
+        for(double x: solusi){
             if (x == 9999){
                 parametric = true;
                 break;
