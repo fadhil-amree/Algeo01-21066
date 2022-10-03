@@ -13,7 +13,7 @@ public class Main {
                 Scanner input = new Scanner(System.in); //inisiasi variabel untuk melakukan input
                 boolean runProgram = true;
                 
-                while (runProgram){
+        while (runProgram){
             System.out.println("MENU");
             System.out.println("1. Sistem Persamaan Linier");
             System.out.println("2. Determinan");
